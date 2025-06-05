@@ -14,10 +14,10 @@ require_once(__DIR__ . "/../include/header.php");
 
                 <!-- Formulário de login -->
                 <form id="frmLogin" action="./LoginController.php?action=logon" method="POST" >
-                    <div class="mb-3">
-                        <label class="form-label" for="txtLogin">Login:</label>
-                        <input type="text" class="form-control" name="login" id="txtLogin"
-                            maxlength="15" placeholder="Informe o login"
+                <div class="mb-3">
+                        <label class="form-label" for="txtEmail">Email:</label>
+                        <input type="text" class="form-control" name="email" id="txtEmail"
+                            maxlength="15" placeholder="Informe o Email"
                             value="<?php echo isset($dados['login']) ? $dados['login'] : '' ?>" />        
                     </div>
 

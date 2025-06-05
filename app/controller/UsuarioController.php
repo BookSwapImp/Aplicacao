@@ -54,18 +54,18 @@ class UsuarioController extends Controller {
         //Capturar os dados do formulário
         $id = $_POST['id'];
         $nome = trim($_POST['nome']) != "" ? trim($_POST['nome']) : NULL;
-        $login = trim($_POST['login']) != "" ? trim($_POST['login']) : NULL;
+        $email = trim($_POST['email']) != "" ? trim($_POST['email']) : NULL;
         $senha = trim($_POST['senha']) != "" ? trim($_POST['senha']) : NULL;
         $confSenha = trim($_POST['conf_senha']) != "" ? trim($_POST['conf_senha']) : NULL;
-        $papel = $_POST['papel'];
+       //  = $_POST['papel'];
 
         //Criar o objeto Usuario
         $usuario = new Usuario();
         $usuario->setId($id);
         $usuario->setNome($nome);
-        $usuario->setLogin($login);
+        $usuario->setEmail($email);
         $usuario->setSenha($senha);
-        $usuario->setPapel($papel);
+        $usuario->setTipo('comum');
 
         //Validar os dados (camada service)
         $erros = $this->usuarioService->validarDados($usuario, $confSenha);
@@ -88,7 +88,7 @@ class UsuarioController extends Controller {
 
         //Mostrar os erros
         $dados['id'] = $usuario->getId();
-        $dados['papeis'] = UsuarioPapel::getAllAsArray();
+        $dados['staus'] = UsuarioPapel::getAllAsArray();
         $dados["usuario"] = $usuario;
         $dados['confSenha'] = $confSenha;
 
