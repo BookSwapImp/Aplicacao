@@ -32,7 +32,6 @@ CREATE TABLE IF NOT EXISTS .`anuncios` (
   `status` ENUM('ativo', 'inativo', 'finalizado') NOT NULL,
   `estado_con` ENUM('mal', 'medio', 'bom') NOT NULL,
   PRIMARY KEY (`id`),
-  INDEX `usuarios_id` (`usuarios_id` ASC) VISIBLE,
   CONSTRAINT `anuncios_ibfk_1`
     FOREIGN KEY (`usuarios_id`)
     REFERENCES.`usuarios` (`id`))
@@ -120,8 +119,3 @@ CREATE TABLE IF NOT EXISTS `troca` (
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
-
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
