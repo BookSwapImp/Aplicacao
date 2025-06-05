@@ -115,7 +115,7 @@ CREATE TABLE IF NOT EXISTS `troca` (
     REFERENCES `anuncios` (`id`),
   CONSTRAINT `troca_ibfk_2`
    FOREIGN KEY (`anuncio_id_2`)
-    REFERENCES `anuncios` (`id`),
+    REFERENCES `anuncios` (`id`),)
     
 ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
