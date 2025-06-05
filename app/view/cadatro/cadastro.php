@@ -39,8 +39,8 @@ require_once(__DIR__ . "/../include/header.php");
                     <div class="mb-3">
                             <label for="form-label" for="intTeledone">telefone: </label>
                             <input type="number" class="form-control" name="telefone" id="intTelefone"
-                            maxlength="15" placeholder="Informe o CPF"
-                            value="<?php echo isset($dados['cpf']) ? $dados['cpf'] : '' ?>"/>     
+                            maxlength="15" placeholder="Informe o telefone"
+                            value="<?php echo isset($dados['telefone']) ? $dados['telefone'] : '' ?>"/>     
                     </div>
 
 

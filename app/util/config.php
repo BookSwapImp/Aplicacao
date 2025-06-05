@@ -8,9 +8,9 @@ error_reporting(E_ALL);
 
 //Banco de dados: conexão MySQL
 define('DB_HOST', 'mysql-server');
-define('DB_NAME', 'proj_integrador');
+define('DB_NAME', 'bookswap');
 define('DB_USER', 'root');
-define('DB_PASSWORD', 'root');
+define('DB_PASSWORD', 'adrloclvl');
 
 //Caminho para adionar imagens, scripts e chamar páginas no sistema
 //Deve ter o nome da pasta do projeto no servidor APACHE
