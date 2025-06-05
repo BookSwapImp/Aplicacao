@@ -1,6 +1,6 @@
 
 -- -----------------------------------------------------
--- Table `bookswap`.`usuarios`
+-- Table .`usuarios`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS .`usuarios` (
   `id` INT NOT NULL,
