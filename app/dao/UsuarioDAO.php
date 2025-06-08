@@ -11,7 +11,7 @@ class UsuarioDAO {
     public function list() {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM usuarios u ORDER BY u.nome_usuario";
+        $sql = "SELECT * FROM usuarios u ORDER BY u.nome";
         $stm = $conn->prepare($sql);    
         $stm->execute();
         $result = $stm->fetchAll();
@@ -24,7 +24,7 @@ class UsuarioDAO {
         $conn = Connection::getConn();
 
         $sql = "SELECT * FROM usuarios u" .
-               " WHERE u.id_usuario = ?";
+               " WHERE u.id = ?";
         $stm = $conn->prepare($sql);    
         $stm->execute([$id]);
         $result = $stm->fetchAll();
@@ -46,7 +46,7 @@ class UsuarioDAO {
         $conn = Connection::getConn();
 
         $sql = "SELECT * FROM usuarios u" .
-               " WHERE BINARY u.login = ?";
+               " WHERE BINARY u.email = ?";
         $stm = $conn->prepare($sql);    
         $stm->execute([$login]);
         $result = $stm->fetchAll();
@@ -70,16 +70,16 @@ class UsuarioDAO {
     public function insert(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO usuarios (nome_usuario, login, senha, papel)" .
-               " VALUES (:nome, :login, :senha, :papel)";
+        $sql = "INSERT INTO usuarios (nome, email, senha, tipo)" .
+               " VALUES (:nome, :email, :senha, :tipo)";
         
         $senhaCripto = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
 
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
-        $stm->bindValue("login", $usuario->getLogin());
+        $stm->bindValue("email", $usuario->getEmail());
         $stm->bindValue("senha", $senhaCripto);
-        $stm->bindValue("papel", $usuario->getPapel());
+        $stm->bindValue("tipo", $usuario->getTipo());
         $stm->execute();
     }
 
@@ -87,15 +87,15 @@ class UsuarioDAO {
     public function update(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "UPDATE usuarios SET nome_usuario = :nome, login = :login," . 
-               " senha = :senha, papel = :papel" .   
-               " WHERE id_usuario = :id";
+        $sql = "UPDATE usuarios SET nome = :nome, email = :email," . 
+               " senha = :senha, tipo = :tipo" .   
+               " WHERE id = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
-        $stm->bindValue("login", $usuario->getLogin());
+        $stm->bindValue("Email", $usuario->getEmail());
         $stm->bindValue("senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
-        $stm->bindValue("papel", $usuario->getPapel());
+        $stm->bindValue("tipo", $usuario->getTipo());
         $stm->bindValue("id", $usuario->getId());
         $stm->execute();
     }
@@ -104,7 +104,7 @@ class UsuarioDAO {
     public function deleteById(int $id) {
         $conn = Connection::getConn();
 
-        $sql = "DELETE FROM usuarios WHERE id_usuario = :id";
+        $sql = "DELETE FROM usuarios WHERE id= :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("id", $id);
@@ -112,14 +112,14 @@ class UsuarioDAO {
     }
 
      //Método para alterar a foto de perfil de um usuário
-     public function updateFotoPerfil(Usuario $usuario) {
+    /* public function updateFotoPerfil(Usuario $usuario) {
         $conn = Connection::getConn();
 
         $sql = "UPDATE usuarios SET foto_perfil = ? WHERE id_usuario = ?";
 
         $stm = $conn->prepare($sql);
         $stm->execute(array($usuario->getFotoPerfil(), $usuario->getId()));
-    }
+    } */ 
 
     //Método para retornar a quantidade de usuários salvos na base
     public function quantidadeUsuarios() {
@@ -139,12 +139,12 @@ class UsuarioDAO {
         $usuarios = array();
         foreach ($result as $reg) {
             $usuario = new Usuario();
-            $usuario->setId($reg['id_usuario']);
-            $usuario->setNome($reg['nome_usuario']);
-            $usuario->setLogin($reg['login']);
+            $usuario->setId($reg['id']);
+            $usuario->setNome($reg['nome']);
+            $usuario->setEmail($reg['email']);
             $usuario->setSenha($reg['senha']);
-            $usuario->setPapel($reg['papel']);
-            $usuario->setFotoPerfil($reg['foto_perfil']);
+            $usuario->setTipo($reg['tipo']);
+           // $usuario->setFotoPerfil($reg['foto_perfil']);
             array_push($usuarios, $usuario);
         }
 

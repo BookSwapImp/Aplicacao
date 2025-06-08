@@ -13,11 +13,13 @@ require_once(__DIR__ . "/../include/header.php");
                 <br>
 
                 <!-- Formulário de login -->
-                <form id="frmLogin" action="./LoginController.php?action=logon" method="POST" >
+                <!--Problemas: A url do formulario não esta correta 
+                  -->
+                <form id="frmLogin" action="<?php echo BASEURL?>controller/LoginController.php?action=logon" method="POST" >
                 <div class="mb-3">
                         <label class="form-label" for="txtEmail">Email:</label>
                         <input type="text" class="form-control" name="email" id="txtEmail"
-                            maxlength="15" placeholder="Informe o Email"
+                            maxlength="50" placeholder="Informe o Email"
                             value="<?php echo isset($dados['login']) ? $dados['login'] : '' ?>" />        
                     </div>
 

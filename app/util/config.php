@@ -10,7 +10,7 @@ error_reporting(E_ALL);
 define('DB_HOST', 'mysql-server');
 define('DB_NAME', 'bookswap');
 define('DB_USER', 'root');
-define('DB_PASSWORD', 'adrloclvl');
+define('DB_PASSWORD', 'root');
 
 //Caminho para adionar imagens, scripts e chamar páginas no sistema
 //Deve ter o nome da pasta do projeto no servidor APACHE
@@ -32,10 +32,13 @@ define('CADASTRO_PAGE', BASEURL . '/controller/CadastroController.php?action=cad
 define('HOME_PAGE', BASEURL . '/controller/HomeController.php?action=home');
 
 //Sessão do usuário
-define('SESSAO_USUARIO_ID', "usuarioLogadoId");
-define('SESSAO_USUARIO_NOME', "usuarioLogadoNome");
-define('SESSAO_USUARIO_PAPEL', "usuarioLogadoPapel");
-
+define('SESSAO_USUARIO_ID',     "usuarioLogadoId");
+define('SESSAO_USUARIO_NOME',   "usuarioLogadoNome");
+define('SESSAO_USUARIO_EMAIL',  "usuarioLogadoEmail");
+define('SESSAO_USUARIO_PAPEL',  "usuarioLogadoPapel"); // ou "Tipo", se preferir
+define('SESSAO_USUARIO_STATUS', "usuarioLogadoStatus");
+define('SESSAO_USUARIO_CPF',    "usuarioLogadoCpf");
+define('SESSAO_USUARIO_TEL',    "usuarioLogadoTelefone");
 //Arquivos
 define('PATH_ARQUIVOS', __DIR__ . "/../../arquivos");
 define('BASEURL_ARQUIVOS', BASEURL . "/../arquivos");

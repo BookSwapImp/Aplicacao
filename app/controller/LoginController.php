@@ -23,7 +23,7 @@ class LoginController extends Controller {
 
     /* Método para logar um usuário a partir dos dados informados no formulário */
     protected function logon() {
-        $login = isset($_POST['login']) ? trim($_POST['login']) : null;
+        $login = isset($_POST['email']) ? trim($_POST['email']) : null;
         $senha = isset($_POST['senha']) ? trim($_POST['senha']) : null;
 
         //Validar os campos
@@ -44,7 +44,7 @@ class LoginController extends Controller {
 
         //Se há erros, volta para o formulário            
         $msg = implode("<br>", $erros);
-        $dados["login"] = $login;
+        $dados["email"] = $login;
         $dados["senha"] = $senha;
 
         $this->loadView("login/login.php", $dados, $msg);

@@ -11,7 +11,6 @@ class Connection {
         $conn = new Connection();
         return $conn->getConnection();
     }
-
     //Retorna uma conexão com o MySQL
     public function getConnection() {
         //mysql:host=XXXX;dbname=XXX
@@ -28,6 +27,7 @@ class Connection {
         } catch (PDOException $e) {
             echo "Falha ao conectar na base de dados: " . $e->getMessage();
         }
+        
     }
 
 }
