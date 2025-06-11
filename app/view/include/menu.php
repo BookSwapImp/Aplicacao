@@ -8,6 +8,8 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
 
 ?>
 <nav class="navbar navbar-expand-md bg-light px-3 mb-3">
+    <img class="" src="" alt="">
+
     <button class="navbar-toggler" type="button"
         data-bs-toggle="collapse" data-bs-target="#navSite">
         <span class="navbar-toggler-icon"></span>

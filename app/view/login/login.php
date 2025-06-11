@@ -26,12 +26,17 @@ require_once(__DIR__ . "/../include/header.php");
                     <div class="mb-3">
                         <label class="form-label" for="txtSenha">Senha:</label>
                         <input type="password" class="form-control" name="senha" id="txtSenha"
-                            maxlength="15" placeholder="Informe a senha"
+                            maxlength="" placeholder="Informe a senha"
                             value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
                     </div>
 
                     <button type="submit" class="btn btn-success mt-3">Logar</button>
+                    
                 </form>
+            </div>
+
+            <div>
+                <a href="CadastroController.php?action=cadastroPage">Cadatre-se</a>
             </div>
         </div>
 

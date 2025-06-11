@@ -13,7 +13,6 @@ class CadastroService {
         if (!$nome) {
             array_push($arrayMsg, "O campo [Nome] é obrigatório.");
         }
-
         if (!$email) {
             array_push($arrayMsg, "O campo [Email] é obrigatório.");
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -23,11 +22,11 @@ class CadastroService {
         if (!$senha) {
             array_push($arrayMsg, "O campo [Senha] é obrigatório.");
         }
-
+        //Falta validar a formatação do cpf
         if (!$cpf) {
             array_push($arrayMsg, "O campo [CPF] é obrigatório.");
         }
-
+        //Falta validar Telefone
         if (!$telefone) {
             array_push($arrayMsg, "O campo [Telefone] é obrigatório.");
         }

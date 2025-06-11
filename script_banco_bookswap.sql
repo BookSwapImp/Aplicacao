@@ -13,7 +13,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `telefone` VARCHAR(15) DEFAULT NULL,
   `cpf` VARCHAR(14) NOT NULL,
   `rg` VARCHAR(12),
-  `tipo` ENUM('USUARIO', 'ADMINISTRADOR') NOT NULL,
+  `tipo` ENUM('usuario', 'admin') NOT NULL,
   `status` ENUM('ativo', 'inativo') NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB
