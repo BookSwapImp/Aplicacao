@@ -20,7 +20,7 @@ require_once(__DIR__ . "/../include/header.php");
                         <label class="form-label" for="txtEmail">Email:</label>
                         <input type="text" class="form-control" name="email" id="txtEmail"
                             maxlength="50" placeholder="Informe o Email"
-                            value="<?php echo isset($dados['login']) ? $dados['login'] : '' ?>" />        
+                            value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" />        
                     </div>
 
                     <div class="mb-3">

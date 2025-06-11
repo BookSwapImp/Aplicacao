@@ -1,10 +1,15 @@
+SELECT * FROM avaliacao;
+DROP TABLE bookswap;
+CREATE DATABASE bookswap;
+USE bookswap;
 -- -----------------------------------------------------
 -- Table `usuarios`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `usuarios` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `nome` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  `senha`VARCHAR(255) NOT NULL,
   `telefone` VARCHAR(15) DEFAULT NULL,
   `cpf` VARCHAR(14) NOT NULL,
   `rg` VARCHAR(12),
@@ -126,14 +131,14 @@ CREATE TABLE IF NOT EXISTS `avaliacao` (
   `usuarios_id` INT NOT NULL,
   `descricao` VARCHAR(60) NOT NULL,
   `nota` INT(2) NOT NULL,
-  `usuarios_id1` INT NOT NULL,
+  `usuarios_id_denunciado` INT NOT NULL,
   `anuncios_id` INT NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `enderecos_ibfk_10`
     FOREIGN KEY (`usuarios_id`)
     REFERENCES `usuarios` (`id`),
   CONSTRAINT `fk_avaliacao_usuarios1`
-    FOREIGN KEY (`usuarios_id1`)
+    FOREIGN KEY (`usuarios_id_denunciado`)
     REFERENCES `usuarios` (`id`)
     ON DELETE NO ACTION
     ON UPDATE NO ACTION,
@@ -168,4 +173,30 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-ISERT
+INSERT INTO `usuarios` (
+  `nome`, 
+  `email`,`senha`, 
+  `telefone`, 
+  `cpf`, 
+  `tipo`, 
+  `status`
+) VALUES (
+  'root', 
+  'root.silva@email.com',
+  '$2y$10$9H8nNzW7tM7cGhy6r59gYuKuflEGKzKGOMPv86yUhJbySUNnnY42y', /*root*/ 
+  12345678901, 
+  123456789, 
+  'USUARIO', 
+  'ativo'
+);
+-- Desativar checagem de chaves estrangeiras temporariamente
+SET FOREIGN_KEY_CHECKS = 0;
+/*
+DROP TABLE IF EXISTS `troca`;
+DROP TABLE IF EXISTS `enderecos`;
+DROP TABLE IF EXISTS `denuncia`;
+DROP TABLE IF EXISTS `compra`;
+DROP TABLE IF EXISTS `anuncios`;
+DROP TABLE IF EXISTS `usuarios`;*/
+
+-- Reativar checagem de chaves estrangeiras

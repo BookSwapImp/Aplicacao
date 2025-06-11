@@ -29,7 +29,7 @@ require_once(__DIR__ . "/../include/menu.php");
                     <label class="form-label" for="txtLogin">Login:</label>
                     <input class="form-control" type="text" id="txtLogin" name="login" 
                         maxlength="15" placeholder="Informe o login"
-                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getLogin() : ''); ?>"/>
+                        value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEmail() : ''); ?>"/>
                 </div>
 
                 <div class="mb-3">
