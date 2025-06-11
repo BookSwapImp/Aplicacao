@@ -7,14 +7,14 @@ ini_set('display_errors', 1);
 error_reporting(E_ALL);
 
 //Banco de dados: conexão MySQL
-define('DB_HOST', 'mysql-server');
+define('DB_HOST', 'localhost');
 define('DB_NAME', 'bookswap');
 define('DB_USER', 'root');
-define('DB_PASSWORD', 'root');
+define('DB_PASSWORD', 'adrloclvl2007');
 
 //Caminho para adionar imagens, scripts e chamar páginas no sistema
 //Deve ter o nome da pasta do projeto no servidor APACHE
-define('BASEURL', 'Aplicacao//app');
+define('BASEURL', '/Aplicacao/app');
 
 //Nome do sistema
 define('APP_NAME', 'BookSwap');

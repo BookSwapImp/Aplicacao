@@ -15,7 +15,7 @@ require_once(__DIR__ . "/../include/header.php");
                 <!-- Formulário de login -->
                 <!--Problemas: A url do formulario não esta correta 
                   -->
-                <form id="frmLogin" action="<?php echo BASEURL?>controller/LoginController.php?action=logon" method="POST" >
+                <form id="frmLogin" action="LoginController.php?action=logon" method="POST" >
                 <div class="mb-3">
                         <label class="form-label" for="txtEmail">Email:</label>
                         <input type="text" class="form-control" name="email" id="txtEmail"

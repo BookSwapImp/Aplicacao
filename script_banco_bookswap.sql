@@ -117,3 +117,55 @@ CREATE TABLE IF NOT EXISTS `troca` (
 ) ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
+
+-- -----------------------------------------------------
+-- Table `avaliacao`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `avaliacao` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `usuarios_id` INT NOT NULL,
+  `descricao` VARCHAR(60) NOT NULL,
+  `nota` INT(2) NOT NULL,
+  `usuarios_id1` INT NOT NULL,
+  `anuncios_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `enderecos_ibfk_10`
+    FOREIGN KEY (`usuarios_id`)
+    REFERENCES `usuarios` (`id`),
+  CONSTRAINT `fk_avaliacao_usuarios1`
+    FOREIGN KEY (`usuarios_id1`)
+    REFERENCES `usuarios` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_avaliacao_anuncios1`
+    FOREIGN KEY (`anuncios_id`)
+    REFERENCES `anuncios` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+
+-- -----------------------------------------------------
+-- Table `Relatorio`
+-- -----------------------------------------------------
+CREATE TABLE IF NOT EXISTS `Relatorio` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `descricao` VARCHAR(255) NOT NULL,
+  `Tipo_de_denuncia` ENUM("anuncio", "usuario") NOT NULL,
+  `denuncia_id` INT NOT NULL,
+  `status_denunciado` ENUM("destivado", "liberado") NOT NULL,
+  `relatorio_status` ENUM('ativo', 'inativo') NOT NULL,
+  `data` DATETIME NOT NULL,
+  PRIMARY KEY (`id`),
+   CONSTRAINT `fk_Relatorio_denuncia1`
+    FOREIGN KEY (`denuncia_id`)
+    REFERENCES `denuncia` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+ISERT
