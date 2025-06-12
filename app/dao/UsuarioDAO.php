@@ -70,16 +70,27 @@ class UsuarioDAO {
     public function insert(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "INSERT INTO usuarios (nome, email, senha, tipo)" .
-               " VALUES (:nome, :email, :senha, :tipo)";
+        $sql = "INSERT INTO `usuarios`( `nome`, `email`,`senha`, `telefone`, `cpf`, `tipo`, `status`) 
+                                    VALUES (
+                                    :nome, 
+                                    :email,
+                                    :senha, 
+                                    :telefone, 
+                                    :cpf, 
+                                    :tipo, 
+                                    :status
+                                    );";
         
         $senhaCripto = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
 
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("email", $usuario->getEmail());
+        $stm->bindValue("cpf",$usuario->getCpf());
         $stm->bindValue("senha", $senhaCripto);
         $stm->bindValue("tipo", $usuario->getTipo());
+        $stm->bindValue("status", $usuario->getStatus());
+
         $stm->execute();
     }
 
@@ -88,14 +99,13 @@ class UsuarioDAO {
         $conn = Connection::getConn();
 
         $sql = "UPDATE usuarios SET nome = :nome, email = :email," . 
-               " senha = :senha, tipo = :tipo" .   
+               " senha = :senha ".   
                " WHERE id = :id";
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("Email", $usuario->getEmail());
         $stm->bindValue("senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
-        $stm->bindValue("tipo", $usuario->getTipo());
         $stm->bindValue("id", $usuario->getId());
         $stm->execute();
     }
@@ -142,8 +152,11 @@ class UsuarioDAO {
             $usuario->setId($reg['id']);
             $usuario->setNome($reg['nome']);
             $usuario->setEmail($reg['email']);
+            $usuario->setTelefone($reg['telefone']);
+            $usuario->setCpf($reg['cpf']);
             $usuario->setSenha($reg['senha']);
-            $usuario->setTipo($reg['tipo']);
+            $usuario->setTipo('usuario');
+            $usuario->setStatus('ativo');
            // $usuario->setFotoPerfil($reg['foto_perfil']);
             array_push($usuarios, $usuario);
         }

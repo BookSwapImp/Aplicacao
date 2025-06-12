@@ -7,7 +7,7 @@ require_once(__DIR__ . "/../model/Usuario.php");
 class CadastroService {
 
     // Valida os campos obrigatórios de um usuário
-    public function validarCampos(?string $nome, ?string $email, ?string $senha, ?string $cpf, ?int $telefone) {
+    public function validarCampos(?string $nome, ?string $email, ?string $senha,?string $confSenha,?string $cpf, ?int $telefone) {
         $arrayMsg = [];
 
         if (!$nome) {
@@ -21,6 +21,13 @@ class CadastroService {
 
         if (!$senha) {
             array_push($arrayMsg, "O campo [Senha] é obrigatório.");
+            if($senha!=$confSenha){
+                array_push($arrayMsg, "O campo [Verificar senha] deve estar igual a senha");
+            }
+        }
+        if(!$confSenha){
+            array_push($arrayMsg, "Você deve verificar sua senha! No campo [Verificar senha].");
+            
         }
         //Falta validar a formatação do cpf
         if (!$cpf) {
