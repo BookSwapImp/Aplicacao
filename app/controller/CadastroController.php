@@ -14,10 +14,11 @@ class CadastroController extends Controller{
         $this->handleAction(); 
     }
     protected function cadastroPage() {
+        echo'teste';                
         $this->loadView("cadastro/cadastro.php", []);
     }
      /* Método para Cadastrar um usuário a partir dos dados informados no formulário */
-     protected function cadastroon(){
+     protected function cadastrar(){
         $this->loadView("cadastro/cadastro.php", []);
         $nome = isset($_POST['nome']) ? trim($_POST['nome']) : null; 
         $email = isset($_POST['email']) ? trim($_POST['email']) : null;
@@ -25,26 +26,31 @@ class CadastroController extends Controller{
         $telefone = isset($_POST['telefone']) ? trim($_POST['telefone']) : null;
         $cpf = isset($_POST['cpf']) ? trim($_POST['cpf']) : null;
         $confSenha = isset($_POST['conf_senha']) ? trim($_POST['conf_senha']) : null;// para verificar a senha
-        $usuarioAux = array($nome,$email,$senha,$telefone,$cpf);
-        $erros= $this->cadastroService->validarCampos($nome,$email,$senha,$confSenha,$cpf,$telefone);        $msg = implode("<br>", $erros);
-        if(empty($erros)) {
-            //Valida o login a partir do banco de dados
-            $usuario = $this->usuarioDao->insert($nome,$email,$senha,$cpf,$telefone);
-           if($usuario) {
-                //Se encontrou o usuário, salva a sessão e redireciona para a HOME do sistema
-                $this->cadastroService->salvarUsuarioSessao($usuario);
-
-                header("location: " . HOME_PAGE);
-                exit;
-            } else {
-                $erros = ["Login ou senha informados são inválidos!"];
-            }
-        }
-        $dados= null;
-      
-
-       // $this->loadView("login/login.php", $dados, $msg);
+        $erros= $this->cadastroService->validarCampos($nome,$email,$senha,$confSenha,$cpf,$telefone);        
+        $msg = implode("<br>", $erros);
+        if (empty($erros)) {
+            // Criar objeto Usuario com os dados
+            $usuario = new Usuario();
+            $usuario->setNome($nome);
+            $usuario->setEmail($email);
+            $usuario->setSenha($senha);
+            $usuario->setTelefone($telefone);
+            $usuario->setCpf($cpf);
+            $usuario->setTipo("usuario");   
+            $usuario->setStatus("ativo");  
+    
+            // Inserir no banco
+            $this->usuarioDao->insert($usuario);
+            $dados["nome"] = $nome;
+            $dados["email"] = $email;
+            $dados["telefone"] = $telefone;
+            $dados["cpf"] = $cpf;
+           
+            // Redireciona ou carrega tela de sucesso/login
+            $this->loadView("login/login.php", $dados , $msg);
+            return;
      }
-}
+    }
+    
 
-new CadastroController();
+}   

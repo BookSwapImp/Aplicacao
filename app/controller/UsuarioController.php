@@ -65,7 +65,7 @@ class UsuarioController extends Controller {
         $usuario->setNome($nome);
         $usuario->setEmail($email);
         $usuario->setSenha($senha);
-        $usuario->setTipo('comum');
+        $usuario->setTipo('usuario');
 
         //Validar os dados (camada service)
         $erros = $this->usuarioService->validarDados($usuario, $confSenha);

@@ -65,6 +65,40 @@ class UsuarioDAO {
         die("UsuarioDAO.findByLoginSenha()" . 
             " - Erro: mais de um usuário encontrado.");
     }
+    public function findByTelefone(int $telefone){
+        $conn = Connection::getConn();
+        $sql = "SELECT * FROM usuarios u".
+            "WHERE BINARY u.telefone = ?";
+            $stm = $conn->prepare($sql);
+            $stm->execute([$telefone]);
+            $result = $stm->fetchAll();
+            $usuarios = $this->mapUsuarios($result);
+            if(count($usuarios) == 1){
+                return false;
+            }
+            elseif(count($usuarios) == 0)
+                return true;
+
+            die("UsuarioDAO.findByTelefone()" . 
+            " - Erro.");
+    }
+    public function findByCpf(int $cpf){
+        $conn = Connection::getConn();
+        $sql = "SELECT * FROM usuarios u".
+            "WHERE BINARY u.cpf = ?";
+            $stm = $conn->prepare($sql);
+            $stm->execute([$cpf]);
+            $result = $stm->fetchAll();
+            $usuarios = $this->mapUsuarios($result);
+            if(count($usuarios) == 1){
+                return false;
+            }
+            elseif(count($usuarios) == 0)
+                return true;
+
+            die("UsuarioDAO.findByCpf()" . 
+            " - Erro.");
+    }
 
     //Método para inserir um Usuario
     public function insert(Usuario $usuario) {

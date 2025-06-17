@@ -36,7 +36,7 @@ require_once(__DIR__ . "/../include/header.php");
             </div>
 
             <div>
-                <a href="CadastroController.php?action=cadastroPage">Cadatre-se</a>
+                <a href="CadastroController.php?action=cadastroPage">Cadastre-se</a>
             </div>
         </div>
 

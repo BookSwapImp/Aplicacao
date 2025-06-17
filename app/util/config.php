@@ -26,7 +26,7 @@ define('LOGIN_PAGE', BASEURL . '/controller/LoginController.php?action=login');
 define('LOGOUT_PAGE', BASEURL . '/controller/LoginController.php?action=logout');
 
 //Página home do sistema
-define('CADASTRO_PAGE', BASEURL . '/controller/CadastroController.php?action=cadastro');
+define('CADASTRO_PAGE', BASEURL . '/controller/CadastroController.php?action=cadastroPage');
 
 //Página home do sistema
 define('HOME_PAGE', BASEURL . '/controller/HomeController.php?action=home');
@@ -35,7 +35,7 @@ define('HOME_PAGE', BASEURL . '/controller/HomeController.php?action=home');
 define('SESSAO_USUARIO_ID',     "usuarioLogadoId");
 define('SESSAO_USUARIO_NOME',   "usuarioLogadoNome");
 define('SESSAO_USUARIO_EMAIL',  "usuarioLogadoEmail");
-define('SESSAO_USUARIO_PAPEL',  "usuarioLogadoPapel"); // ou "Tipo", se preferir
+define('SESSAO_USUARIO_TIPO',  "usuarioLogadoTipo"); // ou "Tipo", se preferir
 define('SESSAO_USUARIO_STATUS', "usuarioLogadoStatus");
 define('SESSAO_USUARIO_CPF',    "usuarioLogadoCpf");
 define('SESSAO_USUARIO_TEL',    "usuarioLogadoTelefone");

@@ -21,9 +21,10 @@ class CadastroService {
 
         if (!$senha) {
             array_push($arrayMsg, "O campo [Senha] é obrigatório.");
-            if($senha!=$confSenha){
-                array_push($arrayMsg, "O campo [Verificar senha] deve estar igual a senha");
-            }
+         
+        }
+        elseif($senha!=$confSenha){
+            array_push($arrayMsg, "O campo [Verificar senha] deve estar igual a senha");
         }
         if(!$confSenha){
             array_push($arrayMsg, "Você deve verificar sua senha! No campo [Verificar senha].");
@@ -39,28 +40,6 @@ class CadastroService {
         }
 
         return $arrayMsg;
-    }
-
-    // Salva os dados do usuário logado na sessão
-    public function salvarUsuarioSessao(Usuario $usuario) {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        $_SESSION[SESSAO_USUARIO_ID]     = $usuario->getId();
-        $_SESSION[SESSAO_USUARIO_NOME]   = $usuario->getNome();
-        $_SESSION[SESSAO_USUARIO_EMAIL]  = $usuario->getEmail();
-        $_SESSION[SESSAO_USUARIO_PAPEL]   = $usuario->getTipo();
-        $_SESSION[SESSAO_USUARIO_STATUS] = $usuario->getStatus();
-    }
-
-    // Remove os dados do usuário da sessão
-    public function removerUsuarioSessao() {
-        if (session_status() == PHP_SESSION_NONE) {
-            session_start();
-        }
-
-        session_destroy();
     }
 
 }
