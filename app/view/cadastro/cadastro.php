@@ -9,15 +9,15 @@ require_once(__DIR__ . "/../include/header.php");
     <div class="row" style="margin-top: 20px;">
         <div class="col-6">
             <div class="alert alert-info">
-                <h4>Informe os dados para logar:</h4>
+                <h4>Informe os dados para Cadastro</h4>
                 <br>
 
                 <!-- Formulário de cadastro -->
-                <form id="frmLogin" action="./LoginController.php?action=cadastrar" method="POST" >
+                <form id="frmLogin" action="./CadastroController.php?action=cadastrar" method="POST" >
                     <div class="mb-3">
                         <label class="form-label" for="txtEmail">Email:</label>
                         <input type="text" class="form-control" name="email" id="txtEmail"
-                            maxlength="15" placeholder="Informe o email"
+                            maxlength="" placeholder="Informe o email"
                             value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" />        
                     </div>
 
@@ -29,7 +29,7 @@ require_once(__DIR__ . "/../include/header.php");
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="txtConf_senha">Senha:</label>
+                        <label class="form-label" for="txtConf_senha">Confirme sua senha:</label>
                         <input type="password" class="form-control" name="conf_senha" id="txtConf_senha"
                             maxlength="15" placeholder="Confirmar sua senha"
                             value="<?php echo isset($dados['conf_senha']) ? $dados['conf_senha'] : '' ?>" />        

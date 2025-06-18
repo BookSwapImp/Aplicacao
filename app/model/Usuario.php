@@ -12,8 +12,8 @@ class Usuario implements JsonSerializable {
     private ?string $senha;
     private ?string $tipo;
     private ?string $status;
-    private ?int $telefone;
-    private ?int $cpf;
+    private ?string $telefone;
+    private ?string $cpf;
 
     public function jsonSerialize(): array
     {
@@ -23,6 +23,7 @@ class Usuario implements JsonSerializable {
             "email" => $this->email
         );
     }
+
 
 
     /**
@@ -136,7 +137,7 @@ class Usuario implements JsonSerializable {
     /**
      * Get the value of telefone
      */
-    public function getTelefone(): ?int
+    public function getTelefone(): ?string
     {
         return $this->telefone;
     }
@@ -144,7 +145,7 @@ class Usuario implements JsonSerializable {
     /**
      * Set the value of telefone
      */
-    public function setTelefone(?int $telefone): self
+    public function setTelefone(?string $telefone): self
     {
         $this->telefone = $telefone;
 
@@ -154,7 +155,7 @@ class Usuario implements JsonSerializable {
     /**
      * Get the value of cpf
      */
-    public function getCpf(): ?int
+    public function getCpf(): ?string
     {
         return $this->cpf;
     }
@@ -162,7 +163,7 @@ class Usuario implements JsonSerializable {
     /**
      * Set the value of cpf
      */
-    public function setCpf(?int $cpf): self
+    public function setCpf(?string $cpf): self
     {
         $this->cpf = $cpf;
 

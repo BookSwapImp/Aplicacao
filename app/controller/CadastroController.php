@@ -13,7 +13,7 @@ class CadastroController extends Controller{
         $this->cadastroService = new CadastroService(); 
         $this->handleAction(); 
     }
-    protected function cadastroPage() {
+    public function cadastroPage() {
         echo'teste';                
         $this->loadView("cadastro/cadastro.php", []);
     }
@@ -28,29 +28,31 @@ class CadastroController extends Controller{
         $confSenha = isset($_POST['conf_senha']) ? trim($_POST['conf_senha']) : null;// para verificar a senha
         $erros= $this->cadastroService->validarCampos($nome,$email,$senha,$confSenha,$cpf,$telefone);        
         $msg = implode("<br>", $erros);
-        if (empty($erros)) {
-            // Criar objeto Usuario com os dados
-            $usuario = new Usuario();
-            $usuario->setNome($nome);
-            $usuario->setEmail($email);
-            $usuario->setSenha($senha);
-            $usuario->setTelefone($telefone);
-            $usuario->setCpf($cpf);
-            $usuario->setTipo("usuario");   
-            $usuario->setStatus("ativo");  
-    
-            // Inserir no banco
-            $this->usuarioDao->insert($usuario);
-            $dados["nome"] = $nome;
-            $dados["email"] = $email;
-            $dados["telefone"] = $telefone;
-            $dados["cpf"] = $cpf;
-           
-            // Redireciona ou carrega tela de sucesso/login
-            $this->loadView("login/login.php", $dados , $msg);
-            return;
-     }
+        
+        $dados["nome"] = $nome;
+        $dados["email"] = $email;
+        $dados["telefone"] = $telefone;
+        $dados["cpf"] = $cpf;
+       
+        // Redireciona ou carrega tela de sucesso/login
+            if (empty($erros)) {
+                // Criar objeto Usuario com os dados
+                $usuario = new Usuario();
+                $usuario->setNome($nome);
+                $usuario->setEmail($email);
+                $usuario->setSenha($senha);
+                $usuario->setTelefone($telefone);
+                $usuario->setCpf($cpf);
+                $usuario->setTipo("usuario");   
+                $usuario->setStatus("ativo");  
+
+                // Inserir no banco
+                $this->usuarioDao->insert($usuario);
+                $this->loadView("cadastro/cadastro.php", $dados , $msg);
+                return;
+            }
     }
     
 
 }   
+new CadastroController();

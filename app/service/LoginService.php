@@ -27,7 +27,7 @@ class LoginService {
         //Setar usuário na sessão do PHP
         $_SESSION[SESSAO_USUARIO_ID]   = $usuario->getId();
         $_SESSION[SESSAO_USUARIO_NOME] = $usuario->getNome();
-        $_SESSION[SESSAO_USUARIO_PAPEL] = $usuario->getTipo();
+        $_SESSION[SESSAO_USUARIO_TIPO] = $usuario->getTipo();
     }
 
     public function removerUsuarioSessao() {
