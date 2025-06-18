@@ -22,7 +22,7 @@ class CadastroService {
         if (!$senha) {
             array_push($arrayMsg, "O campo [Senha] é obrigatório.");
         }
-        elseif($senha!=$confSenha){
+        elseif($senha==$confSenha){
             array_push($arrayMsg, "O campo [Verificar senha] deve estar igual a senha");
         }
 

@@ -122,6 +122,7 @@ class UsuarioDAO {
         $stm->bindValue("email", $usuario->getEmail());
         $stm->bindValue("cpf",$usuario->getCpf());
         $stm->bindValue("senha", $senhaCripto);
+        $stm->bindValue("telefone", $usuario->getTelefone());
         $stm->bindValue("tipo", $usuario->getTipo());
         $stm->bindValue("status", $usuario->getStatus());
 

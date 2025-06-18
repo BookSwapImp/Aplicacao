@@ -1,14 +1,8 @@
-Neste Aquivo armazenaremos os principais problemas do projeto:
+Problemas resolvidos -
+cadastro solucionado
+Problemas -
+- link css da Home
 
-Crud: 12/06/2025
-->Layout
-    - desenvolver layout do sistema (use o formulario de base).
-->Tela de inicio (Não precisa estar completo).
-    - E preciso uma pagina Home
+-problema no cadastro duplica ao submeter
 
-Login e cadastro: 12/06/2025
-->Problemas no formulario
-    - Problema na submissão do formulario : esta indo para uma url que não existe.
-->Problemas na requisicao
-    - A pagina LoginController.php não reconhece os dados.
-->CadastroController imcompleto
+-serviçe n esta exibindo a msg de erro

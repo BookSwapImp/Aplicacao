@@ -14,6 +14,12 @@ require_once(__DIR__ . "/../include/header.php");
 
                 <!-- Formulário de cadastro -->
                 <form id="frmLogin" action="./CadastroController.php?action=cadastrar" method="POST" >
+                     <div class="mb-3">
+                        <label class="form-label" for="txtNome">Nome Completo:</label>
+                        <input type="text" class="form-control" name="nome" id="txtNome"
+                            maxlength="" placeholder="Informe o seu nome"
+                            value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" />        
+                    </div>
                     <div class="mb-3">
                         <label class="form-label" for="txtEmail">Email:</label>
                         <input type="text" class="form-control" name="email" id="txtEmail"
@@ -24,7 +30,7 @@ require_once(__DIR__ . "/../include/header.php");
                     <div class="mb-3">
                         <label class="form-label" for="txtSenha">Senha:</label>
                         <input type="password" class="form-control" name="senha" id="txtSenha"
-                            maxlength="15" placeholder="Informe a senha"
+                            maxlength="" placeholder="Informe a senha"
                             value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
                     </div>
 
@@ -47,12 +53,16 @@ require_once(__DIR__ . "/../include/header.php");
                     <div class="mb-3">
                             <label for="form-label" for="cpf">CPF: </label>
                             <input type="number" class="form-control" name="cpf" id="cpf"
-                            maxlength="15" placeholder="Informe o CPF"
+                            maxlength="14" placeholder="Informe o CPF"
                             value="<?php echo isset($dados['cpf']) ? $dados['cpf'] : '' ?>"/>     
                     </div>
 
                     <button type="submit" class="btn btn-success mt-3">Finalizar</button>
                 </form>
+            </div>
+            
+             <div>
+                <a href="LoginController.php?action=login">logar</a>
             </div>
         </div>
 
