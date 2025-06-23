@@ -28,6 +28,7 @@ CREATE TABLE IF NOT EXISTS `anuncios` (
   `id` INT NOT NULL AUTO_INCREMENT,
   `usuarios_id` INT NOT NULL,
   `nome_livro` VARCHAR(55) NOT NULL,
+  `imagem_livro` VARCHAR(255) NOT NULL,
   `valor_anuncio` FLOAT NOT NULL,
   `descricao` VARCHAR(45) NOT NULL,
   `data_publicacao` DATETIME NOT NULL,

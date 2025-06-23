@@ -58,10 +58,15 @@ class CadastroController extends Controller{
 
         // A linha abaixo passa $msg, mas se não há erros, $msg será vazia.
             $this->loadView("cadastro/cadastro_sucesso.php", $dados,$msg); // Exemplo de view de sucesso
-             header("location: " . LOGIN_PAGE);
+            // header();
             return;
         } else {
-        $this->loadView("cadastro/cadastro.php", $dados,$msg); // Recarrega a tela de cadastro com os erros
+      //  $this->loadView("cadastro/cadastro.php", $dados,$msg); // Recarrega a tela de cadastro com os erros
+        $dados["nome"] = $nome;
+        $dados["email"] = $email;
+        $dados["telefone"] = $telefone;
+        $dados["cpf"] = $cpf;
+
             return;
         }
         

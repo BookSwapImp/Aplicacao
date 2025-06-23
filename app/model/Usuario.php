@@ -3,7 +3,7 @@
 #Objetivo: classe Model para Usuario
 
 require_once(__DIR__ . "/enum/UsuarioPapel.php");
-
+    
 class Usuario implements JsonSerializable {
 
     private ?int $id;

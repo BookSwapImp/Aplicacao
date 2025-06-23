@@ -13,12 +13,12 @@ require_once(__DIR__ . "/../include/header.php");
                 <br>
 
                 <!-- Formulário de cadastro -->
-                <form id="frmLogin" action="./CadastroController.php?action=cadastrar" method="POST" >
+                <form id="frmLogin" action="?action=cadastrar" method="POST" >
                      <div class="mb-3">
                         <label class="form-label" for="txtNome">Nome Completo:</label>
                         <input type="text" class="form-control" name="nome" id="txtNome"
                             maxlength="" placeholder="Informe o seu nome"
-                            value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" />        
+                            value="<?php echo isset($dados['nome']) ? $dados['nome'] : '' ?>" />        
                     </div>
                     <div class="mb-3">
                         <label class="form-label" for="txtEmail">Email:</label>

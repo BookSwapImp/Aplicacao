@@ -18,6 +18,8 @@ class UsuarioDAO {
         
         return $this->mapUsuarios($result);
     }
+    
+   
 
     //Método para buscar um usuário por seu ID
     public function findById(int $id) {
@@ -198,5 +200,6 @@ class UsuarioDAO {
 
         return $usuarios;
     }
+   
 
 }

@@ -7,13 +7,13 @@ $html_content = <<<HTML
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>BookSwap - Livros em Destaque</title>
-<link rel="stylesheet" href="../css/home.css">
+<link rel="stylesheet" href="/Aplicacao/app/view/CSS/home.css">
 </head>
 <body>
     <header>
         <nav>
             <div class="logo">
-                <img src="./assets/bookswap_logo.png" alt="BookSwap Logo">
+                <img src="Avaliacao/app/arquivos/bookSwapLogo7.jpeg" alt="BookSwap Logo">
                 <span>BookSwap</span>
             </div>
             <div class="search-bar">
