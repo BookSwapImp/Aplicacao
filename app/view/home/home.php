@@ -1,35 +1,17 @@
+    <!DOCTYPE html>
+    <html lang="pt-br">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Home</title>
+        <link rel="stylesheet" href="<?=BASEURL_CSS?>/home.css">
+    </head>
 <?php
-
-$html_content = <<<HTML
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>BookSwap - Livros em Destaque</title>
-<link rel="stylesheet" href="/Aplicacao/app/view/CSS/home.css">
-</head>
-<body>
-    <header>
-        <nav>
-            <div class="logo">
-                <img src="Avaliacao/app/arquivos/bookSwapLogo7.jpeg" alt="BookSwap Logo">
-                <span>BookSwap</span>
-            </div>
-            <div class="search-bar">
-                <input type="text" placeholder="Pesquisar">
-                <button>Q</button>
-            </div>
-            <div class="user-menu">
-                <span>Meus livros</span>
-                <img src="./assets/user_icon.png" alt="User Icon">
-            </div>
-        </nav>
-    </header>
-
+require_once(__DIR__ . "/../include/menu.php");
+?>
     <main>
         <section class="hero-section">
-            <img src="./assets/bookswap_logo.png" alt="BookSwap Logo Grande">
+            <img src="<?=BASEURL_ARQUIVOS?>/bookSwapLogo7.jpeg" alt="BookSwap Logo Grande">
             <span>BookSwap</span>
         </section>
 
@@ -152,20 +134,9 @@ $html_content = <<<HTML
         </section>
     </main>
 
-    <footer>
-        <div class="footer-content">
-            <div class="logo">
-                <img src="./assets/bookswap_logo.png" alt="BookSwap Logo">
-                <span>BookSwap</span>
-            </div>
-            <p>O Bookswap é um projeto que tem como objetivo incentivar a leitura e reduzir o impacto ambiental por meio da troca de livros.</p>
-        </div>
-    </footer>
-</body>
-</html>
-HTML;
+<?php
 
-echo $html_content;
+require_once(__DIR__."/../include/footer.php");
 
 ?>
 

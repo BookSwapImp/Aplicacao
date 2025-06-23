@@ -42,5 +42,7 @@ define('SESSAO_USUARIO_TEL',    "usuarioLogadoTelefone");
 //Arquivos
 define('PATH_ARQUIVOS', __DIR__ . "/../../arquivos");
 define('BASEURL_ARQUIVOS', BASEURL . "/../arquivos");
+define('BASEURL_CSS', BASEURL . "/view/css");
+
 
 
