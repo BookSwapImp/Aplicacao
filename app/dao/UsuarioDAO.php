@@ -130,6 +130,7 @@ class UsuarioDAO {
 
         $stm->execute();
     }
+  
 
     //Método para atualizar um Usuario
     public function update(Usuario $usuario) {

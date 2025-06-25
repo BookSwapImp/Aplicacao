@@ -35,10 +35,10 @@ require_once(__DIR__ . "/../include/header.php");
                     </div>
 
                     <div class="mb-3">
-                        <label class="form-label" for="txtConf_senha">Confirme sua senha:</label>
-                        <input type="password" class="form-control" name="conf_senha" id="txtConf_senha"
+                        <label class="form-label" for="txtConfSenha">Confirme sua senha:</label>
+                        <input type="password" class="form-control" name="confSenha" id="txtConfSenha"
                             maxlength="15" placeholder="Confirmar sua senha"
-                            value="<?php echo isset($dados['conf_senha']) ? $dados['conf_senha'] : '' ?>" />        
+                            value="<?php echo isset($dados['confSenha']) ? $dados['confSenha'] : '' ?>" />        
                     </div>
 
                     
@@ -67,10 +67,9 @@ require_once(__DIR__ . "/../include/header.php");
         </div>
 
         <div class="col-6">
-            <?php include_once(__DIR__ . "/../include/msg.php") ?>
-        </div>
-    </div>
+    <?php include_once(__DIR__ . "/../include/msg.php") ?> <!-- ok -->
 </div>
+
 
 <?php  
 require_once(__DIR__ . "/../include/footer.php");

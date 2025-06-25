@@ -18,8 +18,8 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
                 <button>Q</button>
             </div>
             <div class="user-menu">
-                <span>Meus livros</span>
-                <img src="./assets/user_icon.png" alt="User Icon">
+                <button>Meus livros</button>
+                <img src="<?= BASEURL_ARQUIVOS ?>/user_icon.png" alt="User Icon">
             </div>
         </nav>
     </header>

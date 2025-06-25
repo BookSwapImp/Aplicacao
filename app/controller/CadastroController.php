@@ -13,34 +13,28 @@ class CadastroController extends Controller{
         $this->cadastroService = new CadastroService(); 
         $this->handleAction(); 
     }
-    protected function cadastroPage() {
-        echo'teste';                
+    protected function cadastroPage() {               
         $this->loadView("cadastro/cadastro.php", []);
     }
      /* Método para Cadastrar um usuário a partir dos dados informados no formulário */
      protected function cadastrar(){
-         echo'cadatro';
+         echo'cadastro não enviado';
          
-        $this->loadView("cadastro/cadastro.php", []);
+      //  $this->loadView("cadastro/cadastro.php", []);
         $nome = isset($_POST['nome']) ? trim($_POST['nome']) : null; 
         $email = isset($_POST['email']) ? trim($_POST['email']) : null;
         $senha = isset($_POST['senha']) ? trim($_POST['senha']) : null;
         $telefone = isset($_POST['telefone']) ? trim($_POST['telefone']) : null;
         $cpf = isset($_POST['cpf']) ? trim($_POST['cpf']) : null;
         $confSenha = isset($_POST['conf_senha']) ? trim($_POST['conf_senha']) : null;// para verificar a senha
-        $erros=[];
-        $msg=[];
+       // $erros=[];
+       // $msg=[];
         $errosRetornados = $this->cadastroService->validarCampos($nome, $email, $senha, $confSenha, $cpf, $telefone);
 
         // Se $errosRetornados não for um array (ou seja, se for false ou null), use um array vazio.
         $erros = is_array($errosRetornados) ? $errosRetornados : [];
-        $msg = implode("<br>", $erros);
-
-        $dados["nome"] = $nome;
-        $dados["email"] = $email;
-        $dados["telefone"] = $telefone;
-        $dados["cpf"] = $cpf;
-
+      
+        
         if (empty($erros)) {
             // Se não há erros de validação
             echo 'cadastro enviado';
@@ -57,18 +51,17 @@ class CadastroController extends Controller{
             $this->usuarioDao->insert($usuario);
 
         // A linha abaixo passa $msg, mas se não há erros, $msg será vazia.
-            $this->loadView("cadastro/cadastro_sucesso.php", $dados,$msg); // Exemplo de view de sucesso
-            // header();
-            return;
-        } else {
-      //  $this->loadView("cadastro/cadastro.php", $dados,$msg); // Recarrega a tela de cadastro com os erros
-        $dados["nome"] = $nome;
-        $dados["email"] = $email;
-        $dados["telefone"] = $telefone;
-        $dados["cpf"] = $cpf;
-
-            return;
-        }
+            //$this->loadView("cadastro/cadastro_sucesso.php", $dados,$msg); // Exemplo de view de sucesso
+            header("location: " . LOGIN_PAGE);
+            exit;
+        }  else {
+                $msgErro = implode("<br>", $erros);
+                $dados["nome"] = $nome;
+                $dados["email"] = $email;
+                $dados["telefone"] = $telefone;
+                $dados["cpf"] = $cpf;
+            $this->loadView("cadastro/cadastro.php", $dados, $msgErro); // LINHA APROXIMADA
+            }
         
     
    } 
