@@ -18,9 +18,10 @@ class CadastroService {
        
         if (!$nome) {
             array_push($arrayMsg, "O campo [Nome] é obrigatório.");
-            }
+            }   
         if (!$email) {
             array_push($arrayMsg, "O campo [Email] é obrigatório.");
+
             }  //verifica o formato  do email
             elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 array_push($arrayMsg, "O campo [Email] está em formato inválido.");
@@ -30,8 +31,7 @@ class CadastroService {
                     if ($usuarioExistente !== null) {
                         array_push($arrayMsg, "O Email já está cadastrado no sistema.");
                     }*/
-
-        if (!$senha) {
+    if (!$senha) {
             array_push($arrayMsg, "O campo [Senha] é obrigatório.");
             }
             elseif(!$confSenha){
