@@ -30,14 +30,14 @@ require_once(__DIR__ . "/../include/header.php");
                     <div class="mb-3">
                         <label class="form-label" for="txtSenha">Senha:</label>
                         <input type="password" class="form-control" name="senha" id="txtSenha"
-                            maxlength="" placeholder="Informe a senha"
+                            maxlength="15" placeholder="Informe a senha"
                             value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
                     </div>
 
                     <div class="mb-3">
                         <label class="form-label" for="txtConfSenha">Confirme sua senha:</label>
                         <input type="password" class="form-control" name="confSenha" id="txtConfSenha"
-                            maxlength="15" placeholder="Confirmar sua senha"
+                            maxlength="15" placeholder="Confirme sua senha"
                             value="<?php echo isset($dados['confSenha']) ? $dados['confSenha'] : '' ?>" />        
                     </div>
 
