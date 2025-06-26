@@ -26,10 +26,10 @@ class CadastroController extends Controller{
         $senha = isset($_POST['senha']) ? trim($_POST['senha']) : null;
         $telefone = isset($_POST['telefone']) ? trim($_POST['telefone']) : null;
         $cpf = isset($_POST['cpf']) ? trim($_POST['cpf']) : null;
-        $confSenha = isset($_POST['conf_senha']) ? trim($_POST['conf_senha']) : null;// para verificar a senha
+        $confSenha = isset($_POST['confSenha']) ? trim($_POST['confSenha']) : null;// para verificar a senha
        // $erros=[];
        // $msg=[];
-        $errosRetornados = $this->cadastroService->validarCampos($nome, $email, $senha, $confSenha, $cpf, $telefone);
+       $errosRetornados = $this->cadastroService->validarCampos($nome, $email, $senha, $confSenha, $cpf, $telefone);
 
         // Se $errosRetornados não for um array (ou seja, se for false ou null), use um array vazio.
         $erros = is_array($errosRetornados) ? $errosRetornados : [];

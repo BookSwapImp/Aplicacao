@@ -18,7 +18,7 @@ class CadastroService {
         } elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             array_push($arrayMsg, "O campo [Email] está em formato inválido.");
         }
-
+        
         if (!$senha) {
             array_push($arrayMsg, "O campo [Senha] é obrigatório.");
         }
