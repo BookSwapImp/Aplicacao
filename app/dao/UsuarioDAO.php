@@ -70,7 +70,7 @@ class UsuarioDAO {
     public function findByTelefone(int $telefone){
         $conn = Connection::getConn();
         $sql = "SELECT * FROM usuarios u".
-            "WHERE BINARY u.telefone = ?";
+            "WHERE BINARY u.telefone = :telefone";
             $stm = $conn->prepare($sql);
             $stm->execute([$telefone]);
             $result = $stm->fetchAll();
@@ -84,6 +84,24 @@ class UsuarioDAO {
             die("UsuarioDAO.findByTelefone()" . 
             " - Erro.");
     }
+      /*/public function findByEmail(string $email){
+        $conn = Connection::getConn();
+        $sql = "SELECT * FROM usuarios WHERE BINARY email = :email";
+        $stmt = $conn->prepare($sql);
+        $stmt->bindParam(':email', $email);
+        $stmt->execute();
+
+        if ($stmt->rowCount() > 0) {
+            $dados = $stmt->fetch();
+            $usuario = new Usuario();
+            $usuario->setId($dados['id']);
+            $usuario->setNome($dados['nome']);
+            $usuario->setEmail($dados['email']);
+            return $usuario;
+        }
+
+        return null;
+        }*/
     public function findByCpf(int $cpf){
         $conn = Connection::getConn();
         $sql = "SELECT * FROM usuarios u".

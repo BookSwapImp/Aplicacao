@@ -1,5 +1,5 @@
 <?php
-require_once(__DIR__."Usuario.php");
+require_once(__DIR__."/Usuario.php");
 
 class Livro extends JsonException {
     private ?int $id;

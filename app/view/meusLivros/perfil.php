@@ -20,20 +20,25 @@ require_once(__DIR__ . "/../include/menu.php");
 
         <div class="col-12 mb-2">
             <span class="fw-bold">Login:</span>
-            <span><?= $dados['usuario']->getLogin() ?></span>
+            <span><?= $dados['usuario']->getEmail() ?></span>
         </div>
 
         <div class="col-12 mb-2">
             <span class="fw-bold">Papel:</span>
-            <span><?= $dados['usuario']->getPapel() ?></span>
+            <span><?= $dados['usuario']->getTipo() ?></span>
+        </div>
+
+        <div class="col-12 mb-2">
+            <span class="fw-bold">Status:</span>
+            <span><?= $dados['usuario']->getStatus() ?></span>
         </div>
 
         <div class="col-12 mb-2">
             <div class="fw-bold">Foto:</div>
-            <?php if($dados['usuario']->getFotoPerfil()): ?>
+            <?php //if($dados['usuario']->getFotoPerfil()): ?>
                 <img src="<?= BASEURL_ARQUIVOS . '/' . $dados['usuario']->getFotoPerfil() ?>"
                     height="300">
-            <?php endif; ?>
+            <?php //endif; ?>
         </div>
 
     </div>

@@ -2,12 +2,14 @@
 
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
+require_once(__DIR__ . "/../dao/LivroDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
 
-class PerfilController extends Controller {
+class MeusLivrosController extends Controller {
 
     private UsuarioDAO $usuarioDao;
+    private LivroDAO $livroDao;
     private UsuarioService $usuarioService;
     private ArquivoService $arquivoService;
 
@@ -16,6 +18,7 @@ class PerfilController extends Controller {
             return;
 
         $this->usuarioDao = new UsuarioDAO();
+        $this->livroDao = new LivroDAO();
         $this->usuarioService = new UsuarioService();
         $this->arquivoService = new ArquivoService();
 
@@ -27,7 +30,7 @@ class PerfilController extends Controller {
         $usuario = $this->usuarioDao->findById($idUsuarioLogado);
         $dados['usuario'] = $usuario;
 
-        $this->loadView("perfil/perfil.php", $dados);    
+        $this->loadView("meusLivros/perfil.php", $dados);    
     }
 
     protected function save() {
@@ -51,9 +54,9 @@ class PerfilController extends Controller {
 
         $msgErro = implode("<br>", $erros);
 
-        $this->loadView("perfil/perfil.php", $dados, $msgErro); 
+        $this->loadView("meusLivros/perfil.php", $dados, $msgErro); 
     }
 
 }
 
-new PerfilController();
+new MeusLivrosController();

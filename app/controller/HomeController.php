@@ -2,10 +2,12 @@
 
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
+require_once(__DIR__ . "/../dao/livroDAO.php");
 
 class HomeController extends Controller {
 
     private UsuarioDAO $usuarioDAO;
+    private livroDAO $livroDAO;
 
     public function __construct() {
         //Verificar se o usuário está logado
@@ -13,6 +15,7 @@ class HomeController extends Controller {
             return;
 
         $this->usuarioDAO = new UsuarioDAO();
+        $this->livroDAO = new LivroDAO();
 
         //Tratar a ação solicitada no parâmetro "action"
         $this->handleAction();
@@ -23,6 +26,9 @@ class HomeController extends Controller {
         $dados["qtdUsuarios"] = $this->usuarioDAO->quantidadeUsuarios(); 
 
         $this->loadView("home/home.php", $dados);
+    }
+    protected function listarAnuncios(){
+
     }
     
 }

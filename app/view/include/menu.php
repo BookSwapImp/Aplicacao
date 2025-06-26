@@ -8,18 +8,29 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
 
 ?>
     <header>
-        <nav>
+       <nav>
             <div class="logo">
-                <img src="<?=BASEURL_ARQUIVOS?>/bookSwapLogo7.jpeg" alt="BookSwap Logo">
+                 <a class="nav-link" href="<?= HOME_PAGE ?>"><img src="<?=BASEURL_ARQUIVOS?>/bookSwapLogo7.jpeg" alt="BookSwap Logo"  class="img-fluid" style="width: 60px; height: 60px;"></a>
                 <span>BookSwap</span>
             </div>
             <div class="search-bar">
                 <input type="text" placeholder="Pesquisar">
                 <button>Q</button>
             </div>
-            <div class="user-menu">
-                <button>Meus livros</button>
-                <img src="<?= BASEURL_ARQUIVOS ?>/user_icon.png" alt="User Icon">
-            </div>
+            <div>
+                <div>                           
+                <a class="nav-link dropdown-toggle" href="#" id="navbarUsuario"
+                    data-bs-toggle="dropdown">
+                    <?= $nome ?>
+                </a>
+                </div>
+                <div class="dropdown-menu-->">
+                    <a class="dropdown-item"
+                          href="<?= BASEURL . '/controller/MeusLivrosController.php?action=view' ?>">Meus Livros</a>
+                    <a class="dropdown-item" href="<?= LOGOUT_PAGE ?>">Sair da conta</a>
+                </div>
+            </li>
+        </ul>
+    </div>
         </nav>
     </header>

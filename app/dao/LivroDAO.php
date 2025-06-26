@@ -33,47 +33,64 @@ class LivroDAO{
         }
         return $livros;
     }
- public function insertLivros(Livro $livro) {
-    $conn = Connection::getConn();
+    public function insertLivros(Livro $livro) {
+        $conn = Connection::getConn();
 
-    $sql = "INSERT INTO `anuncios` (
-                `usuarios_id`,
-                `nome_livro`,
-                `imagem_livro`,
-                `valor_anuncio`,
-                `descricao`,
-                `data_publicacao`,
-                `avaliacao`,
-                `nota`,
-                `status`,
-                `estado_con`
-            ) VALUES (
-                :usuarios_id,
-                :nome_livro,
-                :imagem_livro,
-                :valor_anuncio,
-                :descricao,
-                :data_publicacao,
-                :avaliacao,
-                :nota,
-                :status,
-                :estado_con
-            )";
+        $sql = "INSERT INTO `anuncios` (
+                    `usuarios_id`,
+                    `nome_livro`,
+                    `imagem_livro`,
+                    `valor_anuncio`,
+                    `descricao`,
+                    `data_publicacao`,
+                    `avaliacao`,
+                    `nota`,
+                    `status`,
+                    `estado_con`
+                ) VALUES (
+                    :usuarios_id,
+                    :nome_livro,
+                    :imagem_livro,
+                    :valor_anuncio,
+                    :descricao,
+                    :data_publicacao,
+                    :avaliacao,
+                    :nota,
+                    :status,
+                    :estado_con
+                )";
 
-    $stm = $conn->prepare($sql);
-    $stm->bindValue("usuarios_id", $livro->getUsuarioId());
-    $stm->bindValue("nome_livro", $livro->getNomeLivro());
-    $stm->bindValue("imagem_livro", $livro->getImagemLivro());
-    $stm->bindValue("valor_anuncio", $livro->getValorAnuncio());
-    $stm->bindValue("descricao", $livro->getDescricao());
-    $stm->bindValue("data_publicacao", $livro->getDataPublicacao());
-    $stm->bindValue("avaliacao", $livro->getAvaliacao());
-    $stm->bindValue("nota", $livro->getNota());
-    $stm->bindValue("status", $livro->getStatus());
-    $stm->bindValue("estado_con", $livro->getEstadoCon());
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("usuarios_id", $livro->getUsuarioId());
+        $stm->bindValue("nome_livro", $livro->getNomeLivro());
+        $stm->bindValue("imagem_livro", $livro->getImagemLivro());
+        $stm->bindValue("valor_anuncio", $livro->getValorAnuncio());
+        $stm->bindValue("descricao", $livro->getDescricao());
+        $stm->bindValue("data_publicacao", $livro->getDataPublicacao());
+        $stm->bindValue("avaliacao", $livro->getAvaliacao());
+        $stm->bindValue("nota", $livro->getNota());
+        $stm->bindValue("status", $livro->getStatus());
+        $stm->bindValue("estado_con", $livro->getEstadoCon());
 
-    $stm->execute();
-}
+        $stm->execute();
+        }
+        public function findLivroByUsuariosId(int $usuarios_id){
+        $conn = Connection::getConn();
+        $sql = "SELECT * FROM anuncios an".
+            "WHERE BINARY an.usuarios_id = ?";
+            $stm = $conn->prepare($sql);
+            $stm->execute([$usuarios_id]);
+            $result = $stm->fetchAll();
+            $livros = $this->mapLivros($result);
+            if(count($livros) == 1){
+                return false;
+            }
+            elseif(count($livros) == 0)
+                return true;
+
+            die("UsuarioDAO.findByTelefone()" . 
+            " - Erro.");
+    }
 
 }
 ?>
