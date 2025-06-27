@@ -24,13 +24,18 @@ class LivroDAO{
             $usuario->setId($reg['usuarios_id']);
             $livro->setId($reg['id']);
             $livro->setUsuarioId( $usuario);
-            $livro->setNomeLivro(nome_livro: $reg['nome_livro']);
+            $livro->setNomeLivro( $reg['nome_livro']);
             $livro->setImagemLivro($reg['imagem_livro']);
             $livro->setValorAnuncio($reg['valor_anuncio']);
             $livro->setDescricao($reg['descricao']);
             $livro->setDataPublicacao(new DateTime($reg['data_publicacao']));
             $livro->setEstadoCon($reg['estado_con']);
+            $livro->setStatus($reg['status']);
             array_push($livros, $livro);
+            if(empty($livro)){
+                echo 'esta com problema para seta livro';
+                return null;
+            }
         }
         return $livros;
     }

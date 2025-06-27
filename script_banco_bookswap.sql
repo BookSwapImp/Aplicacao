@@ -7,6 +7,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `nome` VARCHAR(45) NOT NULL,
   `email` VARCHAR(255) NOT NULL,
   `senha`VARCHAR(255) NOT NULL,
+  `foto_de_perfil` VARCHAR DEFAULT NULL,
   `telefone` VARCHAR(15) DEFAULT NULL,
   `cpf` VARCHAR(14) NOT NULL,
   `rg` VARCHAR(12),

@@ -20,17 +20,22 @@ require_once(__DIR__ . "/../include/menu.php");
             <h2>LIVROS EM DESTAQUE</h2>
             <div class="book-grid">
                 <!-- Livro 1 -->
-               <?php foreach ($anuncios as $a ):?>                
+          
+            <?php foreach ($dados['listarHome'] as $a ):?>                
                <div class="book-card">
-                    <img src="./assets/a_teoria_de_tudo.png" alt="A Teoria de Tudo">
-                    <h3><?=$a->getNome()?></h3><!-- nome -->
-                    <p><?=$a->getNome()?></p><!--descricao-->
-                    <p><?=$a->getNome()?></p><!-- preço -->
+                  <?php if(empty($dado['listarHome'])):
+                    echo'não á livros';    
+                         endif;
+                         ?>  
+                    <img src="<?= $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>">
+                    <h3><?=$a->getNomeLivro()?></h3><!-- nome -->
+                    <p><?=$a->getDescricao()?></p><!--descricao-->
+                    <p><?=$a->getValorAnuncio()?></p><!-- preço -->
                     <p><?=$a->getDataPublicacao()->format('d/m/Y');?></p>
-                    <button class="buy-button">Comprar</button>
-                    <button class="trade-button">Trocar</button>
+                    <button class="buy-button"id='<?= $a->getId()?>'>Comprar</button>
+                    <button class="trade-button"id='<?=$a->getid()?>'>Trocar</button>
                 </div>
-                <?php endforeach;?>
+            <?php endforeach;?>
 
                 <!-- Livro 2 -->
                 <div class="book-card">

@@ -20,15 +20,11 @@ class HomeController extends Controller {
         //Tratar a ação solicitada no parâmetro "action"
         $this->handleAction();
     }
+       protected function home(string $msgErro = "", string $msgSucesso = "") {
+        $dados["listarHome"] = $this->livroDAO->listLivros();
 
-    protected function home() {
-
-        $dados["qtdUsuarios"] = $this->usuarioDAO->quantidadeUsuarios(); 
-        $dados["anuncios"]=$this->livroDAO->listLivros();
-
-        $this->loadView("home/home.php", $dados);
+        $this->loadView("home/home.php", ['listarHome'=>$dados],  $msgErro, $msgSucesso);
     }
-  
     
 }
 
