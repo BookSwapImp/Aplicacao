@@ -32,10 +32,6 @@ class LivroDAO{
             $livro->setEstadoCon($reg['estado_con']);
             $livro->setStatus($reg['status']);
             array_push($livros, $livro);
-            if(empty($livro)){
-                echo 'esta com problema para seta livro';
-                return null;
-            }
         }
         return $livros;
     }
