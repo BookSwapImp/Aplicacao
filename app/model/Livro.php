@@ -9,8 +9,7 @@ class Livro extends JsonException {
     private ?float $valor_anuncio;
     private ?string $descricao;
     private ?DateTime $data_publicacao;
-    private ?string $avaliacao;
-    private ?string $nota;
+
     private ?string $status; // pode ser 'ativo', 'inativo' ou 'finalizado'
     private ?string $estado_con; // pode ser 'mal', 'medio' ou 'bom'
 
@@ -150,41 +149,6 @@ class Livro extends JsonException {
         return $this;
     }
 
-    /**
-     * Get the value of avaliacao
-     */
-    public function getAvaliacao(): ?string
-    {
-        return $this->avaliacao;
-    }
-
-    /**
-     * Set the value of avaliacao
-     */
-    public function setAvaliacao(?string $avaliacao): self
-    {
-        $this->avaliacao = $avaliacao;
-
-        return $this;
-    }
-
-    /**
-     * Get the value of nota
-     */
-    public function getNota(): ?string
-    {
-        return $this->nota;
-    }
-
-    /**
-     * Set the value of nota
-     */
-    public function setNota(?string $nota): self
-    {
-        $this->nota = $nota;
-
-        return $this;
-    }
 
     /**
      * Get the value of status

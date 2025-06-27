@@ -31,7 +31,7 @@ class CadastroService {
                     if ($usuarioExistente !== null) {
                         array_push($arrayMsg, "O Email já está cadastrado no sistema.");
                     }*/
-    if (!$senha) {
+        if (!$senha) {
             array_push($arrayMsg, "O campo [Senha] é obrigatório.");
             }
             elseif(!$confSenha){

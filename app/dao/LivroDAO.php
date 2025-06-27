@@ -3,12 +3,13 @@
 
 include_once(__DIR__ . "/../connection/Connection.php");
 include_once(__DIR__ . "/../model/Livro.php");
+include_once(__DIR__ . "/../model/Usuario.php");
 
 class LivroDAO{
      public function listLivros() {
         $conn = Connection::getConn();
 
-        $sql = "SELECT * FROM livros l ORDER BY l.id";
+        $sql = "SELECT * FROM anuncios a ORDER BY a.id";
         $stm = $conn->prepare($sql);    
         $stm->execute();
         $result = $stm->fetchAll();
@@ -19,15 +20,15 @@ class LivroDAO{
         $livros = array();
         foreach ($result as $reg) {
             $livro = new Livro();
+            $usuario = new Usuario();
+            $usuario->setId($reg['usuarios_id']);
             $livro->setId($reg['id']);
-            $livro->setUsuarioId($reg['usuarios_id']);
-            $livro->setNomeLivro($reg['nome_livro']);
+            $livro->setUsuarioId( $usuario);
+            $livro->setNomeLivro(nome_livro: $reg['nome_livro']);
             $livro->setImagemLivro($reg['imagem_livro']);
             $livro->setValorAnuncio($reg['valor_anuncio']);
             $livro->setDescricao($reg['descricao']);
-            $livro->setDataPublicacao($reg['data_publicacao']);
-            $livro->setAvaliacao($reg['avaliacao']);
-            $livro->setNota($reg['nota']);
+            $livro->setDataPublicacao(new DateTime($reg['data_publicacao']));
             $livro->setEstadoCon($reg['estado_con']);
             array_push($livros, $livro);
         }
@@ -43,8 +44,6 @@ class LivroDAO{
                     `valor_anuncio`,
                     `descricao`,
                     `data_publicacao`,
-                    `avaliacao`,
-                    `nota`,
                     `status`,
                     `estado_con`
                 ) VALUES (
@@ -54,8 +53,6 @@ class LivroDAO{
                     :valor_anuncio,
                     :descricao,
                     :data_publicacao,
-                    :avaliacao,
-                    :nota,
                     :status,
                     :estado_con
                 )";
@@ -67,8 +64,6 @@ class LivroDAO{
         $stm->bindValue("valor_anuncio", $livro->getValorAnuncio());
         $stm->bindValue("descricao", $livro->getDescricao());
         $stm->bindValue("data_publicacao", $livro->getDataPublicacao());
-        $stm->bindValue("avaliacao", $livro->getAvaliacao());
-        $stm->bindValue("nota", $livro->getNota());
         $stm->bindValue("status", $livro->getStatus());
         $stm->bindValue("estado_con", $livro->getEstadoCon());
 

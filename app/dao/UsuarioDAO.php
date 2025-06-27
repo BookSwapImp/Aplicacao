@@ -211,8 +211,8 @@ class UsuarioDAO {
             $usuario->setTelefone($reg['telefone']);
             $usuario->setCpf($reg['cpf']);
             $usuario->setSenha($reg['senha']);
-            $usuario->setTipo('usuario');
-            $usuario->setStatus('ativo');
+            $usuario->setTipo($reg['tipo']);
+            $usuario->setStatus($reg['status']);
            // $usuario->setFotoPerfil($reg['foto_perfil']);
             array_push($usuarios, $usuario);
         }

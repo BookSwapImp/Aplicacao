@@ -20,14 +20,18 @@ require_once(__DIR__ . "/../include/menu.php");
             <h2>LIVROS EM DESTAQUE</h2>
             <div class="book-grid">
                 <!-- Livro 1 -->
-                <div class="book-card">
+               <?php foreach ($anuncios as $a ):?>                
+               <div class="book-card">
                     <img src="./assets/a_teoria_de_tudo.png" alt="A Teoria de Tudo">
-                    <h3>A Teoria de Tudo</h3>
-                    <p>Jane Hawking</p>
-                    <p>R$ 49,99</p>
+                    <h3><?=$a->getNome()?></h3><!-- nome -->
+                    <p><?=$a->getNome()?></p><!--descricao-->
+                    <p><?=$a->getNome()?></p><!-- preço -->
+                    <p><?=$a->getDataPublicacao()->format('d/m/Y');?></p>
                     <button class="buy-button">Comprar</button>
                     <button class="trade-button">Trocar</button>
                 </div>
+                <?php endforeach;?>
+
                 <!-- Livro 2 -->
                 <div class="book-card">
                     <img src="./assets/segredo.png" alt="S.E.G.R.E.D.O">

@@ -1,7 +1,4 @@
-SELECT * FROM avaliacao;
-DROP TABLE bookswap;
-CREATE DATABASE bookswap;
-USE bookswap;
+
 -- -----------------------------------------------------
 -- Table `usuarios`
 -- -----------------------------------------------------
@@ -32,8 +29,8 @@ CREATE TABLE IF NOT EXISTS `anuncios` (
   `valor_anuncio` FLOAT NOT NULL,
   `descricao` VARCHAR(45) NOT NULL,
   `data_publicacao` DATETIME NOT NULL,
-  `avaliacao` VARCHAR(255) DEFAULT NULL,
-  `nota` VARCHAR(45) DEFAULT NULL,
+  /*`avaliacao` VARCHAR(255) DEFAULT NULL,
+  `nota` VARCHAR(45) DEFAULT NULL,*/
   `status` ENUM('ativo', 'inativo', 'finalizado') NOT NULL,
   `estado_con` ENUM('mal', 'medio', 'bom') NOT NULL,
   PRIMARY KEY (`id`),
@@ -174,30 +171,5 @@ ENGINE = InnoDB
 DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
-INSERT INTO `usuarios` (
-  `nome`, 
-  `email`,`senha`, 
-  `telefone`, 
-  `cpf`, 
-  `tipo`, 
-  `status`
-) VALUES (
-  'root', 
-  'root.silva@email.com',
-  '$2y$10$9H8nNzW7tM7cGhy6r59gYuKuflEGKzKGOMPv86yUhJbySUNnnY42y', /*root*/ 
-  12345678901, 
-  123456789, 
-  'USUARIO', 
-  'ativo'
-);
 -- Desativar checagem de chaves estrangeiras temporariamente
 SET FOREIGN_KEY_CHECKS = 0;
-/*
-DROP TABLE IF EXISTS `troca`;
-DROP TABLE IF EXISTS `enderecos`;
-DROP TABLE IF EXISTS `denuncia`;
-DROP TABLE IF EXISTS `compra`;
-DROP TABLE IF EXISTS `anuncios`;
-DROP TABLE IF EXISTS `usuarios`;*/
-
--- Reativar checagem de chaves estrangeiras

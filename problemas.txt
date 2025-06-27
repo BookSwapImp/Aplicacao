@@ -1,8 +1,0 @@
-Problemas resolvidos -
-cadastro solucionado
-Problemas -
-- link css da Home
-
--problema no cadastro duplica ao submeter
-
--serviçe n esta exibindo a msg de erro

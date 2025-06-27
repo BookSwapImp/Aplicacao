@@ -13,6 +13,7 @@ require_once(__DIR__ . "/../include/menu.php");
 <div class="container">
 
     <div class="row mt-2">
+        <h3 class="row mt-5">Seus Dados: </h3>
         <div class="col-12 mb-2">
             <span class="fw-bold">Nome:</span>
             <span><?= $dados['usuario']->getNome() ?></span>
@@ -36,7 +37,7 @@ require_once(__DIR__ . "/../include/menu.php");
         <div class="col-12 mb-2">
             <div class="fw-bold">Foto:</div>
             <?php //if($dados['usuario']->getFotoPerfil()): ?>
-                <img src="<?= BASEURL_ARQUIVOS . '/' . $dados['usuario']->getFotoPerfil() ?>"
+                <img src="<?= BASEURL_ARQUIVOS . '/basePfp.jpeg' //.  $dados['usuario']->getFotoPerfil() ?>"
                     height="300">
             <?php //endif; ?>
         </div>
