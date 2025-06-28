@@ -13,7 +13,6 @@ class LivroDAO{
         $stm = $conn->prepare($sql);    
         $stm->execute();
         $result = $stm->fetchAll();
-        
         return $this->mapLivros($result);
     }
      private function mapLivros($result){

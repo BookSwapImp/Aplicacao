@@ -40,6 +40,7 @@ class CadastroService {
                 elseif($senha!==$confSenha){
                     array_push($arrayMsg, "O campo [Verificar senha] deve estar igual a senha");
                     }
+                 
 
         if (!$cpf) {
             array_push($arrayMsg, "O campo [CPF] é obrigatório.");
@@ -60,7 +61,8 @@ class CadastroService {
                     if ($cpf[$c] != $d) {
                         array_push($arrayMsg, "O CPF é inválido.");
                         break;
-                    }
+                    } // verificar cpf no banco
+                   
                 }
             }
            

@@ -3,7 +3,7 @@
 #Nome do arquivo: cadatro/cadastro.php
 #Objetivo: interface para logar no sistema
 
-require_once(__DIR__ . "/../include/menuLoginCasdatro.php");
+require_once(__DIR__ . "/../include/headerMenuLoginCasdatro.php");
 ?>
              <h2 class="mb-4 text-center">Cadastro</h2>
                     <form id="frmCadastro" action="<?=BASEURL?>/controller/CadastroController.php?action=cadastrar" method="POST">

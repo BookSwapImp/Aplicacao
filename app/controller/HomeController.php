@@ -21,9 +21,9 @@ class HomeController extends Controller {
         $this->handleAction();
     }
        protected function home(string $msgErro = "", string $msgSucesso = "") {
-        $dados["listarHome"] = $this->livroDAO->listLivros();
+        $dados = $this->livroDAO->listLivros();
 
-        $this->loadView("home/home.php", ['listarHome'=>$dados],  $msgErro, $msgSucesso);
+        $this->loadView("home/home.php", $dados,  $msgErro, $msgSucesso);
     }
     
 }
