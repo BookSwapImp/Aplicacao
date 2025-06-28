@@ -1,49 +1,33 @@
-<?php
-#Nome do arquivo: login/login.php
-#Objetivo: interface para logar no sistema
-
-require_once(__DIR__ . "/../include/header.php");
-?>
-
-<div class="container">
-    <div class="row" style="margin-top: 20px;">
-        <div class="col-6">
-            <div class="alert alert-info">
-                <h4>Informe os dados para logar:</h4>
-                <br>
-
-                <!-- Formulário de login -->
-                <!--Problemas: A url do formulario não esta correta 
-                  -->
-                <form id="frmLogin" action="LoginController.php?action=logon" method="POST" >
-                <div class="mb-3">
-                        <label class="form-label" for="txtEmail">Email:</label>
-                        <input type="text" class="form-control" name="email" id="txtEmail"
-                            maxlength="50" placeholder="Informe o Email"
-                            value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" />        
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" for="txtSenha">Senha:</label>
-                        <input type="password" class="form-control" name="senha" id="txtSenha"
-                            maxlength="" placeholder="Informe a senha"
-                            value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
-                    </div>
-
-                    <button type="submit" class="btn btn-success mt-3">Logar</button>
-                    
-                </form>
-            </div>
-            <div>
-                <a href="CadastroController.php?action=cadastroPage">Cadastre-se</a>
-            </div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Login</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href=" <?php BASEURL_CSS?>/custom.css">
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-logo">
+            <img src="logo.png" alt="Logo">
+            <h1>Login</h1>
         </div>
-
-        <div class="col-6">
-            <?php include_once(__DIR__ . "/../include/msg.php") ?>
-        </div>
+        <form action="processar_login.php" method="post">
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="senha" class="form-control" placeholder="Senha" required>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a class="form-link" href="cadastro.php">FAZER CADASTRO</a>
+            </div>
+            <button type="submit" class="btn btn-confirm w-100">CONFIRMAR</button>
+        </form>
     </div>
-</div>
+</body>
+</html>
+
 
 <?php  
 require_once(__DIR__ . "/../include/footer.php");

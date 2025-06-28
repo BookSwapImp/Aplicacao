@@ -1,74 +1,42 @@
-<?php
-#Nome do arquivo: cadatro/cadastro.php
-#Objetivo: interface para logar no sistema
-
-require_once(__DIR__ . "/../include/header.php");
-?>
-
-<div class="container">
-    <div class="row" style="margin-top: 20px;">
-        <div class="col-6">
-            <div class="alert alert-info">
-                <h4>Informe os dados para Cadastro</h4>
-                <br>
-
-                <!-- Formulário de cadastro -->
-                <form id="frmLogin" action="?action=cadastrar" method="POST" >
-                     <div class="mb-3">
-                        <label class="form-label" for="txtNome">Nome Completo:</label>
-                        <input type="text" class="form-control" name="nome" id="txtNome"
-                            maxlength="" placeholder="Informe o seu nome"
-                            value="<?php echo isset($dados['nome']) ? $dados['nome'] : '' ?>" />        
-                    </div>
-                    <div class="mb-3">
-                        <label class="form-label" for="txtEmail">Email:</label>
-                        <input type="text" class="form-control" name="email" id="txtEmail"
-                            maxlength="" placeholder="Informe o email"
-                            value="<?php echo isset($dados['email']) ? $dados['email'] : '' ?>" />        
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" for="txtSenha">Senha:</label>
-                        <input type="password" class="form-control" name="senha" id="txtSenha"
-                            maxlength="15" placeholder="Informe a senha"
-                            value="<?php echo isset($dados['senha']) ? $dados['senha'] : '' ?>" />        
-                    </div>
-
-                    <div class="mb-3">
-                        <label class="form-label" for="txtConfSenha">Confirme sua senha:</label>
-                        <input type="password" class="form-control" name="confSenha" id="txtConfSenha"
-                            maxlength="15" placeholder="Confirme sua senha"
-                            value="<?php echo isset($dados['confSenha']) ? $dados['confSenha'] : '' ?>" />        
-                    </div>
-
-                    
-                    <div class="mb-3">
-                            <label for="form-label" for="intTeledone">telefone: </label>
-                            <input type="number" class="form-control" name="telefone" id="intTelefone"
-                            maxlength="15" placeholder="Informe o telefone"
-                            value="<?php echo isset($dados['telefone']) ? $dados['telefone'] : '' ?>"/>     
-                    </div>
-
-
-                    <div class="mb-3">
-                            <label for="form-label" for="cpf">CPF: </label>
-                            <input type="number" class="form-control" name="cpf" id="cpf"
-                            maxlength="14" placeholder="Informe o CPF"
-                            value="<?php echo isset($dados['cpf']) ? $dados['cpf'] : '' ?>"/>     
-                    </div>
-
-                    <button type="submit" class="btn btn-success mt-3">Finalizar</button>
-                </form>
-            </div>
-            
-             <div>
-                <a href="LoginController.php?action=login">logar</a>
-            </div>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href=" <?php BASEURL_CSS?>/custom.css">
+</head>
+<body>
+    <div class="form-container">
+        <div class="form-logo">
+            <img src="logo.png" alt="Logo">
+            <h1>Cadastro</h1>
         </div>
+        <form action="processar_cadastro.php" method="post">
+            <div class="mb-3">
+                <input type="text" name="nome" class="form-control" placeholder="Nome" required>
+            </div>
+            <div class="mb-3">
+                <input type="email" name="email" class="form-control" placeholder="Email" required>
+            </div>
+            <div class="mb-3">
+                <input type="email" name="verificar_email" class="form-control" placeholder="Verificar Email" required>
+            </div>
+            <div class="mb-3">
+                <input type="password" name="senha" class="form-control" placeholder="Senha" required>
+            </div>
+            <div class="mb-3">
+                <input type="text" name="cpf" class="form-control" placeholder="CPF" required>
+            </div>
+            <div class="d-flex justify-content-between align-items-center mb-3">
+                <a class="form-link" href="login.php">FAZER LOGIN</a>
+            </div>
+            <button type="submit" class="btn btn-confirm w-100">CONFIRMAR</button>
+        </form>
+    </div>
+</body>
+</html>
 
-        <div class="col-6">
-    <?php include_once(__DIR__ . "/../include/msg.php") ?> <!-- ok -->
-</div>
 
 
 <?php  
