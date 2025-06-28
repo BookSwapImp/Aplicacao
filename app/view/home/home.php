@@ -33,7 +33,7 @@ require_once(__DIR__ . "/../include/menu.php");
                     <p><?=$a->getValorAnuncio()?></p><!-- preço -->
                     <p><?=$a->getDataPublicacao()->format('d/m/Y');?></p>
                     <button class="buy-button"id='<?= $a->getId()?>'>Comprar</button>
-                    <button class="trade-button"id='<?=$a->getid()?>'>Trocar</button>
+                    <button class="trade-button"id='<?=$a->getId()?>'>Trocar</button>
                 </div>
             <?php endforeach;?>
 

@@ -1,42 +1,45 @@
-<!DOCTYPE html>
-<html lang="pt-br">
-<head>
-    <meta charset="UTF-8">
-    <title>Cadastro</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <link rel="stylesheet" href=" <?php BASEURL_CSS?>/custom.css">
-</head>
-<body>
-    <div class="form-container">
-        <div class="form-logo">
-            <img src="logo.png" alt="Logo">
-            <h1>Cadastro</h1>
-        </div>
-        <form action="processar_cadastro.php" method="post">
-            <div class="mb-3">
-                <input type="text" name="nome" class="form-control" placeholder="Nome" required>
-            </div>
-            <div class="mb-3">
-                <input type="email" name="email" class="form-control" placeholder="Email" required>
-            </div>
-            <div class="mb-3">
-                <input type="email" name="verificar_email" class="form-control" placeholder="Verificar Email" required>
-            </div>
-            <div class="mb-3">
-                <input type="password" name="senha" class="form-control" placeholder="Senha" required>
-            </div>
-            <div class="mb-3">
-                <input type="text" name="cpf" class="form-control" placeholder="CPF" required>
-            </div>
-            <div class="d-flex justify-content-between align-items-center mb-3">
-                <a class="form-link" href="login.php">FAZER LOGIN</a>
-            </div>
-            <button type="submit" class="btn btn-confirm w-100">CONFIRMAR</button>
-        </form>
-    </div>
-</body>
-</html>
 
+<?php
+#Nome do arquivo: cadatro/cadastro.php
+#Objetivo: interface para logar no sistema
+
+require_once(__DIR__ . "/../include/menuLoginCasdatro.php");
+?>
+             <h2 class="mb-4 text-center">Cadastro</h2>
+                    <form id="frmCadastro" action="<?=BASEURL?>/controller/CadastroController.php?action=cadastrar" method="POST">
+                        <div class="mb-3">
+                            <label for="txtNome" class="form-label">Nome Completo:</label>
+                            <input type="text" name="nome" id="txtNome" class="form-control" placeholder="Informe o seu nome" value="<?= $dados['nome'] ?? '' ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="txtEmail" class="form-label">Email:</label>
+                            <input type="text" name="email" id="txtEmail" class="form-control" placeholder="Informe o email" value="<?= $dados['email'] ?? '' ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="txtSenha" class="form-label">Senha:</label>
+                            <input type="password" name="senha" id="txtSenha" class="form-control" placeholder="Informe a senha">
+                        </div>
+                        <div class="mb-3">
+                            <label for="txtConfSenha" class="form-label">Confirme sua senha:</label>
+                            <input type="password" name="confSenha" id="txtConfSenha" class="form-control" placeholder="Confirme sua senha">
+                        </div>
+                        <div class="mb-3">
+                            <label for="intTelefone" class="form-label">Telefone:</label>
+                            <input type="tel" name="telefone" id="intTelefone" class="form-control" placeholder="Informe o telefone" value="<?= $dados['telefone'] ?? '' ?>">
+                        </div>
+                        <div class="mb-3">
+                            <label for="cpf" class="form-label">CPF:</label>
+                            <input type="text" name="cpf" id="cpf" class="form-control" placeholder="Informe o CPF" value="<?= $dados['cpf'] ?? '' ?>">
+                        </div>
+                        <button type="submit" class="btn btn-success w-100">Finalizar</button>
+                    </form>
+                    </div>
+                    <div class="text-center mt-3">
+                        <a href="<?=LOGIN_PAGE?>">Já tem conta? Faça login</a>
+                    </div>
+        <div class="col-6">
+    <?php include_once(__DIR__ . "/../include/msg.php") ?> <!-- ok -->
+</div>
 
 
 <?php  

@@ -28,6 +28,26 @@ INSERT INTO `usuarios` (
   'USUARIO', 
   'ativo'
 );
+INSERT INTO `anuncios` (
+    `usuarios_id`,
+    `nome_livro`,
+    `imagem_livro`,
+    `valor_anuncio`,
+    `descricao`,
+    `data_publicacao`,
+    `status`,
+    `estado_con`
+) VALUES (
+    1,
+    'Dom Casmurro',
+    'https://images.tcdn.com.br/img/img_prod/1043052/dom_casmurro_12019_1_c24baa33081e8405255ef17ea4c377c1.jpg',
+    39.90,
+    'Livro em bom estado',
+    NOW(),
+    'ativo',
+    'bom'
+);
+
 
 
 

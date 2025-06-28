@@ -10,7 +10,6 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `foto_de_perfil` VARCHAR DEFAULT NULL,
   `telefone` VARCHAR(15) DEFAULT NULL,
   `cpf` VARCHAR(14) NOT NULL,
-  `rg` VARCHAR(12),
   `tipo` ENUM('usuario', 'admin') NOT NULL,
   `status` ENUM('ativo', 'inativo') NOT NULL,
   PRIMARY KEY (`id`)
