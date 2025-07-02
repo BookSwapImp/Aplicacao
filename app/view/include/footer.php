@@ -1,6 +1,7 @@
 
+    </main>
     <footer>
-        <div class="footer-content">
+        <div class="footer-content border-top">
             <div class="logo">
                 <img src="<?=BASEURL_ARQUIVOS?>/bookSwapLogo7.jpeg" alt="BookSwap Logo" s class="img-fluid" style="width: 60px; height: 60px;">
                 <span>BookSwap</span>
@@ -9,5 +10,6 @@
         </div>
        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     </footer>
+    </div>
 </body>
 </html>

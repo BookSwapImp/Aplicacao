@@ -18,7 +18,7 @@ class CadastroController extends Controller{
     }
      /* Método para Cadastrar um usuário a partir dos dados informados no formulário */
      protected function cadastrar(){
-         echo'cadastro não enviado';
+      
          
       //  $this->loadView("cadastro/cadastro.php", []);
         $nome = isset($_POST['nome']) ? trim($_POST['nome']) : null; 
@@ -37,7 +37,7 @@ class CadastroController extends Controller{
         
         if (empty($erros)) {
             // Se não há erros de validação
-            echo 'cadastro enviado';
+           //echo 'cadastro enviado';
             $usuario = new Usuario();
             $usuario->setNome($nome);
             $usuario->setEmail($email);
@@ -55,6 +55,7 @@ class CadastroController extends Controller{
             header("location: " . LOGIN_PAGE);
             exit;
         }  else {
+              // echo'cadastro  enviado';
                 $msgErro = implode("<br>", $erros);
                 $dados["nome"] = $nome;
                 $dados["email"] = $email;

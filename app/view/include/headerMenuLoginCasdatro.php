@@ -6,8 +6,10 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <link rel="stylesheet" href=" <?php BASEURL_CSS?>/custom.css">
 </head>
-  <div class="container d-flex justify-content-center align-items-center vh-100">
-    <div class="row w-100" style="max-width: 10000px;">
+<div class="wrapper">
+ <main>  
+  <div class="container d-flex justify-content-center align-items-center vh-70">
+    <div class="row w-100">
         <div class="col-md-6">
             <div class="form-container border rounded p-4 shadow-sm">
                 <div class="form-logo text-center mb-3">

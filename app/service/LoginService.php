@@ -7,11 +7,15 @@ require_once(__DIR__ . "/../model/Usuario.php");
 class LoginService {
 
     public function validarCampos(?string $email, ?string $senha) {
-        $arrayMsg = array();
+        $arrayMsg = [];
 
-        //Valida o campo nome
+        //Valida o campo 
         if(! $email)
             array_push($arrayMsg, "O campo [Email] é obrigatório.");
+            
+            elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
+                array_push($arrayMsg, "O campo [Email] está em formato inválido.");
+                }
 
         //Valida o campo login
         if(! $senha)
