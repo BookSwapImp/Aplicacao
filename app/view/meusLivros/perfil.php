@@ -63,12 +63,17 @@ require_once(__DIR__ . "/../include/menu.php");
                 </div>
             </form>            
         </div>
-
-        <div class="col-6">
+         <div class="col-6">
             <?php require_once(__DIR__ . "/../include/msg.php"); ?>
         </div>
     </div>
-
+        <div class="row" style="margin-top: 30px;">
+            <div class="col-12">
+                <button class="btn btn-secondary">
+                    <a href="<?=BASEURL?>/controller/MeusLivrosController.php?action=cadastroLivroPage">Cadastrar seus livros</a>
+                </button>
+            </div>
+        </div>
     <div class="row" style="margin-top: 30px;">
         <div class="col-12">
         <a class="btn btn-secondary" 
@@ -76,6 +81,23 @@ require_once(__DIR__ . "/../include/menu.php");
         </div>
     </div>
 </div>
+  <h1><?=$dados['livros']->getIdUsuarioLogado()?></h1>
+   
+            <?php foreach ($dados['livros'] as $a ):               
+                         if(empty($dados['livros'])):
+                             echo'não á livros';    
+                         endif;
+                         ?>
+                    <div class="size">       
+                    <img src="<?= $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>">
+                    <h3><?=$a->getNomeLivro()?></h3><!-- nome -->
+                    <p><?=$a->getDescricao()?></p><!--descricao-->
+                    <p>Preço:R$<?=$a->getValorAnuncio()?></p><!-- preço -->
+                    <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
+                   
+            <?php endforeach;?>
+       
+
 
 <?php  
 require_once(__DIR__ . "/../include/footer.php");

@@ -111,17 +111,22 @@ nav .user-menu img {
     height: auto;
     margin-bottom: 10px;
 }
+.book-card .size{
+     max-width: 300px; max-height: 500px;
+}
 
 .book-card h3 {
     font-size: 1.2em;
     margin-bottom: 5px;
     color: #333;
+    text-align: left;
 }
 
 .book-card p {
     font-size: 0.9em;
     color: #666;
     margin-bottom: 10px;
+    text-align: right;
 }
 
 .book-card .buy-button {

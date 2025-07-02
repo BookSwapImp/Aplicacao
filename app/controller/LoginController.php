@@ -34,7 +34,7 @@ class LoginController extends Controller {
             if($usuario) {
                 //Se encontrou o usuário, salva a sessão e redireciona para a HOME do sistema
                 $this->loginService->salvarUsuarioSessao($usuario);
-
+            
                 header("location: " . HOME_PAGE);
                 exit;
             } else {

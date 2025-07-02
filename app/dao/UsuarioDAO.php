@@ -101,7 +101,7 @@ class UsuarioDAO {
         }
 
         return null;
-        }*/
+        }*/ 
     public function findByCpf(int $cpf){
         $conn = Connection::getConn();
         $sql = "SELECT * FROM usuarios u".

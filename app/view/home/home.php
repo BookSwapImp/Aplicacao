@@ -22,17 +22,17 @@ require_once(__DIR__ . "/../include/menu.php");
                 <!-- Livro 1 -->
           
             <?php foreach ($dados as $a ):?>                
-               <div class="book-card" style="max-width: 200px;">
+               <div class="book-card" style="max-width: 300px;">
                   <?php if(empty($dados)):
                     echo'não á livros';    
                          endif;
                          ?>
-                    <div style="max-width: 200px; max-height: 500px;">       
+                    <div class="size">       
                     <img src="<?= $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>">
                     <h3><?=$a->getNomeLivro()?></h3><!-- nome -->
                     <p><?=$a->getDescricao()?></p><!--descricao-->
-                    <p><?=$a->getValorAnuncio()?></p><!-- preço -->
-                    <p><?=$a->getDataPublicacao()->format('d/m/Y');?></p>
+                    <p>Preço:R$<?=$a->getValorAnuncio()?></p><!-- preço -->
+                    <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
                     <button class="buy-button"id='<?= $a->getId()?>'>Comprar</button>
                     <button class="trade-button"id='<?=$a->getId()?>'>Trocar</button>
                     </div>

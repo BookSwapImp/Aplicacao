@@ -13,4 +13,4 @@
                 <div class="form-logo text-center mb-3">
                     <img src="<?= BASEURL_ARQUIVOS ?>/bookSwapLogo7.jpeg" alt="logo" class="img-fluid" style="height: 50px;">
                     <h1 class="h4 ms-2">BookSwap</h1>
-                </div>
+                </div>  

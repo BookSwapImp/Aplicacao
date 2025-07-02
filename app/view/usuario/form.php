@@ -26,7 +26,7 @@ require_once(__DIR__ . "/../include/menu.php");
                 </div>
                 
                 <div class="mb-3">
-                    <label class="form-label" for="txtLogin">Login:</label>
+                    <label class="form-label" for="txtLogin">email:</label>
                     <input class="form-control" type="text" id="txtLogin" name="login" 
                         maxlength="15" placeholder="Informe o login"
                         value="<?php echo (isset($dados["usuario"]) ? $dados["usuario"]->getEmail() : ''); ?>"/>

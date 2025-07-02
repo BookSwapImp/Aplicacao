@@ -69,21 +69,23 @@ class LivroDAO{
 
         $stm->execute();
         }
+
         public function findLivroByUsuariosId(int $usuarios_id){
-        $conn = Connection::getConn();
-        $sql = "SELECT * FROM anuncios an".
-            "WHERE BINARY an.usuarios_id = ?";
+            $conn = Connection::getConn();
+            $sql = "SELECT * FROM anuncios an
+            WHERE BINARY an.usuarios_id = ?";
+            
             $stm = $conn->prepare($sql);
             $stm->execute([$usuarios_id]);
             $result = $stm->fetchAll();
             $livros = $this->mapLivros($result);
             if(count($livros) == 1){
-                return false;
+                return $livros;
             }
             elseif(count($livros) == 0)
-                return true;
+                return "não tem livros";
 
-            die("UsuarioDAO.findByTelefone()" . 
+            die("UsuarioDAO.findLivroByUsuariosId()" . 
             " - Erro.");
     }
 
