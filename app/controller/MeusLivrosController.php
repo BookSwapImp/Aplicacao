@@ -29,7 +29,7 @@ class MeusLivrosController extends Controller {
         $idUsuarioLogado = $this->getIdUsuarioLogado();
         $usuario = $this->usuarioDao->findById($idUsuarioLogado);
         $dados['usuario'] = $usuario;
-        $livros = $this->livroDao->findLivroByUsuariosId($idUsuarioLogado);
+        $livros = $this->livroDao->findLivrosByUsuariosId($idUsuarioLogado);
         $dados['livros'] = $livros;
         
         $this->loadView("meusLivros/perfil.php", $dados); 
