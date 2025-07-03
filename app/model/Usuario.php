@@ -14,6 +14,7 @@ class Usuario implements JsonSerializable {
     private ?string $status;
     private ?string $telefone;
     private ?string $cpf;
+    private ?string $fotoDePerfil;
 
     public function jsonSerialize(): array
     {
@@ -23,6 +24,7 @@ class Usuario implements JsonSerializable {
             "email" => $this->email
         );
     }
+
 
 
 
@@ -166,6 +168,24 @@ class Usuario implements JsonSerializable {
     public function setCpf(?string $cpf): self
     {
         $this->cpf = $cpf;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of fotoDePerfil
+     */
+    public function getFotoDePerfil(): ?string
+    {
+        return $this->fotoDePerfil;
+    }
+
+    /**
+     * Set the value of fotoDePerfil
+     */
+    public function setFotoDePerfil(?string $fotoDePerfil): self
+    {
+        $this->fotoDePerfil = $fotoDePerfil;
 
         return $this;
     }

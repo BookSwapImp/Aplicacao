@@ -8,7 +8,7 @@ require_once(__DIR__ . "/../include/menu.php");
 
 <h3 class="text-center">
     Perfil
-</h3>
+</h3><!-- -->
 
 <div class="container">
 
@@ -36,10 +36,15 @@ require_once(__DIR__ . "/../include/menu.php");
 
         <div class="col-12 mb-2">
             <div class="fw-bold">Foto:</div>
-            <?php //if($dados['usuario']->getFotoPerfil()): ?>
-                <img src="<?= BASEURL_ARQUIVOS . '/basePfp.jpeg' //.  $dados['usuario']->getFotoPerfil() ?>"
+                    <img src="<?= BASEURL_ARQUIVOS . '/basePfp.jpeg'?>"
                     height="300">
-            <?php //endif; ?>
+            <?php 
+             /*<?php if($dados['usuario']->getFotoDePerfil()): ?>
+                   <img src="<?= BASEURL_ARQUIVOS .  $dados['usuario']->getFotoDePerfil() ?>"
+                    height="300">
+            <?php else:?>
+                    <img src="<?= BASEURL_ARQUIVOS . '/basePfp.jpeg'?>"
+                    height="300"*/?>
         </div>
 
     </div>
@@ -55,8 +60,8 @@ require_once(__DIR__ . "/../include/menu.php");
                     <input class="form-control" type="file" 
                         id="txtFoto" name="foto" />
                 </div>
-
-                <input type="hidden" name="fotoAnterior" value="<?= $dados['usuario']->getFotoPerfil() ?>">
+                                                                <!-- 
+                <input type="hidden" name="fotoAnterior" value="<?php // $dados['usuario']->getFotoDePerfil() ?>"  > -->
                 
                 <div class="mt-3">
                     <button type="submit" class="btn btn-success">Gravar</button>
@@ -74,28 +79,26 @@ require_once(__DIR__ . "/../include/menu.php");
                 </button>
             </div>
         </div>
-    <div class="row" style="margin-top: 30px;">
-        <div class="col-12">
-        <a class="btn btn-secondary" 
-                href="<?= BASEURL ?>/controller/UsuarioController.php?action=list">Voltar</a>
-        </div>
-    </div>
 </div>
-  <h1><?=$dados['livros']->getIdUsuarioLogado()?></h1>
+  <h1><!--<?=$dados['usuario']->getid()?>--></h1>
    
-            <?php foreach ($dados['livros'] as $a ):               
-                         if(empty($dados['livros'])):
-                             echo'não á livros';    
-                         endif;
-                         ?>
-                    <div class="size">       
-                    <img src="<?= $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>">
+                    <?php if (empty($dados['livros'])): ?>
+                    <p>Não há livros cadastrados.</p>
+                    <?php else: ?>
+                    <?php foreach ($dados['livros'] as $a): ?>
+        
+                    <div>
+                    <img src="<?= $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>" style="    max-width: 300px;
+                    height: auto;
+                    margin-bottom: 10px;">
                     <h3><?=$a->getNomeLivro()?></h3><!-- nome -->
                     <p><?=$a->getDescricao()?></p><!--descricao-->
                     <p>Preço:R$<?=$a->getValorAnuncio()?></p><!-- preço -->
                     <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
+                    </div>
                    
             <?php endforeach;?>
+            <?php endif;?>
        
 
 
