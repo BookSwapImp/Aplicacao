@@ -46,6 +46,16 @@ INSERT INTO `anuncios` (
     NOW(),
     'ativo',
     'bom'
+),
+(
+    2,
+    'Ilíada',
+    'https://m.media-amazon.com/images/I/81iCk4r43AL._UF1000,1000_QL80_.jpg',
+    50.90,
+    'Livro novo',
+    NOW(),
+    'ativo',
+    'bom'
 );
 
 
