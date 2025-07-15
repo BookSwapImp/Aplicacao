@@ -35,18 +35,16 @@ require_once(__DIR__ . "/../include/menu.php");
         </div>
 
         <div class="col-12 mb-2">
+
             <div class="fw-bold">Foto:</div>
-                    <img src="<?= BASEURL_ARQUIVOS . '/basePfp.jpeg'?>"
-                    height="300">
-            <?php 
-             /*<?php if($dados['usuario']->getFotoDePerfil()): ?>
-                   <img src="<?= BASEURL_ARQUIVOS .  $dados['usuario']->getFotoDePerfil() ?>"
+            <?php if($dados['usuario']->getFotoDePerfil()): ?>
+                    <img src="<?= BASEURL_ARQUIVOS .'/'.$dados['usuario']->getFotoDePerfil() ?>?>"
                     height="300">
             <?php else:?>
                     <img src="<?= BASEURL_ARQUIVOS . '/basePfp.jpeg'?>"
-                    height="300"*/?>
+                    height="300"?>
+            <?php endif;?>      
         </div>
-
     </div>
     
     <div class="row mt-5">
@@ -80,14 +78,14 @@ require_once(__DIR__ . "/../include/menu.php");
             </div>
         </div>
 </div>
-  <h1><!--<?=$dados['usuario']->getid()?>--></h1>
-   
-                    <?php if (empty($dados['livros'])): ?>
+  <h1><!--<?=$dados['usuario']->getNome()?>--></h1>
+                
+    <?php if (empty($dados['anuncios'])): ?>
+           
                     <p>Não há livros cadastrados.</p>
-                    <?php else: ?>
-                    <?php foreach ($dados['livros'] as $a): ?>
-        
-                    <div>
+    <?php else: ?>
+        <?php foreach ($dados['anuncios'] as $a): ?>
+            <div class="book-card" style="max-width: 300px;">
                     <img src="<?= $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>" style="    max-width: 300px;
                     height: auto;
                     margin-bottom: 10px;">
@@ -95,10 +93,10 @@ require_once(__DIR__ . "/../include/menu.php");
                     <p><?=$a->getDescricao()?></p><!--descricao-->
                     <p>Preço:R$<?=$a->getValorAnuncio()?></p><!-- preço -->
                     <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
-                    </div>
-                   
-            <?php endforeach;?>
-            <?php endif;?>
+                    <button class="btn btn-danger"> Deletar</button>
+            </div>
+        <?php endforeach;?>
+    <?php endif;?>
        
 
 

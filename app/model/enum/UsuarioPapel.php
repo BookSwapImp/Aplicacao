@@ -6,8 +6,8 @@ class UsuarioPapel {
 
     public static string $SEPARADOR = "|";
 
-    const USUARIO = "usuario";
-    const ADMINISTRADOR = "admin";
+    const USUARIO = "USUARIO";
+    const ADMINISTRADOR = "ADMINISTRADOR";
 
     public static function getAllAsArray() {
         return [UsuarioPapel::USUARIO, UsuarioPapel::ADMINISTRADOR];

@@ -1,6 +1,6 @@
 <?php
 
-require_once(__DIR__."/dao/LivroDAO.php");
+require_once(__DIR__."/dao/AnunciosDAO.php");
 /*
 $teste = new testeDAO();
 $teste->listLivros();
@@ -8,7 +8,7 @@ $teste->listLivros();
 $teste2 = new LivroDAO();
 $teste->listLivros();
 */
-$usuarios_id = 1;
-$teste = new LivroDAO();
-$teste->findLivroByUsuariosId($usuarios_id);
-
+$usuarios_id = 2;
+$teste = new AnunciosDAO();
+$anuncio = $teste->findAnuncioByAnuncioId($usuarios_id);
+print_r($anuncio);

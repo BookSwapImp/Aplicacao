@@ -2,20 +2,45 @@
 
 
 include_once(__DIR__ . "/../connection/Connection.php");
-include_once(__DIR__ . "/../model/Livro.php");
+include_once(__DIR__ . "/../model/Anuncios.php");
 include_once(__DIR__ . "/../model/Usuario.php");
 
-class LivroDAO{
-     public function listLivros() {
+class AnunciosDAO{
+     public function listAnuncio() {
         $conn = Connection::getConn();
 
         $sql = "SELECT * FROM anuncios a ORDER BY a.id";
         $stm = $conn->prepare($sql);    
         $stm->execute();
         $result = $stm->fetchAll();
-        return $this->mapLivros($result);
+        return $this->mapAnuncios($result);
     }
-     private function mapLivros($result){
+        public function findAnunciosByUsuariosId(int $usuariosId){
+            $conn = Connection::getConn();
+            $sql = "SELECT * FROM anuncios an
+                    WHERE BINARY an.usuarios_id = ?";
+            
+            $stm = $conn->prepare($sql);
+            $stm->execute([$usuariosId]);
+            $result = $stm->fetchAll();
+            $livros = $this->mapAnuncios($result);
+            
+            return $livros;
+    }
+        public function findAnuncioByAnuncioId(int $anuncioId){
+                        $conn = Connection::getConn();
+            $sql = "SELECT * FROM anuncios an
+                    WHERE BINARY an.id = ?";
+            
+            $stm = $conn->prepare($sql);
+            $stm->execute([$anuncioId]);
+            $result = $stm->fetchAll();
+            $livros = $this->mapAnuncios($result);
+            
+            return $livros;
+        }
+
+     private function mapAnuncios($result){
         $livros = array();
         foreach ($result as $reg) {
             $livro = new Livro();
@@ -34,7 +59,7 @@ class LivroDAO{
         }
         return $livros;
     }
-    public function insertLivros(Livro $livro) {
+    public function insertAnuncios(Livro $livro) {
         $conn = Connection::getConn();
 
         $sql = "INSERT INTO `anuncios` (
@@ -70,18 +95,6 @@ class LivroDAO{
         $stm->execute();
         }
 
-        public function findLivrosByUsuariosId(int $usuariosId){
-            $conn = Connection::getConn();
-            $sql = "SELECT * FROM anuncios an
-                    WHERE BINARY an.usuarios_id = ?";
-            
-            $stm = $conn->prepare($sql);
-            $stm->execute([$usuariosId]);
-            $result = $stm->fetchAll();
-            $livros = $this->mapLivros($result);
-            
-            return $livros;
-    }
 
 }
 ?>

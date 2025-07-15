@@ -10,7 +10,7 @@ CREATE TABLE IF NOT EXISTS `usuarios` (
   `foto_de_perfil` VARCHAR(255) DEFAULT NULL,
   `telefone` VARCHAR(15) DEFAULT NULL,
   `cpf` VARCHAR(14) NOT NULL,
-  `tipo` ENUM('usuario', 'admin') NOT NULL,
+  `tipo` ENUM('USUARIO', 'ADMINISTRADOR') NOT NULL,
   `status` ENUM('ativo', 'inativo') NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE = InnoDB

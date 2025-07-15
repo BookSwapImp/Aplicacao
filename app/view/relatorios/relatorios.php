@@ -1,3 +1,6 @@
+
 <?php
-echo"este sao os relatorios";
-?>
+
+
+    print(PHP_EOL.'ola mundo');
+    echo'ola relatorios';

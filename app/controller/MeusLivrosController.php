@@ -2,14 +2,14 @@
 
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
-require_once(__DIR__ . "/../dao/LivroDAO.php");
+require_once(__DIR__ . "/../dao/AnunciosDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
 
 class MeusLivrosController extends Controller {
 
     private UsuarioDAO $usuarioDao;
-    private LivroDAO $livroDao;
+    private AnunciosDAO $anunciosDao;
     private UsuarioService $usuarioService;
     private ArquivoService $arquivoService;
 
@@ -18,7 +18,7 @@ class MeusLivrosController extends Controller {
             return;
 
         $this->usuarioDao = new UsuarioDAO();
-        $this->livroDao = new LivroDAO();
+        $this->anunciosDao = new AnunciosDAO();
         $this->usuarioService = new UsuarioService();
         $this->arquivoService = new ArquivoService();
 
@@ -29,8 +29,8 @@ class MeusLivrosController extends Controller {
         $idUsuarioLogado = $this->getIdUsuarioLogado();
         $usuario = $this->usuarioDao->findById($idUsuarioLogado);
         $dados['usuario'] = $usuario;
-        $livros = $this->livroDao->findLivrosByUsuariosId($idUsuarioLogado);
-        $dados['livros'] = $livros;
+        $anuncios = $this->anunciosDao->findAnunciosByUsuariosId($idUsuarioLogado);
+        $dados['anuncios'] = $anuncios;
         
         $this->loadView("meusLivros/perfil.php", $dados); 
     }
@@ -38,7 +38,7 @@ class MeusLivrosController extends Controller {
         $idUsuarioLogado = $this->getIdUsuarioLogado();
         $usuario = $this->usuarioDao->findById($idUsuarioLogado);
         $dados['usuario'] = $usuario;
-        $this->loadView("cadastro/cadastroLivro.php",$dados);
+        $this->loadView("cadastro/cadastroLivros.php",$dados);
     }
 
     protected function save() {

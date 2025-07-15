@@ -166,7 +166,7 @@ class UsuarioDAO {
         
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
-        $stm->bindValue("Email", $usuario->getEmail());
+        $stm->bindValue("email", $usuario->getEmail());
         $stm->bindValue("senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
         $stm->bindValue("id", $usuario->getId());
         $stm->execute();
@@ -184,14 +184,14 @@ class UsuarioDAO {
     }
 
      //Método para alterar a foto de perfil de um usuário
-    /* public function updateFotoPerfil(Usuario $usuario) {
+     public function updateFotoPerfil(Usuario $usuario) {
         $conn = Connection::getConn();
 
-        $sql = "UPDATE usuarios SET foto_perfil = ? WHERE id_usuario = ?";
+        $sql = "UPDATE usuarios SET foto_de_perfil = ? WHERE id= ?";
 
         $stm = $conn->prepare($sql);
-        $stm->execute(array($usuario->getFotoPerfil(), $usuario->getId()));
-    } */ 
+        $stm->execute(array($usuario->getFotoDePerfil(), $usuario->getId()));
+    }  
 
     //Método para retornar a quantidade de usuários salvos na base
     public function quantidadeUsuarios() {
@@ -219,7 +219,8 @@ class UsuarioDAO {
             $usuario->setSenha($reg['senha']);
             $usuario->setTipo($reg['tipo']);
             $usuario->setStatus($reg['status']);
-           // $usuario->setFotoPerfil($reg['foto_perfil']);
+            
+            $usuario->setFotoDePerfil($reg['foto_de_perfil']);
             array_push($usuarios, $usuario);
         }
 

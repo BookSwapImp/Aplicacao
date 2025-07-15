@@ -30,6 +30,7 @@ define('CADASTRO_PAGE', BASEURL . '/controller/CadastroController.php?action=cad
 
 //Página home do sistema
 define('HOME_PAGE', BASEURL . '/controller/HomeController.php?action=home');
+define('HOME_ADMIN', BASEURL. '/controller/RelatoriosController.php?action=home');
 
 //Sessão do usuário
 define('SESSAO_USUARIO_ID',     "usuarioLogadoId");
