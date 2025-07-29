@@ -23,7 +23,7 @@ require_once(__DIR__ . "/../include/menu.php");
                     echo'não á livros';    
                          endif;
                          ?>
-                    <form action="<?=BASEURL."/view/anuncio/anuncio.php"?>">
+                    <form method="get" action="anuncio" >
                     <div class="size">
                         <button class="anuncioButton"type="submit" id="<?= $a->getId()?>">       
                             <img src="<?= $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>">
@@ -37,6 +37,7 @@ require_once(__DIR__ . "/../include/menu.php");
                     <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
                     <button class="buy-button"id='<?= $a->getId()?>'>Comprar</button>
                     <button class="trade-button"id='<?=$a->getId()?>'>Trocar</button>
+                    </form>    
                     </div>
                 </div>
             <?php endforeach;?>

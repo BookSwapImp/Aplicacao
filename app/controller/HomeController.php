@@ -25,6 +25,11 @@ class HomeController extends Controller {
 
         $this->loadView("home/home.php", $dados,  $msgErro, $msgSucesso);
     }
+    protected function anuncio(string $msgErro = "", string $msgSucesso = ""){
+        $dados = $this->anunciosDAO->findAnuncioByAnuncioId($_GET['id']);
+
+        $this->loadView("home/anuncio.php", $dados,  $msgErro, $msgSucesso);
+    }
     
 }
 

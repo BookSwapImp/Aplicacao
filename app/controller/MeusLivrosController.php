@@ -32,7 +32,7 @@ class MeusLivrosController extends Controller {
         $anuncios = $this->anunciosDao->findAnunciosByUsuariosId($idUsuarioLogado);
         $dados['anuncios'] = $anuncios;
         
-        $this->loadView("meusLivros/perfil.php", $dados); 
+        $this->loadView("meusLivros/meusLivros.php", $dados); 
     }
     protected function cadastroLivroPage(){
         $idUsuarioLogado = $this->getIdUsuarioLogado();
