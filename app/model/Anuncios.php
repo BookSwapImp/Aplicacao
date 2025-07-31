@@ -1,7 +1,7 @@
 <?php
 require_once(__DIR__."/Usuario.php");
 
-class Livro extends JsonException {
+class Anuncio implements JsonSerializable {
     private ?int $id;
     private ?Usuario $usuario_id;
     private ?string $nome_livro;
@@ -9,7 +9,6 @@ class Livro extends JsonException {
     private ?float $valor_anuncio;
     private ?string $descricao;
     private ?DateTime $data_publicacao;
-
     private ?string $status; // pode ser 'ativo', 'inativo' ou 'finalizado'
     private ?string $estado_con; // pode ser 'mal', 'medio' ou 'bom'
 
@@ -47,6 +46,14 @@ class Livro extends JsonException {
     public function getUsuarioId(): ?Usuario
     {
         return $this->usuario_id;
+    }
+
+    /**
+     * Get the value of usuario_id as integer
+     */
+    public function getUsuarioIdInt(): ?int
+    {
+        return $this->usuario_id ? $this->usuario_id->getId() : null;
     }
 
     /**

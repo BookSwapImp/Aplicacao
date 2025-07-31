@@ -3,6 +3,7 @@
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 require_once(__DIR__ . "/../dao/AnunciosDAO.php");
+require_once(__DIR__ . "/../util/config.php");
 
 class HomeController extends Controller {
 
@@ -25,9 +26,9 @@ class HomeController extends Controller {
 
         $this->loadView("home/home.php", $dados,  $msgErro, $msgSucesso);
     }
-    protected function anuncio(string $msgErro = "", string $msgSucesso = ""){
-        $dados = $this->anunciosDAO->findAnuncioByAnuncioId($_GET['id']);
-
+       protected function anuncio(string $msgErro = "", string $msgSucesso = ""){
+        $anuncio = $this->anunciosDAO->findAnuncioByAnuncioId($_GET['id']);
+        $dados = ['anuncio' => $anuncio];
         $this->loadView("home/anuncio.php", $dados,  $msgErro, $msgSucesso);
     }
     

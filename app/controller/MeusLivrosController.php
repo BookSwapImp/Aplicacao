@@ -25,7 +25,7 @@ class MeusLivrosController extends Controller {
         $this->handleAction();    
     }
 
-    protected function view() {
+    protected function meusLivrosPage() {
         $idUsuarioLogado = $this->getIdUsuarioLogado();
         $usuario = $this->usuarioDao->findById($idUsuarioLogado);
         $dados['usuario'] = $usuario;
@@ -33,6 +33,13 @@ class MeusLivrosController extends Controller {
         $dados['anuncios'] = $anuncios;
         
         $this->loadView("meusLivros/meusLivros.php", $dados); 
+    }
+
+    protected function perfilPage() {
+        $idUsuarioLogado = $this->getIdUsuarioLogado();
+        $usuario = $this->usuarioDao->findById($idUsuarioLogado);
+        $dados['usuario'] = $usuario;
+        $this->loadView("meusLivros/perfil.php", $dados);
     }
     protected function cadastroLivroPage(){
         $idUsuarioLogado = $this->getIdUsuarioLogado();

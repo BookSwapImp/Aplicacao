@@ -18,9 +18,13 @@ require_once(__DIR__ . "/../include/menu.php");
     </div>
         <div class="row" style="margin-top: 30px;">
             <div class="col-12">
-                <button class="btn btn-secondary">
-                    <a href="<?=BASEURL?>/controller/MeusLivrosController.php?action=cadastroLivroPage">Cadastrar seus livros</a>
-                </button>
+                <form method="get" action="MeusLivrosController.php">               
+                   <input type="hidden"class="action" value="cadastroLivroPage">
+                    <button class="btn btn-secondary"  type="submit">
+                    Cadastrar seus livros
+                    </button>
+                </form>
+ 
             </div>
         </div>
     </div>
@@ -33,12 +37,12 @@ require_once(__DIR__ . "/../include/menu.php");
     <?php else: ?>
         <?php foreach ($dados['anuncios'] as $a): ?>
             <div class="book-card" style="max-width: 300px;">
-                    <img src="<?= $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>" style="    max-width: 300px;
+                    <img src="<?= htmlspecialchars($a->getImagemLivro())?>" alt="<?= htmlspecialchars($a->getNomeLivro())?>" style="    max-width: 300px;
                     height: auto;
                     margin-bottom: 10px;">
-                    <h3><?=$a->getNomeLivro()?></h3><!-- nome -->
-                    <p><?=$a->getDescricao()?></p><!--descricao-->
-                    <p>Preço:R$<?=$a->getValorAnuncio()?></p><!-- preço -->
+                    <h3><?=htmlspecialchars($a->getNomeLivro())?></h3><!-- nome -->
+                    <p><?=htmlspecialchars($a->getDescricao())?></p><!--descricao-->
+                    <p>R$<?=number_format($a->getValorAnuncio(),2,',','.')?></p><!-- preço/ -->
                     <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
                     <button class="btn btn-danger"> Deletar</button>
             </div>

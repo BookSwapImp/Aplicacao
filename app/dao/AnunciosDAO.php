@@ -5,6 +5,11 @@ include_once(__DIR__ . "/../connection/Connection.php");
 include_once(__DIR__ . "/../model/Anuncios.php");
 include_once(__DIR__ . "/../model/Usuario.php");
 
+// Verificar se a classe Anuncio foi carregada
+if (!class_exists('Anuncio')) {
+    die("Erro: Classe Anuncio não foi encontrada. Verifique se o arquivo Anuncios.php está correto.");
+}
+
 class AnunciosDAO{
      public function listAnuncio() {
         $conn = Connection::getConn();
@@ -23,43 +28,49 @@ class AnunciosDAO{
             $stm = $conn->prepare($sql);
             $stm->execute([$usuariosId]);
             $result = $stm->fetchAll();
-            $livros = $this->mapAnuncios($result);
+            $anuncio = $this->mapAnuncios($result);
             
-            return $livros;
+            return $anuncio;
     }
         public function findAnuncioByAnuncioId(int $anuncioId){
-                        $conn = Connection::getConn();
+            $conn = Connection::getConn();
             $sql = "SELECT * FROM anuncios an
                     WHERE BINARY an.id = ?";
             
             $stm = $conn->prepare($sql);
             $stm->execute([$anuncioId]);
             $result = $stm->fetchAll();
-            $livros = $this->mapAnuncios($result);
+            $anuncios = $this->mapAnuncios($result);
             
-            return $livros;
+            if(count($anuncios) == 1)
+                return $anuncios[0];
+            elseif(count($anuncios) == 0)
+                return null;
+
+            die("AnunciosDAO.findAnuncioByAnuncioId()" . 
+                " - Erro: mais de um anúncio encontrado.");
         }
 
      private function mapAnuncios($result){
-        $livros = array();
+        $anuncios = array();
         foreach ($result as $reg) {
-            $livro = new Livro();
+            $anuncio = new Anuncio();
             $usuario = new Usuario();
             $usuario->setId($reg['usuarios_id']);
-            $livro->setId($reg['id']);
-            $livro->setUsuarioId( $usuario);
-            $livro->setNomeLivro( $reg['nome_livro']);
-            $livro->setImagemLivro($reg['imagem_livro']);
-            $livro->setValorAnuncio($reg['valor_anuncio']);
-            $livro->setDescricao($reg['descricao']);
-            $livro->setDataPublicacao(new DateTime($reg['data_publicacao']));
-            $livro->setEstadoCon($reg['estado_con']);
-            $livro->setStatus($reg['status']);
-            array_push($livros, $livro);
+            $anuncio->setId($reg['id']);
+            $anuncio->setUsuarioId( $usuario);
+            $anuncio->setNomeLivro( $reg['nome_livro']);
+            $anuncio->setImagemLivro($reg['imagem_livro']);
+            $anuncio->setValorAnuncio($reg['valor_anuncio']);
+            $anuncio->setDescricao($reg['descricao']);
+            $anuncio->setDataPublicacao(new DateTime($reg['data_publicacao']));
+            $anuncio->setEstadoCon($reg['estado_con']);
+            $anuncio->setStatus($reg['status']);
+            array_push($anuncios, $anuncio);
         }
-        return $livros;
+        return $anuncios;
     }
-    public function insertAnuncios(Livro $livro) {
+    public function insertAnuncios(Anuncio $anuncio) {
         $conn = Connection::getConn();
 
         $sql = "INSERT INTO `anuncios` (
@@ -83,14 +94,14 @@ class AnunciosDAO{
                 )";
 
         $stm = $conn->prepare($sql);
-        $stm->bindValue("usuarios_id", $livro->getUsuarioId());
-        $stm->bindValue("nome_livro", $livro->getNomeLivro());
-        $stm->bindValue("imagem_livro", $livro->getImagemLivro());
-        $stm->bindValue("valor_anuncio", $livro->getValorAnuncio());
-        $stm->bindValue("descricao", $livro->getDescricao());
-        $stm->bindValue("data_publicacao", $livro->getDataPublicacao());
-        $stm->bindValue("status", $livro->getStatus());
-        $stm->bindValue("estado_con", $livro->getEstadoCon());
+        $stm->bindValue("usuarios_id", $anuncio->getUsuarioIdInt());
+        $stm->bindValue("nome_livro", $anuncio->getNomeLivro());
+        $stm->bindValue("imagem_livro", $anuncio->getImagemLivro());
+        $stm->bindValue("valor_anuncio", $anuncio->getValorAnuncio());
+        $stm->bindValue("descricao", $anuncio->getDescricao());
+        $stm->bindValue("data_publicacao", $anuncio->getDataPublicacao());
+        $stm->bindValue("status", $anuncio->getStatus());
+        $stm->bindValue("estado_con", $anuncio->getEstadoCon());
 
         $stm->execute();
         }

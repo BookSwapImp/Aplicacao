@@ -69,55 +69,54 @@ class UsuarioDAO {
     }
     public function findByTelefone(int $telefone){
         $conn = Connection::getConn();
-        $sql = "SELECT * FROM usuarios u".
-            "WHERE BINARY u.telefone = :telefone";
-            $stm = $conn->prepare($sql);
-            $stm->execute([$telefone]);
-            $result = $stm->fetchAll();
-            $usuarios = $this->mapUsuarios($result);
-            if(count($usuarios) == 1){
-                return false;
-            }
-            elseif(count($usuarios) == 0)
-                return true;
-
-            die("UsuarioDAO.findByTelefone()" . 
-            " - Erro.");
-    }
-      /*/public function findByEmail(string $email){
-        $conn = Connection::getConn();
-        $sql = "SELECT * FROM usuarios WHERE BINARY email = :email";
-        $stmt = $conn->prepare($sql);
-        $stmt->bindParam(':email', $email);
-        $stmt->execute();
-
-        if ($stmt->rowCount() > 0) {
-            $dados = $stmt->fetch();
-            $usuario = new Usuario();
-            $usuario->setId($dados['id']);
-            $usuario->setNome($dados['nome']);
-            $usuario->setEmail($dados['email']);
-            return $usuario;
+        $sql = "SELECT * FROM usuarios u " .
+            "WHERE BINARY u.telefone = ?";
+        $stm = $conn->prepare($sql);
+        $stm->execute([$telefone]);
+        $result = $stm->fetchAll();
+        $usuarios = $this->mapUsuarios($result);
+        if(count($usuarios) == 1){
+            return false; // Telefone já existe
         }
+        elseif(count($usuarios) == 0)
+            return true; // Telefone disponível
 
-        return null;
-        }*/ 
+        die("UsuarioDAO.findByTelefone()" . 
+            " - Erro: mais de um usuário encontrado.");
+    }
+    public function findByEmail(string $email){
+        $conn = Connection::getConn();
+        $sql = "SELECT * FROM usuarios u " .
+            "WHERE BINARY u.email = ?";
+        $stm = $conn->prepare($sql);
+        $stm->execute([$email]);
+        $result = $stm->fetchAll();
+        $usuarios = $this->mapUsuarios($result);
+        
+        if(count($usuarios) == 1)
+            return $usuarios[0];
+        elseif(count($usuarios) == 0)
+            return null;
+
+        die("UsuarioDAO.findByEmail()" . 
+            " - Erro: mais de um usuário encontrado.");
+    }
     public function findByCpf(int $cpf){
         $conn = Connection::getConn();
-        $sql = "SELECT * FROM usuarios u".
+        $sql = "SELECT * FROM usuarios u " .
             "WHERE BINARY u.cpf = ?";
-            $stm = $conn->prepare($sql);
-            $stm->execute([$cpf]);
-            $result = $stm->fetchAll();
-            $usuarios = $this->mapUsuarios($result);
-            if(count($usuarios) == 1){
-                return false;
-            }
-            elseif(count($usuarios) == 0)
-                return true;
+        $stm = $conn->prepare($sql);
+        $stm->execute([$cpf]);
+        $result = $stm->fetchAll();
+        $usuarios = $this->mapUsuarios($result);
+        if(count($usuarios) == 1){
+            return false; // CPF já existe
+        }
+        elseif(count($usuarios) == 0)
+            return true; // CPF disponível
 
-            die("UsuarioDAO.findByCpf()" . 
-            " - Erro.");
+        die("UsuarioDAO.findByCpf()" . 
+            " - Erro: mais de um usuário encontrado.");
     }
 
     //Método para inserir um Usuario
@@ -146,7 +145,7 @@ class UsuarioDAO {
         $stm->bindValue("status", $usuario->getStatus());
         
         if (empty($usuario->getTelefone())) {
-             $stm->bindValue("telefone", 'null()');
+             $stm->bindValue("telefone", null);
         }
         else{
              $stm->bindValue("telefone", $usuario->getTelefone());

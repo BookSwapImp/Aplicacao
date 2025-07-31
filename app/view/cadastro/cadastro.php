@@ -1,7 +1,7 @@
 
 <?php
-#Nome do arquivo: cadatro/cadastro.php
-#Objetivo: interface para logar no sistema
+#Nome do arquivo: cadastro/cadastro.php
+#Objetivo: interface para cadastro no sistema
 
 require_once(__DIR__ . "/../include/headerMenuLoginCasdatro.php");
 ?>
@@ -18,7 +18,7 @@ require_once(__DIR__ . "/../include/headerMenuLoginCasdatro.php");
                         </div>
                         <div class="mb-3">
                             <label for="txtSenha" class="form-label">Senha:</label>
-                            <input type="password" name="senha" id="txtSenha" class="form-control" placeholder="Informe a senha"value="<?= $dados['senha'] ?? '' ?>">
+                            <input type="password" name="senha" id="txtSenha" class="form-control" placeholder="Informe a senha" value="<?= $dados['senha'] ?? '' ?>">
                         </div>
                         <div class="mb-3">
                             <label for="txtConfSenha" class="form-label">Confirme sua senha:</label>
@@ -32,18 +32,21 @@ require_once(__DIR__ . "/../include/headerMenuLoginCasdatro.php");
                             <label for="cpf" class="form-label">CPF:</label>
                             <input type="text" name="cpf" id="cpf" class="form-control" placeholder="Informe o CPF" value="<?= $dados['cpf'] ?? '' ?>">
                         </div>
-                        <div class="col-6">
+                        <div class="mb-3">
                             <?php include_once(__DIR__ . "/../include/msg.php") ?> 
                         </div>
                         <button type="submit" class="btn btn-success w-100">Finalizar</button>
-                         <div class="text-center mt-3">
-                        <a href="<?=LOGIN_PAGE?>">Já tem conta? Faça login</a>
-                    </div>
-                </form>
+                        <div class="text-center mt-3">
+                            <a href="<?=LOGIN_PAGE?>">Já tem conta? Faça login</a>
+                        </div>
+                    </form>
+                </div>
             </div>
-                   
-      
-
+        </div>
+    </div>
+</div>
+</main>
+</div>
 
 <?php  
 require_once(__DIR__ . "/../include/footer.php");

@@ -16,31 +16,44 @@ require_once(__DIR__ . "/../include/menu.php");
             <h2>LIVROS EM DESTAQUE</h2>
             <div class="book-grid">
                 <!-- Livro 1 -->
-          
-            <?php foreach ($dados as $a ):?>                
+
+            <?php 
+                if(empty($dados)):
+                    echo'não á livros';
+                    endif;
+                foreach ($dados as $a ):
+                   if ($a->getUsuarioIdInt() == SESSAO_USUARIO_ID) :
+                        echo"este é seu livro";
+                        continue;
+                   endif;
+                   ?>            
                <div class="book-card" style="max-width: 300px;">
                   <?php if(empty($dados)):
                     echo'não á livros';    
                          endif;
                          ?>
-                    <form method="get" action="anuncio" >
+                    <form method="get" action="HomeController.php">
                     <div class="size">
-                        <button class="anuncioButton"type="submit" id="<?= $a->getId()?>">       
+                        <input type="hidden" name="action" value="anuncio">
+                        <input type="hidden" name="id" value="<?= $a->getId()?>">
+                        <button class="anuncioButton"type="submit">       
                             <img src="<?= $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>">
                         </button>
-                        <button class="anuncioButton"type="submit" id="<?= $a->getId()?>">
+                        <button class="anuncioButton"type="submit">
                             <h3><?=$a->getNomeLivro()?></h3><!-- nome -->
                         </button>
                     </form>
                     <p><?=$a->getDescricao()?></p><!--descricao-->
-                    <p>Preço:R$<?=$a->getValorAnuncio()?></p><!-- preço -->
+                    <p>R$<?= number_format($a->getValorAnuncio(), 2,
+                     ',', '.') ?></p><!-- preço -->
                     <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
                     <button class="buy-button"id='<?= $a->getId()?>'>Comprar</button>
                     <button class="trade-button"id='<?=$a->getId()?>'>Trocar</button>
                     </form>    
                     </div>
                 </div>
-            <?php endforeach;?>
+              <?php 
+             endforeach;?>
         </section>
     </main>
 
