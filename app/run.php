@@ -1,14 +1,31 @@
 <?php
 
-require_once(__DIR__."/dao/AnunciosDAO.php");
-/*
-$teste = new testeDAO();
-$teste->listLivros();
+require_once(__DIR__."/service/ArquivoService.php");
 
-$teste2 = new LivroDAO();
-$teste->listLivros();
-*/
-$usuarios_id = 2;
-$teste = new AnunciosDAO();
-$anuncio = $teste->findAnuncioByAnuncioId($usuarios_id);
-print_r($anuncio);
+$arquivoService = new ArquivoService();
+
+// Testar se o diretório de uploads existe
+$diretorioUploads = __DIR__ . '/arquivos/basePfp.jpeg';
+if (is_dir($diretorioUploads)) {
+    echo "Diretório de uploads existe: " . $diretorioUploads;
+} else {
+    echo "Diretório de uploads não existe";
+}
+
+// Testar com o arquivo basePfp.jpeg
+$arquivoTeste = [
+    'name' => 'basePfp.jpeg',
+    'type' => 'image/jpeg',
+    'tmp_name' => __DIR__ . '/arquivos/basePfp.jpeg',
+    'error' => 0,
+    'size' => filesize(__DIR__ . '/arquivos/basePfp.jpeg')
+];
+
+echo "<br><br>Testando com arquivo: " . $arquivoTeste['tmp_name'];
+
+if (file_exists($arquivoTeste['tmp_name'])) {
+    echo "<br>Arquivo existe!";
+    $arquivoService->salvarArquivo($arquivoTeste);
+} else {
+    echo "<br>Arquivo não encontrado!";
+}

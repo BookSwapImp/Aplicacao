@@ -24,6 +24,7 @@ class ArquivoService {
         if(move_uploaded_file($arquivo["tmp_name"], 
                             PATH_ARQUIVOS. "/" . $nomeArquivoSalvar)) { 
             //Se salvou, retorna o nome do arquivo
+            
             return $nomeArquivoSalvar;
         }
 

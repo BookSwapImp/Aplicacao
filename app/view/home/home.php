@@ -43,6 +43,7 @@ require_once(__DIR__ . "/../include/menu.php");
                             <h3><?=$a->getNomeLivro()?></h3><!-- nome -->
                         </button>
                     </form>
+                    <form action="">
                     <p><?=$a->getDescricao()?></p><!--descricao-->
                     <p>R$<?= number_format($a->getValorAnuncio(), 2,
                      ',', '.') ?></p><!-- preço -->

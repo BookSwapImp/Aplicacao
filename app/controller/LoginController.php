@@ -29,31 +29,36 @@ class LoginController extends Controller {
 
         //Validar os campos
         $erros = $this->loginService->validarCampos($login, $senha);
+        
         if(empty($erros)) {
             //Valida o login a partir do banco de dados
             $usuario = $this->usuarioDao->findByLoginSenha($login, $senha);
-            if($usuario->getTipo() == UsuarioPapel::ADMINISTRADOR) {
-                //Se encontrou o usuário, salva a sessão e redireciona para a HOME do sistema
-                $this->loginService->salvarUsuarioSessao($usuario);
             
-                header("location: " . HOME_ADMIN);
-                exit;
-            }
-                elseif($usuario){
-                $this->loginService->salvarUsuarioSessao($usuario);
-                header("location: " . HOME_PAGE);
-                
+            if($usuario !== null) {
+                // ✅ Usuário encontrado e senha correta
+                if($usuario->getTipo() == UsuarioPapel::ADMINISTRADOR) {
+                    //Se encontrou o usuário, salva a sessão e redireciona para a HOME do sistema
+                    $this->loginService->salvarUsuarioSessao($usuario);
+                    header("location: " . HOME_ADMIN);
+                    exit;
+                } else {
+                    // ✅ Usuário comum
+                    $this->loginService->salvarUsuarioSessao($usuario);
+                    header("location: " . HOME_PAGE);
+                    exit; // ✅ EXIT ADICIONADO
+                }
             } else {
+                // ✅ Usuário não encontrado ou senha incorreta
                 $erros = ["Login ou senha informados são inválidos!"];
             }
         }
 
         //Se há erros, volta para o formulário            
-        $msg = implode("<br>", $erros);
+        $msgErro = implode("<br>", $erros); // ✅ CORRIGIDO PARA $msgErro
         $dados["email"] = $login;
         $dados["senha"] = $senha;
 
-        $this->loadView("login/login.php", $dados, $msg);
+        $this->loadView("login/login.php", $dados, $msgErro);
     }
 
      /* Método para logar um usuário a partir dos dados informados no formulário */
