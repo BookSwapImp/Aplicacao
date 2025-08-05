@@ -8,6 +8,7 @@ include_once(__DIR__ . "/../../util/config.php");
 <html lang="pt-br">
 <head>
     <meta charset="utf-8">
+    <link rel="icon" type="image/x-icon" href="<?= BASEURL_ARQUIVOS ?>/bookSwapLogo7.jpeg">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title><?php echo APP_NAME; ?></title>
     <!-- Bootstrap CSS -->

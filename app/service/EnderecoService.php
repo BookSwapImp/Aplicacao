@@ -76,3 +76,4 @@ class EnderecoService {
         return substr($cepLimpo, 0, 5) . '-' . substr($cepLimpo, 5, 3);
     }
 }
+

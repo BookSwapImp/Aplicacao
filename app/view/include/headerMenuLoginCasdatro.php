@@ -4,6 +4,7 @@
     <meta charset="UTF-8">
     <title>Login</title>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="icon" type="image/x-icon" href="<?= BASEURL_ARQUIVOS ?>/bookSwapLogo7.jpeg">
     <link rel="stylesheet" href=" <?php BASEURL_CSS?>/loginCadastro.css">
     <link rel="stylesheet" href=" <?php BASEURL_CSS?>/footer.css">
 </head>
