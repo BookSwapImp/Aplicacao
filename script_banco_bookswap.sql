@@ -88,11 +88,15 @@ CREATE TABLE IF NOT EXISTS `denuncia` (
 -- Table `enderecos`
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `enderecos` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `usuarios_id` INT NOT NULL,
-  `rua` VARCHAR(60) NOT NULL,
-  `cidade` VARCHAR(45) NOT NULL,
-  `cep` VARCHAR(45) NOT NULL,
+id INT NOT NULL AUTO_INCREMENT,
+  usuarios_id INT NOT NULL,
+  estado VARCHAR(2) NOT NULL,
+  cidade VARCHAR(45) NOT NULL,
+  cep VARCHAR(9) NOT NULL,
+  rua VARCHAR(60) NOT NULL,
+  numero VARCHAR(10) NOT NULL,
+  complemento VARCHAR(60),
+  referencia VARCHAR(100),
   PRIMARY KEY (`id`),
   CONSTRAINT `enderecos_ibfk_1`
     FOREIGN KEY (`usuarios_id`)

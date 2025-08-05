@@ -6,15 +6,17 @@ require_once(__DIR__ . "/../dao/AnunciosDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
 
-class MeusLivrosController extends Controller {
+class MeusLivrosController extends Controller
+{
 
     private UsuarioDAO $usuarioDao;
     private AnunciosDAO $anunciosDao;
     private UsuarioService $usuarioService;
     private ArquivoService $arquivoService;
 
-    public function __construct() {
-        if(! $this->usuarioEstaLogado())
+    public function __construct()
+    {
+        if (! $this->usuarioEstaLogado())
             return;
 
         $this->usuarioDao = new UsuarioDAO();
@@ -22,44 +24,48 @@ class MeusLivrosController extends Controller {
         $this->usuarioService = new UsuarioService();
         $this->arquivoService = new ArquivoService();
 
-        $this->handleAction();    
+        $this->handleAction();
     }
 
-    protected function meusLivrosPage() {
+    protected function meusLivrosPage()
+    {
         $idUsuarioLogado = $this->getIdUsuarioLogado();
         $usuario = $this->usuarioDao->findById($idUsuarioLogado);
         $dados['usuario'] = $usuario;
         $anuncios = $this->anunciosDao->findAnunciosByUsuariosId($idUsuarioLogado);
         $dados['anuncios'] = $anuncios;
-        
-        $this->loadView("meusLivros/meusLivros.php", $dados); 
+
+        $this->loadView("meusLivros/meusLivros.php", $dados);
     }
 
-    protected function perfilPage() {
+    protected function perfilPage()
+    {
         $idUsuarioLogado = $this->getIdUsuarioLogado();
         $usuario = $this->usuarioDao->findById($idUsuarioLogado);
         $dados['usuario'] = $usuario;
         $this->loadView("meusLivros/perfil.php", $dados);
     }
-    protected function cadastroLivroPage(){
+    protected function cadastroLivroPage()
+    {
         $idUsuarioLogado = $this->getIdUsuarioLogado();
         $usuario = $this->usuarioDao->findById($idUsuarioLogado);
         $dados['usuario'] = $usuario;
-        $this->loadView("cadastro/cadastroLivros.php",$dados);
+        $this->loadView("cadastro/cadastroLivros.php", $dados);
     }
 
-    protected function save() {
+    protected function save()
+    {
         $foto = $_FILES["foto"];
-        
+
         //Validar se o usuário mandou a foto de perfil
         $erros = $this->usuarioService->validarFotoPerfil($foto);
-        if(! $erros) {
+        if (! $erros) {
             //1- Salvar a foto em um arquivo
             $this->arquivoService->salvarArquivo($foto);
             echo "Arquivo salvo!";
-            
+
             //2- Atualizar o registro do usuário com o nome da foto
-            
+
             exit;
         }
 
@@ -69,9 +75,21 @@ class MeusLivrosController extends Controller {
 
         $msgErro = implode("<br>", $erros);
 
-        $this->loadView("meusLivros/perfil.php", $dados, $msgErro); 
+        $this->loadView("meusLivros/perfil.php", $dados, $msgErro);
     }
 
+    protected function cadastroEnderecoPage()
+    {
+        $idUsuarioLogado = $this->getIdUsuarioLogado();
+        $usuario = $this->usuarioDao->findById($idUsuarioLogado);
+        $dados['usuario'] = $usuario;
+        $this->loadView("cadastro/cadastroEndereco.php", $dados);
+    }
+
+    protected function cadastroEnderecoOn()  {
+
+         }
 }
+
 
 new MeusLivrosController();
