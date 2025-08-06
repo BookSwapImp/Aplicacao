@@ -3,10 +3,11 @@
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 require_once(__DIR__ . "/../dao/AnunciosDAO.php");
+require_once(__DIR__."/../dao/EnderecoDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
 require_once(__DIR__."/../service/EnderecoService.php");
-require_once(__DIR__."/../service/EnderecoDAO.php");
+
 
 class MeusLivrosController extends Controller {
 
@@ -26,6 +27,7 @@ class MeusLivrosController extends Controller {
         $this->usuarioService = new UsuarioService();
         $this->arquivoService = new ArquivoService();
         $this->enderecoService = new EnderecoService();
+        $this->enderecoDAO = new EnderecoDAO();
 
         $this->handleAction();    
     }
@@ -46,7 +48,7 @@ class MeusLivrosController extends Controller {
         $this->loadView("meusLivros/meusLivros.php", $dados); 
     }
 
-    protected function perfilPage() {
+     protected function perfilPage() {
        $dados['usuario'] = $this->procurarUsuarioId();
         $this->loadView("meusLivros/perfil.php", $dados);
     }
@@ -55,11 +57,21 @@ class MeusLivrosController extends Controller {
         $this->loadView("cadastro/cadastroLivros.php",$dados);
     }
     protected function editarPerfilPage(){
+
         $dados['usuario'] = $this->procurarUsuarioId();
         $this->loadView("meusLivros/editarPerfil.php", $dados);
     }
+    protected function atualizarPerfil(){
+        $nome = $_POST['nome'];
+        $email = $_POST['email'];
+        $cpf = $_POST['cpf'];
+        $senha = $_POST['nova_senha'];
 
-    protected function save() {
+    //$this->loadView("meusLivros/editarPerfil.php", $dados);
+        
+    }
+
+    protected function saveFoto() {
         $foto = $_FILES["foto"];
         
         //Validar se o usuário mandou a foto de perfil
@@ -86,16 +98,46 @@ class MeusLivrosController extends Controller {
     }
 
             protected function cadastroEnderecoOn()  {
-                $nome = $_POST['nome'];
-                $id = $resolveAmanha;
-                $enderosVfc = $this->enderecoService->validarCampos($enderecos);
-                if(! $enderosVfc) {
-                    $this->enderecoDAO->insertEndereco($enderecos);
-                    echo "Endereço salvo!";
+                // Receber dados do formulário com estrutura correta
+                $nome = isset($_POST['nome']) ? trim($_POST['nome']) : null;
+                $rua = isset($_POST['rua']) ? trim($_POST['rua']) : null;
+                $cidade = isset($_POST['cidade']) ? trim($_POST['cidade']) : null;
+                $cep = isset($_POST['cep']) ? trim($_POST['cep']) : null;
+                $estado = isset($_POST['estado']) ? trim($_POST['estado']) : null;
+                $numb = isset($_POST['numb']) ? (int)trim($_POST['numb']) : null;
+                $complemento = isset($_POST['complemento']) ? trim($_POST['complemento']) : null;
+                $main = isset($_POST['main']) ? trim($_POST['main']) : 'normal';
+                
+                // Obter ID do usuário logado
+                $idUsuario = $this->getIdUsuarioLogado();
+                
+                // Validar campos
+                $erros = $this->enderecoService->validarCampos($rua, $cidade, $cep, $estado, $numb);
+                
+                if(empty($erros)) {
+                    // Criar objeto Endereco
+                    $endereco = new Endereco();
+                    $endereco->setNome($nome);
+                    $endereco->setUsuariosId($idUsuario);
+                    $endereco->setRua($rua);
+                    $endereco->setCidade($cidade);
+                    $endereco->setCep($cep);
+                    $endereco->setEstado($estado);
+                    $endereco->setNumb($numb);
+                    $endereco->setMain($main);
+                    
+                    // Salvar endereço
+                   $this->enderecoDAO->insertEndereco($endereco);
+                    
+                    // Redirecionar para página de sucesso
+                    header("Location: " . BASEURL . "/controller/MeusLivrosController.php?action=meusLivrosPage");
+                    exit;
+                } else {
+                    // Retornar com erros
+                    $dados['usuario'] = $this->procurarUsuarioId();
+                    $msgErro = implode("<br>", $erros);
+                    $this->loadView("cadastro/cadastroEndereco.php", $dados, $msgErro);
                 }
-                $dados['usuario'] = $this->procurarUsuarioId();
-                $msgErro = implode("<br>", $enderosVfc);
-                $this->loadView("cadastro/cadastroEndereco.php", $dados, $msgErro);
             }
 
 }

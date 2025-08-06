@@ -37,22 +37,14 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
                             <?= $nome ?>
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUsuario">
-                            <li class="dropdown-item">
-                            <a class="dropdown-item" href="#" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                Configurações
-                            </a>
-                            <ul class="dropdown-menu dropdown-menu-end">
-                                    <li>
-                                        <a class="dropdown-item" href="<?= BASEURL . '/controller/MeusLivrosController.php?action=perfilPage' ?>">
-                                            enderecos                                </a>
-                                    </li>
-                                </ul>
-                            </li>
                             <li>
                                  <a class="dropdown-item" href="<?= BASEURL . '/controller/MeusLivrosController.php?action=perfilPage' ?>">Perfil</a>
                             </li>
                             <li>
                                 <a class="dropdown-item" href="<?= BASEURL . '/controller/MeusLivrosController.php?action=meusLivrosPage' ?>">Meus Livros</a>
+                            </li>
+                             <li>
+                                <a class="dropdown-item" href="<?= BASEURL . '/controller/MeusLivrosController.php?action=cadastroEnderecoPage' ?>">endereços</a>
                             </li>
                             <li>
                                 <a class="dropdown-item text-danger" href="<?= LOGOUT_PAGE ?>">Sair da conta</a>

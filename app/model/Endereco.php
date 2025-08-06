@@ -1,15 +1,15 @@
 <?php
 require_once(__DIR__."/Usuario.php");
-class Endereco extends Usuario{
+class Endereco {
     private ?Int $id;
-    private ?string $name;
+    private ?string $nome;
+    private ?int $usuarios_id;
     private ?string $rua;
     private ?string $cidade;
-    private ?string $estado;
     private ?string $cep;
-    private ?Usuario $idUsuario;
-
-    
+    private ?string $estado;
+    private ?int $numb;
+    private ?string $main;
 
     /**
      * Get the value of id
@@ -25,34 +25,41 @@ class Endereco extends Usuario{
     public function setId(?Int $id): self
     {
         $this->id = $id;
-
         return $this;
     }
 
     /**
-     * Get the value of name
+     * Get the value of nome
      */
-    public function getName(): ?string
+    public function getNome(): ?string
     {
-        return $this->name;
+        return $this->nome;
     }
 
     /**
-     * Set the value of name
+     * Set the value of nome
      */
-    public function setName(?string $name): self
+    public function setNome(?string $nome): self
     {
-        $this->name = $name;
-
+        $this->nome = $nome;
         return $this;
     }
-    public function getEstado(): ? string
+
+    /**
+     * Get the value of usuarios_id
+     */
+    public function getUsuariosId(): ?int
     {
-        return $this->estado;
+        return $this->usuarios_id;
     }
-    public function setEstado(?string $estado)
+
+    /**
+     * Set the value of usuarios_id
+     */
+    public function setUsuariosId(?int $usuarios_id): self
     {
-        $this->estado = $estado;
+        $this->usuarios_id = $usuarios_id;
+        return $this;
     }
 
     /**
@@ -69,7 +76,6 @@ class Endereco extends Usuario{
     public function setRua(?string $rua): self
     {
         $this->rua = $rua;
-
         return $this;
     }
 
@@ -87,7 +93,6 @@ class Endereco extends Usuario{
     public function setCidade(?string $cidade): self
     {
         $this->cidade = $cidade;
-
         return $this;
     }
 
@@ -105,29 +110,57 @@ class Endereco extends Usuario{
     public function setCep(?string $cep): self
     {
         $this->cep = $cep;
-
         return $this;
     }
 
     /**
-     * Get the value of idUsuario
+     * Get the value of estado
      */
-    public function getIdUsuario(): ?Usuario
+    public function getEstado(): ?string
     {
-        return $this->idUsuario;
+        return $this->estado;
     }
-    public function getIdUsuarioInt():? int
-    {
-        return $this->idUsuario ? $this->idUsuario->getId() : null;
-    }   
 
     /**
-     * Set the value of idUsuario
+     * Set the value of estado
      */
-    public function setIdUsuario(?Usuario $idUsuario): self
+    public function setEstado(?string $estado): self
     {
-        $this->idUsuario = $idUsuario;
+        $this->estado = $estado;
+        return $this;
+    }
 
+    /**
+     * Get the value of numb
+     */
+    public function getNumb(): ?int
+    {
+        return $this->numb;
+    }
+
+    /**
+     * Set the value of numb
+     */
+    public function setNumb(?int $numb): self
+    {
+        $this->numb = $numb;
+        return $this;
+    }
+
+    /**
+     * Get the value of main
+     */
+    public function getMain(): ?string
+    {
+        return $this->main;
+    }
+
+    /**
+     * Set the value of main
+     */
+    public function setMain(?string $main): self
+    {
+        $this->main = $main;
         return $this;
     }
 }

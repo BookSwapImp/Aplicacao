@@ -160,15 +160,16 @@ class UsuarioDAO {
         $conn = Connection::getConn();
 
         $sql = "UPDATE usuarios SET nome = :nome, email = :email," . 
-               " senha = :senha ".   
+               " senha = :senha ,cpf = :cpf".   
                " WHERE id = :id";
-        
+            
+        $senhaCripto = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
+
         $stm = $conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("email", $usuario->getEmail());
-        $stm->bindValue("senha", password_hash($usuario->getSenha(), PASSWORD_DEFAULT));
-        $stm->bindValue("id", $usuario->getId());
-        $stm->execute();
+        $stm->bindValue("cpf",$usuario->getCpf());
+        $stm->bindValue("senha", $senhaCripto);
     }
 
     //Método para excluir um Usuario pelo seu ID

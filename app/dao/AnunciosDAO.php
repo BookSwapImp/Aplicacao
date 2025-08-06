@@ -13,8 +13,7 @@ if (!class_exists('Anuncio')) {
 class AnunciosDAO{
      public function listAnuncio() {
         $conn = Connection::getConn();
-
-        $sql = "SELECT * FROM anuncios a ORDER BY a.id";
+        $sql = "SELECT * FROM anuncios a WHERE status = 'ativo' ORDER BY a.id";
         $stm = $conn->prepare($sql);    
         $stm->execute();
         $result = $stm->fetchAll();
