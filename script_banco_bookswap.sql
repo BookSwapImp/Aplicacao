@@ -97,6 +97,7 @@ CREATE TABLE IF NOT EXISTS `enderecos` (
   `estado` VARCHAR(45) NOT NULL,
   `numb` INT(10) NOT NULL,
   `main` ENUM('main','normal'),
+
   PRIMARY KEY (`id`),
   CONSTRAINT `enderecos_ibfk_1`
     FOREIGN KEY (`usuarios_id`)

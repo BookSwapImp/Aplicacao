@@ -10,6 +10,7 @@ require_once(__DIR__ . "/../include/menu.php");
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
+
                         <form method="POST" action="<?= BASEURL . '/controller/MeusLivrosController.php?action=cadastroEnderecoOn' ?>" enctype="multipart/form-data">
                                 <label for="nome">Nome do Endereço:</label>
                                 <input type="text" id="nome" name="nome" required placeholder="Ex: Casa, Trabalho, etc.">
@@ -51,7 +52,6 @@ require_once(__DIR__ . "/../include/menu.php");
                                     ?>
                                         <option value="<?= $sigla ?>"><?= $nome ?></option>
                                     <?php endforeach; ?>
-                                </select>
 
                                 <label for="cidade">Cidade:</label>
                                 <input type="text" id="cidade" name="cidade" required>
@@ -62,13 +62,17 @@ require_once(__DIR__ . "/../include/menu.php");
                                 <label for="rua">Rua:</label>
                                 <input type="text" id="rua" name="rua" required>
 
-                                <label for="numb">Número da Residência:</label>
-                                <input type="number" id="numb" name="numb" required>
+
+                                <label for="numero">Número da Residência:</label>
+                                <input type="text" id="numero" name="numero" required>
+
 
                                 <label for="complemento">Complemento:</label>
                                 <input type="text" id="complemento" name="complemento">
 
-                                <input type="hidden" name="main" value="normal">
+
+                                <label for="referencia">Ponto de Referência:</label>
+                                <input type="text" id="referencia" name="referencia">
 
                                 <button type="submit">Cadastrar Endereço</button>
                             </form>
