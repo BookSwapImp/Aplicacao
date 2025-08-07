@@ -6,13 +6,17 @@ include_once(__DIR__ . "/../connection/Connection.php");
 include_once(__DIR__ . "/../model/Usuario.php");
 
 class UsuarioDAO {
-
+    private $conn;
+    public function __construct(){
+        $this->conn = Connection::getConn();
+       
+    }
+   
     //Método para listar os usuaários a partir da base de dados
     public function list() {
-        $conn = Connection::getConn();
-
+     
         $sql = "SELECT * FROM usuarios u ORDER BY u.nome";
-        $stm = $conn->prepare($sql);    
+        $stm = $this->conn->prepare($sql);    
         $stm->execute();
         $result = $stm->fetchAll();
         
@@ -23,11 +27,10 @@ class UsuarioDAO {
 
     //Método para buscar um usuário por seu ID
     public function findById(int $id) {
-        $conn = Connection::getConn();
-
+    
         $sql = "SELECT * FROM usuarios u" .
                " WHERE u.id = ?";
-        $stm = $conn->prepare($sql);    
+        $stm = $this->conn->prepare($sql);    
         $stm->execute([$id]);
         $result = $stm->fetchAll();
 
@@ -45,11 +48,9 @@ class UsuarioDAO {
 
     //Método para buscar um usuário por seu login e senha
     public function findByLoginSenha(string $login, string $senha) {
-        $conn = Connection::getConn();
-
-        $sql = "SELECT * FROM usuarios u" .
+      $sql = "SELECT * FROM usuarios u" .
                " WHERE BINARY u.email = ?";
-        $stm = $conn->prepare($sql);    
+        $stm = $this->conn->prepare($sql);    
         $stm->execute([$login]);
         $result = $stm->fetchAll();
 
@@ -68,10 +69,9 @@ class UsuarioDAO {
             " - Erro: mais de um usuário encontrado.");
     }
     public function findByTelefone(int $telefone){
-        $conn = Connection::getConn();
         $sql = "SELECT * FROM usuarios u " .
             "WHERE BINARY u.telefone = ?";
-        $stm = $conn->prepare($sql);
+        $stm = $this->conn->prepare($sql);
         $stm->execute([$telefone]);
         $result = $stm->fetchAll();
         $usuarios = $this->mapUsuarios($result);
@@ -85,10 +85,9 @@ class UsuarioDAO {
             " - Erro: mais de um usuário encontrado.");
     }
     public function findByEmail(string $email){
-        $conn = Connection::getConn();
-        $sql = "SELECT * FROM usuarios u " .
+      $sql = "SELECT * FROM usuarios u " .
             "WHERE BINARY u.email = ?";
-        $stm = $conn->prepare($sql);
+        $stm = $this->conn->prepare($sql);
         $stm->execute([$email]);
         $result = $stm->fetchAll();
         $usuarios = $this->mapUsuarios($result);
@@ -102,10 +101,9 @@ class UsuarioDAO {
             " - Erro: mais de um usuário encontrado.");
     }
     public function findByCpf(int $cpf){
-        $conn = Connection::getConn();
-        $sql = "SELECT * FROM usuarios u " .
+       $sql = "SELECT * FROM usuarios u " .
             "WHERE BINARY u.cpf = ?";
-        $stm = $conn->prepare($sql);
+        $stm = $this->conn->prepare($sql);
         $stm->execute([$cpf]);
         $result = $stm->fetchAll();
         $usuarios = $this->mapUsuarios($result);
@@ -121,8 +119,6 @@ class UsuarioDAO {
 
     //Método para inserir um Usuario
     public function insert(Usuario $usuario) {
-        $conn = Connection::getConn();
-
         $sql = "INSERT INTO `usuarios`( `nome`, `email`,`senha`, `telefone`, `cpf`, `tipo`, `status`) 
                                     VALUES (
                                     :nome, 
@@ -136,7 +132,7 @@ class UsuarioDAO {
         
         $senhaCripto = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
 
-        $stm = $conn->prepare($sql);
+        $stm = $this->conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("email", $usuario->getEmail());
         $stm->bindValue("cpf",$usuario->getCpf());
@@ -157,49 +153,45 @@ class UsuarioDAO {
 
     //Método para atualizar um Usuario
     public function update(Usuario $usuario) {
-        $conn = Connection::getConn();
-
-        $sql = "UPDATE usuarios SET nome = :nome, email = :email," . 
-               " senha = :senha ,cpf = :cpf".   
+      
+        $sql = "UPDATE usuarios SET nome = :nome, email = :email, cpf = :cpf, telefone = :telefone" .   
                " WHERE id = :id";
-            
-        $senhaCripto = password_hash($usuario->getSenha(), PASSWORD_DEFAULT);
-
-        $stm = $conn->prepare($sql);
+    
+        $stm = $this->conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("email", $usuario->getEmail());
-        $stm->bindValue("cpf",$usuario->getCpf());
-        $stm->bindValue("senha", $senhaCripto);
+        $stm->bindValue("cpf", $usuario->getCpf());
+        $stm->bindValue("telefone", $usuario->getTelefone());
+        $stm->bindValue("id", $usuario->getId());
+        
+        return $stm->execute();
     }
 
     //Método para excluir um Usuario pelo seu ID
     public function deleteById(int $id) {
-        $conn = Connection::getConn();
-
+     
         $sql = "DELETE FROM usuarios WHERE id= :id";
         
-        $stm = $conn->prepare($sql);
+        $stm = $this->conn->prepare($sql);
         $stm->bindValue("id", $id);
         $stm->execute();
     }
 
      //Método para alterar a foto de perfil de um usuário
      public function updateFotoPerfil(Usuario $usuario) {
-        $conn = Connection::getConn();
-
+     
         $sql = "UPDATE usuarios SET foto_de_perfil = ? WHERE id= ?";
 
-        $stm = $conn->prepare($sql);
+        $stm = $this->conn->prepare($sql);
         $stm->execute(array($usuario->getFotoDePerfil(), $usuario->getId()));
     }  
 
     //Método para retornar a quantidade de usuários salvos na base
     public function quantidadeUsuarios() {
-        $conn = Connection::getConn();
-
+      
         $sql = "SELECT COUNT(*) AS qtd_usuarios FROM usuarios";
 
-        $stm = $conn->prepare($sql);
+        $stm = $this->conn->prepare($sql);
         $stm->execute();
         $result = $stm->fetchAll();
 

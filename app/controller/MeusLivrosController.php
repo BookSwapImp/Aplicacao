@@ -47,7 +47,16 @@ class MeusLivrosController extends Controller {
         $dados['anuncios'] = $this->procurarAnunciosId();
         $this->loadView("meusLivros/meusLivros.php", $dados); 
     }
+    protected function alterarLivro(){
 
+    }
+  /*  protected function deletarLivro(){
+        $idLivro = isset($_GET['idLivro']) ? (int)trim($_GET['idLivro']):null;
+        $this->anunciosDao->deleteAnuncio($idLivro);
+        $this->arquivoService->deleteArquivo($idLivro);
+        $this->loadView("meusLivros/perfil.php"); 
+    }
+*/
      protected function perfilPage() {
        $dados['usuario'] = $this->procurarUsuarioId();
         $this->loadView("meusLivros/perfil.php", $dados);
@@ -62,13 +71,43 @@ class MeusLivrosController extends Controller {
         $this->loadView("meusLivros/editarPerfil.php", $dados);
     }
     protected function atualizarPerfil(){
-        $nome = $_POST['nome'];
-        $email = $_POST['email'];
-        $cpf = $_POST['cpf'];
-        $senha = $_POST['nova_senha'];
 
-    //$this->loadView("meusLivros/editarPerfil.php", $dados);
+        // Receber dados do formulário com estrutura correta
+        $imagem = [];
+        $nome = isset($_POST['nome']) ? trim($_POST['nome']) : null;
+        $email = isset($_POST['email']) ? trim($_POST['email']) : null;
+        $cpf = isset($_POST['cpf']) ? trim($_POST['cpf']) : null;
+        $telefone = isset($_POST['telefone']) ? trim($_POST['telefone']) : null;
+        $imagem =isset($_FILES['foto_perfil']) ? trim($_FILES['foto_perfil']): null;
+     
+        // Obter ID do usuário logado
+        $idUsuario = $this->getIdUsuarioLogado();
         
+        // Validar campos
+        $erros = $this->usuarioService->validarDados($nome, $email, $telefone,$cpf);
+        $erros = $this->arquivoService->salvarArquivo($imagem);
+        
+        if(empty($erros)) {
+            // Atualizar perfil do usuário
+            $usuario = new Usuario();
+            $usuario->setId($idUsuario);
+            $usuario->setNome($nome);
+            $usuario->setEmail($email);
+            $usuario->setCpf($cpf);
+            $usuario->setTelefone($telefone);
+            
+            // Atualizar usuário
+            $this->usuarioDao->update($usuario);
+            
+            // Redirecionar para página de sucesso
+            header("Location: " . BASEURL . "/controller/MeusLivrosController.php?action=perfilPage");
+            exit;
+        } else {
+            // Retornar com erros
+            $dados['usuario'] = $this->procurarUsuarioId();
+            $msgErro = implode("<br>", $erros);
+            $this->loadView("meusLivros/editarPerfil.php", $dados, $msgErro);
+        }
     }
 
     protected function saveFoto() {

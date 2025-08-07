@@ -23,8 +23,7 @@ class Controller {
             $this->$methodName();
         
         else {
-            echo "Ação não encontrada no controller.<br>";
-            echo "Verifique com o administrador do sistema.";
+          $this->loadView("erros/erro404.php", []);
         }
 
     }

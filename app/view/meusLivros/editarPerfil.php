@@ -86,26 +86,6 @@ require_once(__DIR__ . "/../include/menu.php");
                                    placeholder="(00) 00000-0000">
                         </div>
 
-                        <!-- Nova Senha (opcional) -->
-                        <div class="mb-3">
-                            <label for="nova_senha" class="form-label">Nova Senha (deixe em branco para manter a atual)</label>
-                            <input type="password" 
-                                   class="form-control" 
-                                   id="nova_senha" 
-                                   name="nova_senha" 
-                                   maxlength="255">
-                        </div>
-
-                        <!-- Confirmar Nova Senha -->
-                        <div class="mb-3">
-                            <label for="confirmar_senha" class="form-label">Confirmar Nova Senha</label>
-                            <input type="password" 
-                                   class="form-control" 
-                                   id="confirmar_senha" 
-                                   name="confirmar_senha" 
-                                   maxlength="255">
-                        </div>
-
                         <!-- Botões -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                             <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=perfilPage' ?>" 
