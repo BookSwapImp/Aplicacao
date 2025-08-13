@@ -18,7 +18,7 @@ require_once(__DIR__ . "/../include/menu.php");
     </div>
         <div class="row" style="margin-top: 30px;">
             <div class="col-12">       
-                    <a class="dropdown-item" href="<?= BASEURL . '/controller/MeusLivrosController.php?action=cadastroLivroPage' ?>">
+                    <a class="dropdown-item" href="<?= BASEURL . '/controller/MenuController.php?action=cadastroLivroPage' ?>">
                     <h4>+</h4>
                     </a>
             </div>

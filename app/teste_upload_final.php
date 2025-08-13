@@ -16,8 +16,8 @@ if (!file_exists($arquivoTeste)) {
 
 // Simular estrutura $_FILES com basePfp.jpg
 $arquivoSimulado = [
-    'name' => 'download (2).jpg',
-    'type' => 'image/jpg',
+    'name' => 'basePfp.jpeg',
+    'type' => 'image/jpeg',
     'tmp_name' => $arquivoTeste,
     'error' => 0,
     'size' => filesize($arquivoTeste)

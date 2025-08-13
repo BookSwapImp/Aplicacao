@@ -13,10 +13,6 @@ require_once(__DIR__ . "/../include/menu.php");
                         <h4 class="mb-0">
                             <i class="fas fa-user me-2"></i>Perfil do Usuário
                         </h4>
-                        <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=editarPerfilPage' ?>" 
-                           class="btn btn-light btn-sm">
-                            <i class="fas fa-edit me-1"></i>Editar Perfil
-                        </a>
                     </div>
                 </div>
                 <div class="card-body">
@@ -82,11 +78,11 @@ require_once(__DIR__ . "/../include/menu.php");
                 <!-- Botões de Ação -->
                 <div class="card-footer">
                     <div class="d-flex justify-content-between">
-                        <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=meusLivrosPage' ?>" 
+                        <a href="<?= BASEURL . '/controller/MenuController.php?action=meusLivrosPage' ?>" 
                            class="btn btn-secondary">
                             <i class="fas fa-arrow-left me-1"></i>Voltar
                         </a>
-                        <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=editarPerfilPage' ?>" 
+                        <a href="<?= BASEURL . '/controller/MenuController.php?action=editarPerfilPage' ?>" 
                            class="btn btn-primary">
                             <i class="fas fa-edit me-1"></i>Editar Perfil
                         </a>

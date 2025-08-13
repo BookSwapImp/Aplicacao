@@ -1,0 +1,11 @@
+# Use uma imagem base do PHP com Apache
+FROM php:8.2-apache
+
+# Copie os arquivos da sua aplicação para o diretório padrão do Apache
+COPY . /var/www/html
+
+# Dê as permissões corretas para o diretório
+RUN chown -R www-data:www-data /var/www/html
+
+# Exponha a porta 80 (porta padrão do Apache no container)
+EXPOSE 80

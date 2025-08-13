@@ -67,5 +67,17 @@ public function salvarArquivo(array $arquivo) {
     throw new Exception("Falha ao mover/copiar o arquivo para o destino. TMP: " . $arquivo['tmp_name'] . " DEST: " . $destino);
 }
 
-
+public function excluirArquivo(string $nomeArquivo) {
+    $arquivoCompleto = PATH_ARQUIVOS . DIRECTORY_SEPARATOR .  $nomeArquivo;
+    if (file_exists($arquivoCompleto)) {
+        if (unlink($arquivoCompleto)) {
+            return true;
+        } else {
+            throw new Exception("Falha ao apagar o arquivo: " . $arquivoCompleto);
+        }
+    } else {
+        throw new Exception("Arquivo não encontrado: " . $arquivoCompleto);
+     }
+    }
 }
+

@@ -10,7 +10,7 @@ require_once(__DIR__ . "/../include/menu.php");
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="<?= BASEURL . '/controller/MeusLivrosController.php?action=saveLivro' ?>" enctype="multipart/form-data">
+                        <form method="POST" action="<?= BASEURL . '/controller/MenuController.php?action=saveLivro' ?>" enctype="multipart/form-data">
                             
                             <!-- Nome do Livro -->
                             <div class="mb-3">
@@ -83,7 +83,7 @@ require_once(__DIR__ . "/../include/menu.php");
 
                             <!-- Botões -->
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=meusLivrosPage' ?>" 
+                                <a href="<?= BASEURL . '/controller/MenuController.php?action=meusLivrosPage' ?>" 
                                    class="btn btn-secondary me-md-2">
                                     Cancelar
                                 </a>

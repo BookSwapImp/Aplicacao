@@ -14,7 +14,7 @@ require_once(__DIR__ . "/../include/menu.php");
                     </h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="<?= BASEURL . '/controller/MeusLivrosController.php?action=atualizarPerfil' ?>" enctype="multipart/form-data">
+                    <form method="POST" action="<?= BASEURL . '/controller/MenuController.php?action=atualizarPerfil' ?>" enctype="multipart/form-data">
                         
                         <!-- Foto do Perfil -->
                         <div class="row mb-4">
@@ -88,7 +88,7 @@ require_once(__DIR__ . "/../include/menu.php");
 
                         <!-- Botões -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=perfilPage' ?>" 
+                            <a href="<?= BASEURL . '/controller/MenuController.php?action=perfilPage' ?>" 
                                class="btn btn-secondary me-md-2">
                                 <i class="fas fa-times me-1"></i>Cancelar
                             </a>

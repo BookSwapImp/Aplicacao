@@ -41,7 +41,7 @@ define('SESSAO_USUARIO_STATUS', "usuarioLogadoStatus");
 define('SESSAO_USUARIO_CPF',    "usuarioLogadoCpf");
 define('SESSAO_USUARIO_TEL',    "usuarioLogadoTelefone");
 //Arquivos
-define('PATH_ARQUIVOS', __DIR__ . "/../../arquivos");
+define('PATH_ARQUIVOS', realpath(__DIR__ . "/../../arquivos"));
 define('BASEURL_ARQUIVOS', BASEURL . "/../arquivos");
 define('BASEURL_CSS', BASEURL . "/view/css");
 

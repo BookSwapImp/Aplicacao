@@ -21,12 +21,9 @@ require_once(__DIR__ . "/../include/menu.php");
                 if(empty($dados)):
                     echo'não á livros';
                     endif;
-                foreach ($dados as $a ):
-                   if ($a->getUsuarioIdInt() == SESSAO_USUARIO_ID) :
-                        echo"este é seu livro";
-                        continue;
-                   endif;
-                   ?>            
+                     foreach ($dados as $a ):
+                         // Home acessível para todos os usuários
+                         ?>            
                <div class="book-card" style="max-width: 300px;">
                   <?php if(empty($dados)):
                     echo'não á livros';    

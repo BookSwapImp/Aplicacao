@@ -52,14 +52,14 @@ class MeusLivrosController extends Controller {
     }
   /*  protected function deletarLivro(){
         $idLivro = isset($_GET['idLivro']) ? (int)trim($_GET['idLivro']):null;
-        $this->anunciosDao->deleteAnuncio($idLivro);
-        $this->arquivoService->deleteArquivo($idLivro);
+        $this->anunciosDao->excluirAnuncio($idLivro);
+        $this->arquivoService->excluitArquivo($idLivro);
         $this->loadView("meusLivros/perfil.php"); 
     }
 */
      protected function perfilPage() {
        $dados['usuario'] = $this->procurarUsuarioId();
-        $this->loadView("meusLivros/perfil.php", $dados);
+        $this->loadView("perfil/perfil.php", $dados);
     }
     protected function cadastroLivroPage(){
         $dados['usuario'] = $this->procurarUsuarioId();
@@ -68,25 +68,25 @@ class MeusLivrosController extends Controller {
     protected function editarPerfilPage(){
 
         $dados['usuario'] = $this->procurarUsuarioId();
-        $this->loadView("meusLivros/editarPerfil.php", $dados);
+        $this->loadView("perfil/editarPerfil.php", $dados);
     }
     protected function atualizarPerfil(){
 
         // Receber dados do formulário com estrutura correta
-        $imagem = [];
+        $imagem = isset($_FILES['foto_perfil']) ? $_FILES['foto_perfil'] : null;
         $nome = isset($_POST['nome']) ? trim($_POST['nome']) : null;
         $email = isset($_POST['email']) ? trim($_POST['email']) : null;
         $cpf = isset($_POST['cpf']) ? trim($_POST['cpf']) : null;
         $telefone = isset($_POST['telefone']) ? trim($_POST['telefone']) : null;
-        $imagem =isset($_FILES['foto_perfil']) ? trim($_FILES['foto_perfil']): null;
+        //$imagem =isset($_FILES['foto_perfil']) ? trim($_FILES['foto_perfil']): null;
      
         // Obter ID do usuário logado
         $idUsuario = $this->getIdUsuarioLogado();
         
         // Validar campos
         $erros = $this->usuarioService->validarDados($nome, $email, $telefone,$cpf);
-        $erros = $this->arquivoService->salvarArquivo($imagem);
-        
+       // $erros = $this->saveFotoUser($imagem);
+
         if(empty($erros)) {
             // Atualizar perfil do usuário
             $usuario = new Usuario();
@@ -95,41 +95,54 @@ class MeusLivrosController extends Controller {
             $usuario->setEmail($email);
             $usuario->setCpf($cpf);
             $usuario->setTelefone($telefone);
-            
+
+            // Se foi enviada nova foto, salva e apaga a anterior
+            if ($imagem && $imagem['error'] === UPLOAD_ERR_OK) {
+                $arquivoService = new ArquivoService();
+                $novoNomeFoto = $arquivoService->salvarArquivo($imagem);
+                // Apaga foto anterior se existir
+                $fotoAntiga = $this->procurarUsuarioId()->getFotoDePerfil();
+                if ($fotoAntiga && $fotoAntiga !== 'basePfp.jpeg') {
+                    $arquivoService->excluirArquivo($fotoAntiga);
+                }
+                $usuario->setFotoDePerfil($novoNomeFoto);
+            }
+
             // Atualizar usuário
             $this->usuarioDao->update($usuario);
-            
+
             // Redirecionar para página de sucesso
-            header("Location: " . BASEURL . "/controller/MeusLivrosController.php?action=perfilPage");
+            header("Location: " . BASEURL . "/controller/MenuController.php?action=perfilPage");
             exit;
         } else {
             // Retornar com erros
             $dados['usuario'] = $this->procurarUsuarioId();
             $msgErro = implode("<br>", $erros);
-            $this->loadView("meusLivros/editarPerfil.php", $dados, $msgErro);
+            $this->loadView("perfil/editarPerfil.php", $dados, $msgErro);
         }
     }
 
-    protected function saveFoto() {
+    private function saveFotoUser($foto) {
         $foto = $_FILES["foto"];
-        
-        //Validar se o usuário mandou a foto de perfil
         $erros = $this->usuarioService->validarFotoPerfil($foto);
-        if(! $erros) {
-            //1- Salvar a foto em um arquivo
-            $this->arquivoService->salvarArquivo($foto);
+        if(!$erros) {
+            $arquivoService = new ArquivoService();
+            $novoNomeFoto = $arquivoService->salvarArquivo($foto);
+            // Apaga foto anterior se existir
+            $fotoAntiga = $this->procurarUsuarioId()->getFotoDePerfil();
+            if ($fotoAntiga && $fotoAntiga !== 'basePfp.jpeg') {
+                $arquivoService->excluirArquivo($fotoAntiga);
+            }
+            // Atualizar registro do usuário com novo nome da foto
+            $usuario = $this->procurarUsuarioId();
+            $usuario->setFotoDePerfil($novoNomeFoto);
+            $this->usuarioDao->update($usuario);
             echo "Arquivo salvo!";
-            
-            //2- Atualizar o registro do usuário com o nome da foto
-            
             exit;
         }
-
         $dados['usuario'] = $this->procurarUsuarioId();
-
         $msgErro = implode("<br>", $erros);
-
-        $this->loadView("meusLivros/perfil.php", $dados, $msgErro); 
+        $this->loadView("perfil/perfil.php", $dados, $msgErro); 
     }
         protected function cadastroEnderecoPage(){
         $dados['usuario'] = $this->procurarUsuarioId();
@@ -169,7 +182,7 @@ class MeusLivrosController extends Controller {
                    $this->enderecoDAO->insertEndereco($endereco);
                     
                     // Redirecionar para página de sucesso
-                    header("Location: " . BASEURL . "/controller/MeusLivrosController.php?action=meusLivrosPage");
+                    header("Location: " . BASEURL . "/controller/MenuController.php?action=meusLivrosPage");
                     exit;
                 } else {
                     // Retornar com erros
