@@ -5,9 +5,9 @@ include_once(__DIR__ . "/../connection/Connection.php");
 include_once(__DIR__ . "/../model/Anuncios.php");
 include_once(__DIR__ . "/../model/Usuario.php");
 
-// Verificar se a classe Anuncio foi carregada
-if (!class_exists('Anuncio')) {
-    die("Erro: Classe Anuncio não foi encontrada. Verifique se o arquivo Anuncios.php está correto.");
+// Verificar se a classe Anuncios foi carregada
+if (!class_exists('Anuncios')) {
+    die("Erro: Classe Anuncios não foi encontrada. Verifique se o arquivo Anuncios.php está correto.");
 }
 
 class AnunciosDAO{
@@ -53,14 +53,13 @@ class AnunciosDAO{
      private function mapAnuncios($result){
         $anuncios = array();
         foreach ($result as $reg) {
-            $anuncio = new Anuncio();
+            $anuncio = new Anuncios();
             $usuario = new Usuario();
             $usuario->setId($reg['usuarios_id']);
             $anuncio->setId($reg['id']);
             $anuncio->setUsuarioId( $usuario);
             $anuncio->setNomeLivro( $reg['nome_livro']);
             $anuncio->setImagemLivro($reg['imagem_livro']);
-            $anuncio->setValorAnuncio($reg['valor_anuncio']);
             $anuncio->setDescricao($reg['descricao']);
             $anuncio->setDataPublicacao(new DateTime($reg['data_publicacao']));
             $anuncio->setEstadoCon($reg['estado_con']);
@@ -69,14 +68,13 @@ class AnunciosDAO{
         }
         return $anuncios;
     }
-    public function insertAnuncios(Anuncio $anuncio) {
+    public function insertAnuncios(Anuncios $anuncio) {
         $conn = Connection::getConn();
 
         $sql = "INSERT INTO `anuncios` (
                     `usuarios_id`,
                     `nome_livro`,
                     `imagem_livro`,
-                    `valor_anuncio`,
                     `descricao`,
                     `data_publicacao`,
                     `status`,
@@ -85,7 +83,6 @@ class AnunciosDAO{
                     :usuarios_id,
                     :nome_livro,
                     :imagem_livro,
-                    :valor_anuncio,
                     :descricao,
                     :data_publicacao,
                     :status,
@@ -96,7 +93,6 @@ class AnunciosDAO{
         $stm->bindValue("usuarios_id", $anuncio->getUsuarioIdInt());
         $stm->bindValue("nome_livro", $anuncio->getNomeLivro());
         $stm->bindValue("imagem_livro", $anuncio->getImagemLivro());
-        $stm->bindValue("valor_anuncio", $anuncio->getValorAnuncio());
         $stm->bindValue("descricao", $anuncio->getDescricao());
         $stm->bindValue("data_publicacao", $anuncio->getDataPublicacao());
         $stm->bindValue("status", $anuncio->getStatus());

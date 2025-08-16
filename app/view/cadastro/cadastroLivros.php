@@ -10,7 +10,7 @@ require_once(__DIR__ . "/../include/menu.php");
             <div class="col-md-8">
                 <div class="card">
                     <div class="card-body">
-                        <form method="POST" action="<?= BASEURL . '/controller/MenuController.php?action=saveLivro' ?>" enctype="multipart/form-data">
+                        <form method="POST" action="<?= BASEURL . '/controller/MeusLivrosController.php?action=saveLivro' ?>" enctype="multipart/form-data">
                             
                             <!-- Nome do Livro -->
                             <div class="mb-3">
@@ -36,18 +36,7 @@ require_once(__DIR__ . "/../include/menu.php");
                                 <div class="form-text">Formatos aceitos: JPG, PNG, GIF. Tamanho máximo: 5MB</div>
                             </div>
 
-                            <!-- Valor do Anúncio -->
-                            <div class="mb-3">
-                                <label for="valor_anuncio" class="form-label">Valor do Anúncio (R$) *</label>
-                                <input type="number" 
-                                       class="form-control" 
-                                       id="valor_anuncio" 
-                                       name="valor_anuncio" 
-                                       placeholder="0.00"
-                                       step="0.01"
-                                       min="0"
-                                       required>
-                            </div>
+
 
                             <!-- Descrição -->
                             <div class="mb-3">
@@ -83,7 +72,7 @@ require_once(__DIR__ . "/../include/menu.php");
 
                             <!-- Botões -->
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                                <a href="<?= BASEURL . '/controller/MenuController.php?action=meusLivrosPage' ?>" 
+                                <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=meusLivrosPage' ?>" 
                                    class="btn btn-secondary me-md-2">
                                     Cancelar
                                 </a>

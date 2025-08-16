@@ -14,7 +14,7 @@ require_once(__DIR__ . "/../include/menu.php");
                     </h4>
                 </div>
                 <div class="card-body">
-                    <form method="POST" action="<?= BASEURL . '/controller/PerfilController.php?action=atualizarPerfil' ?>" enctype="multipart/form-data">
+                    <form method="POST" action="<?= BASEURL . '/controller/MeusLivrosController.php?action=atualizarPerfil' ?>" enctype="multipart/form-data">
                         
                         <!-- Foto do Perfil -->
                         <div class="row mb-4">
@@ -86,9 +86,21 @@ require_once(__DIR__ . "/../include/menu.php");
                                    placeholder="(00) 00000-0000">
                         </div>
 
+                        <!-- Nova Senha (opcional) -->
+                 
+                        <!-- Confirmar Nova Senha -->
+                        <div class="mb-3">
+                            <label for="confirmar_senha" class="form-label">Confirmar Nova Senha</label>
+                            <input type="password" 
+                                   class="form-control" 
+                                   id="confirmar_senha" 
+                                   name="confirmar_senha" 
+                                   maxlength="255">
+                        </div>
+
                         <!-- Botões -->
                         <div class="d-grid gap-2 d-md-flex justify-content-md-end">
-                            <a href="<?= BASEURL . '/controller/PerfilController.php?action=perfilPage' ?>" 
+                            <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=perfilPage' ?>" 
                                class="btn btn-secondary me-md-2">
                                 <i class="fas fa-times me-1"></i>Cancelar
                             </a>
@@ -105,4 +117,4 @@ require_once(__DIR__ . "/../include/menu.php");
 
 <?php  
 require_once(__DIR__ . "/../include/footer.php");
-?>
+?> 

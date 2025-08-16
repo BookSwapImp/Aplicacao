@@ -11,17 +11,13 @@ public function salvarArquivo(array $arquivo) {
     if ($arquivo['error'] !== UPLOAD_ERR_OK) {
         throw new Exception("Erro no upload do arquivo: código " . $arquivo['error']);
     }
-    else{
-        echo("upload_sucees" . $arquivo['error']);
-    }
+   
 
     // Validar tamanho
     if ($arquivo['size'] <= 0) {
         throw new Exception("Arquivo com tamanho inválido ou vazio.");
     }
-    else{
-        echo("upload_sucees" . $arquivo['size']);
-    }
+   
 
     // Extrair extensão de forma mais segura
     $extensao = strtolower(pathinfo($arquivo['name'], PATHINFO_EXTENSION));
@@ -31,10 +27,7 @@ public function salvarArquivo(array $arquivo) {
     if (!in_array($extensao, $extensoesPermitidas)) {
         throw new Exception("Extensão de arquivo não permitida.");
     }
-    else{
-        echo("extensaoAprov" . $extensao);
-    }
-
+    
     // Gerar nome único com hash
     $nomeUnico = uniqid('arquivo_') . '_' . time();
     $nomeArquivo = $nomeUnico . '.' . $extensao;
@@ -48,7 +41,7 @@ public function salvarArquivo(array $arquivo) {
 
     // Salvar arquivo
     $destino = PATH_ARQUIVOS . DIRECTORY_SEPARATOR . $nomeArquivo;
-    echo "TMP: " . $arquivo['tmp_name'] . " DEST: " . $destino . "\n";
+   // echo "TMP: " . $arquivo['tmp_name'] . " DEST: " . $destino . "\n";
     if (!file_exists($arquivo['tmp_name'])) {
         throw new Exception("Arquivo temporário não encontrado: " . $arquivo['tmp_name']);
     }
@@ -66,6 +59,14 @@ public function salvarArquivo(array $arquivo) {
 
     throw new Exception("Falha ao mover/copiar o arquivo para o destino. TMP: " . $arquivo['tmp_name'] . " DEST: " . $destino);
 }
+public function validarArquivo(?array $foto){
+    $erros = array();
+
+    if($foto === null || (isset($foto['size']) && $foto['size'] <= 0)) {
+        array_push($erros, "Informe a foto para o perfil!");
+    }
+    return $erros;
+}
 
 public function excluirArquivo(string $nomeArquivo) {
     $arquivoCompleto = PATH_ARQUIVOS . DIRECTORY_SEPARATOR .  $nomeArquivo;
@@ -73,10 +74,12 @@ public function excluirArquivo(string $nomeArquivo) {
         if (unlink($arquivoCompleto)) {
             return true;
         } else {
+            return false;
             throw new Exception("Falha ao apagar o arquivo: " . $arquivoCompleto);
         }
     } else {
-        throw new Exception("Arquivo não encontrado: " . $arquivoCompleto);
+        return false;
+        // throw new Exception("Arquivo não encontrado: " . $arquivoCompleto);
      }
     }
 }

@@ -26,12 +26,9 @@ CREATE TABLE IF NOT EXISTS `anuncios` (
   `usuarios_id` INT NOT NULL,
   `nome_livro` VARCHAR(55) NOT NULL,
   `imagem_livro` VARCHAR(255) NOT NULL,
-  `valor_anuncio` FLOAT NOT NULL,
   `descricao` VARCHAR(45) NOT NULL,
   `data_publicacao` DATETIME NOT NULL,
-  /*`avaliacao` VARCHAR(255) DEFAULT NULL,
-  `nota` VARCHAR(45) DEFAULT NULL,*/
-  `status` ENUM('ativo', 'inativo', 'finalizado') NOT NULL,
+ `status` ENUM('ativo', 'inativo', 'finalizado') NOT NULL,
   `estado_con` ENUM('mal', 'medio', 'bom') NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `anuncios_ibfk_1`

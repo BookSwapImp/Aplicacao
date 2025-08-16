@@ -153,8 +153,8 @@ class UsuarioDAO {
 
     //Método para atualizar um Usuario
     public function update(Usuario $usuario) {
-      
-        $sql = "UPDATE usuarios SET nome = :nome, email = :email, cpf = :cpf, telefone = :telefone" .   
+
+        $sql = "UPDATE usuarios SET nome = :nome, email = :email, cpf = :cpf, telefone = :telefone, foto_de_perfil = :foto_de_perfil" .
                " WHERE id = :id";
     
         $stm = $this->conn->prepare($sql);
@@ -163,7 +163,7 @@ class UsuarioDAO {
         $stm->bindValue("cpf", $usuario->getCpf());
         $stm->bindValue("telefone", $usuario->getTelefone());
         $stm->bindValue("id", $usuario->getId());
-        
+        $stm->bindValue("foto_de_perfil", $usuario->getFotoDePerfil());
         return $stm->execute();
     }
 

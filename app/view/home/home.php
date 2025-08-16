@@ -42,10 +42,7 @@ require_once(__DIR__ . "/../include/menu.php");
                     </form>
                     <form action="">
                     <p><?=$a->getDescricao()?></p><!--descricao-->
-                    <p>R$<?= number_format($a->getValorAnuncio(), 2,
-                     ',', '.') ?></p><!-- preço -->
                     <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
-                    <button class="buy-button"id='<?= $a->getId()?>'>Comprar</button>
                     <button class="trade-button"id='<?=$a->getId()?>'>Trocar</button>
                     </form>    
                     </div>

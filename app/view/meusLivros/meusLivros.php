@@ -18,7 +18,7 @@ require_once(__DIR__ . "/../include/menu.php");
     </div>
         <div class="row" style="margin-top: 30px;">
             <div class="col-12">       
-                    <a class="dropdown-item" href="<?= BASEURL . '/controller/MenuController.php?action=cadastroLivroPage' ?>">
+                    <a class="dropdown-item" href="<?= BASEURL . '/controller/MeusLivrosController.php?action=cadastroLivroPage' ?>">
                     <h4>+</h4>
                     </a>
             </div>
@@ -38,7 +38,6 @@ require_once(__DIR__ . "/../include/menu.php");
                     margin-bottom: 10px;">
                     <h3><?=htmlspecialchars($a->getNomeLivro())?></h3><!-- nome -->
                     <p><?=htmlspecialchars($a->getDescricao())?></p><!--descricao-->
-                    <p>R$<?=number_format($a->getValorAnuncio(),2,',','.')?></p><!-- preço/ -->
                     <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
                     <button class="btn btn-danger"> Deletar</button> <button class="btn btn-primary">Editar</button>
             </div>

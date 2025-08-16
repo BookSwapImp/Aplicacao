@@ -1,12 +1,11 @@
 <?php
 require_once(__DIR__."/Usuario.php");
 
-class Anuncio implements JsonSerializable {
+class Anuncios implements JsonSerializable {
     private ?int $id;
     private ?Usuario $usuario_id;
     private ?string $nome_livro;
     private ?string $imagem_livro;
-    private ?float $valor_anuncio;
     private ?string $descricao;
     private ?DateTime $data_publicacao;
     private ?string $status; // pode ser 'ativo', 'inativo' ou 'finalizado'
@@ -102,23 +101,7 @@ class Anuncio implements JsonSerializable {
         return $this;
     }
 
-    /**
-     * Get the value of valor_anuncio
-     */
-    public function getValorAnuncio(): ?float
-    {
-        return $this->valor_anuncio;
-    }
 
-    /**
-     * Set the value of valor_anuncio
-     */
-    public function setValorAnuncio(?float $valor_anuncio): self
-    {
-        $this->valor_anuncio = $valor_anuncio;
-
-        return $this;
-    }
 
     /**
      * Get the value of descricao

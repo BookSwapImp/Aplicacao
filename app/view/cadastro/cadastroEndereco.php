@@ -11,7 +11,7 @@ require_once(__DIR__ . "/../include/menu.php");
                 <div class="card">
                     <div class="card-body">
 
-                        <form method="POST" action="<?= BASEURL . '/controller/MeusLivrosController.php?action=cadastroEnderecoOn' ?>" enctype="multipart/form-data">
+                        <form method="POST" action="<?= BASEURL . '/controller/EnderecosController.php?action=cadastroEnderecoOn' ?>" enctype="multipart/form-data">
                                 <label for="nome">Nome do Endereço:</label>
                                 <input type="text" id="nome" name="nome" required placeholder="Ex: Casa, Trabalho, etc.">
 

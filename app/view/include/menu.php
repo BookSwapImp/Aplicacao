@@ -38,13 +38,14 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
                         </a>
                         <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUsuario">
                             <li>
-                                 <a class="dropdown-item" href="<?= BASEURL . '/controller/MenuController.php?action=perfilPage' ?>">Perfil</a>
+                                 <a class="dropdown-item" href="<?= BASEURL . '/controller/PerfilController.php?action=perfilPage' ?>">Perfil</a>
                             </li>
                             <li>
-                                <a class="dropdown-item" href="<?= BASEURL . '/controller/MenuController.php?action=meusLivrosPage' ?>">Meus Livros</a>
+                                <a class="dropdown-item" href="<?= BASEURL . '/controller/MeusLivrosController.php?action=meusLivrosPage' ?>">Meus Livros</a>
+
                             </li>
                              <li>
-                                <a class="dropdown-item" href="<?= BASEURL . '/controller/MenuController.php?action=cadastroEnderecoPage' ?>">endereços</a>
+                                <a class="dropdown-item" href="<?= BASEURL . '/controller/EnderecoController.php?action=cadastroEnderecoPage' ?>">Endereços</a>
                             </li>
                             <li>
                                 <a class="dropdown-item text-danger" href="<?= LOGOUT_PAGE ?>">Sair da conta</a>
