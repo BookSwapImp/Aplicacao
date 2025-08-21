@@ -28,7 +28,7 @@ require_once(__DIR__ . "/../include/menu.php");
                                            class="form-control" 
                                            name="foto_perfil" 
                                            accept="image/*">
-                                    <small class="form-text text-muted">Formatos: JPG, PNG, GIF. Máx: 5MB</small>
+                                    <small class="form-text text-muted">Formatos: JPG, PNG, GIF. Máx: 5MB (opcional - deixe em branco para manter foto atual)</small>
                                 </div>
                             </div>
                             

@@ -33,13 +33,17 @@ require_once(__DIR__ . "/../include/menu.php");
     <?php else: ?>
         <?php foreach ($dados['anuncios'] as $a): ?>
             <div class="book-card" style="max-width: 300px;">
-                    <img src="<?= htmlspecialchars($a->getImagemLivro())?>" alt="<?= htmlspecialchars($a->getNomeLivro())?>" style="    max-width: 300px;
+                    <img src="<?= BASEURL_ARQUIVOS."/".htmlspecialchars($a->getImagemLivro())?>" alt="<?= htmlspecialchars($a->getNomeLivro())?>" style="    max-width: 300px;
                     height: auto;
                     margin-bottom: 10px;">
                     <h3><?=htmlspecialchars($a->getNomeLivro())?></h3><!-- nome -->
                     <p><?=htmlspecialchars($a->getDescricao())?></p><!--descricao-->
                     <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
-                    <button class="btn btn-danger"> Deletar</button> <button class="btn btn-primary">Editar</button>
+                           <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=deletarLivro&idLivro=' . $a->getId() ?>" 
+                       class="btn btn-danger" 
+                       onclick="return confirm('Tem certeza que deseja deletar este livro?')">Deletar</a>
+                    <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=editarLivroPage&idLivro=' . $a->getId() ?>" class="btn btn-primary">Editar</a>
+ 
             </div>
         <?php endforeach;?>
     <?php endif;?>

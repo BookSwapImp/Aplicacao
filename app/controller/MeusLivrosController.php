@@ -2,6 +2,7 @@
 
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
+require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../model/Anuncios.php");
 require_once(__DIR__ . "/../dao/AnunciosDAO.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
@@ -36,21 +37,103 @@ class MeusLivrosController extends Controller {
         $anuncios = $this->anunciosDao->findAnunciosByUsuariosId($idUsuarioLogado);
         return $anuncios;
     }
+    protected function procurarAnuncioIdAnuncio($id){
+        $anuncios = $this->anunciosDao->findAnuncioByAnuncioId($id);
+        return $anuncios;
+    }
 
     protected function meusLivrosPage() {
         $dados['usuario'] = $this->procurarUsuarioId();
         $dados['anuncios'] = $this->procurarAnunciosId();
         $this->loadView("meusLivros/meusLivros.php", $dados); 
     }
-    
-    protected function alterarLivro(){
-        // Implementação do método para alterar livro
+    protected function editarLivroPage() {
+        $idLivro = isset($_GET['idLivro']) ? (int)trim($_GET['idLivro']) : null;
+       $livro = $this->procurarAnuncioIdAnuncio($idLivro);
+      $dados = [
+    'idLivro' => $livro->getId(),
+    'usuarioLivro' => $livro->getUsuarioId()->getId(),
+    'imagemLivro' => $livro->getImagemLivro(),
+    'nomeLivro' => $livro->getNomeLivro(),
+    'descricao' => $livro->getDescricao(),
+    'estadoCon' => $livro->getEstadoCon(),
+    'status' => $livro->getStatus()
+];
+        $this->loadView("meusLivros/editarLivros.php", $dados);
+    }
+
+    protected function editarLivro(){
+        // Receber dados do formulário
+        $idLivro = isset($_POST['id_livro']) ? (int)trim($_POST['id_livro']) : null;
+        $nomeLivro = isset($_POST['nome_livro']) ? trim($_POST['nome_livro']) : null;
+        $imagemLivro = isset($_FILES['imagem_livro']) ? $_FILES['imagem_livro'] : null;
+        $descricao = isset($_POST['descricao']) ? trim($_POST['descricao']) : null;
+        $estadoCon = isset($_POST['estado_con']) ? trim($_POST['estado_con']) : null;
+        $status = 'ativo';
+        
+        // Validar campos
+        $erros = [];
+        if (!$idLivro) $erros[] = "ID do livro é obrigatório";
+        if (!$nomeLivro) $erros[] = "Nome do livro é obrigatório";
+        if (!$descricao) $erros[] = "Descrição é obrigatória";
+        if (!$estadoCon) $erros[] = "Estado de conservação é obrigatório";
+        
+        // Só valida a imagem se uma nova foi enviada (opcional)
+        if ($imagemLivro && $imagemLivro['size'] > 0) {
+            $errosArquivo = $this->arquivoService->validarArquivo($imagemLivro);
+            if (!empty($errosArquivo)) {
+                $erros = array_merge($erros, $errosArquivo);
+            }
+        }
+        
+        if(empty($erros)) {
+            // Buscar o anúncio existente
+            $anuncioExistente = $this->procurarAnuncioIdAnuncio($idLivro);
+            
+            if ($anuncioExistente) {
+                // Atualizar os dados do anúncio
+                $anuncioExistente->setNomeLivro($nomeLivro);
+                $anuncioExistente->setDescricao($descricao);
+                $anuncioExistente->setEstadoCon($estadoCon);
+                $anuncioExistente->setStatus($status);
+                
+                // Processar nova imagem se enviada
+                if ($imagemLivro && $imagemLivro['error'] === UPLOAD_ERR_OK) {
+                    // Salvar nova imagem
+                    $nomeImagem = $this->arquivoService->salvarArquivo($imagemLivro);
+                    
+                    // Apagar imagem antiga se existir
+                    $fotoAntiga = $anuncioExistente->getImagemLivro();
+                    if ($fotoAntiga && $fotoAntiga !== 'basePfp.jpeg') {
+                        $this->arquivoService->excluirArquivo($fotoAntiga);
+                    }
+                    
+                    // Atualizar com nova imagem
+                    $anuncioExistente->setImagemLivro($nomeImagem);
+                }
+                
+                // Salvar alterações
+                $this->anunciosDao->updateAnuncios($anuncioExistente);
+                
+                // Redirecionar para página de sucesso
+                header("Location: " . BASEURL . "/controller/MeusLivrosController.php?action=meusLivrosPage");
+                exit;
+            } else {
+                $erros[] = "Livro não encontrado";
+            }
+        }
+        
+        // Se chegou aqui, houve erros
+        $dados['usuario'] = $this->procurarUsuarioId();
+        $dados['livro'] = $this->procurarAnuncioIdAnuncio($idLivro);
+        $msgErro = implode("<br>", $erros);
+        $this->loadView("meusLivros/editarLivros.php", $dados, $msgErro);
     }
     
     protected function deletarLivro(){
         $idLivro = isset($_GET['idLivro']) ? (int)trim($_GET['idLivro']):null;
-       //this->anunciosDao->excluirAnuncios($idLivro);
         $this->arquivoService->excluirArquivo($idLivro);
+        $this->anunciosDao->excluirAnuncios($idLivro);
         header("Location: " . BASEURL . "/controller/MeusLivrosController.php?action=meusLivrosPage");
         exit;
     }
@@ -66,9 +149,10 @@ class MeusLivrosController extends Controller {
         $imagemLivro = isset($_FILES['imagem_livro']) ? $_FILES['imagem_livro'] : null;
         $descricao = isset($_POST['descricao']) ? trim($_POST['descricao']) : null;
         $estadoCon = isset($_POST['estado_con']) ? trim($_POST['estado_con']) : null;
-        $status = isset($_POST['status']) ? trim($_POST['status']) : 'ativo';
+        $status = 'ativo';
         
         // Obter ID do usuário logado
+        
         $idUsuario = $this->getIdUsuarioLogado();
         
         // Validar campos (implementar validação adequada)
@@ -89,8 +173,10 @@ class MeusLivrosController extends Controller {
             }
             
             // Criar objeto Anuncio
+            $usuario = new Usuario();
+            $usuario->setId($idUsuario);
             $anuncio = new Anuncios();
-            $anuncio->setUsuarioId($idUsuario);
+            $anuncio->setUsuarioId($usuario);
             $anuncio->setNomeLivro($nomeLivro);
             $anuncio->setImagemLivro($nomeImagem);
             $anuncio->setDescricao($descricao);

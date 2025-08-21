@@ -14,10 +14,10 @@ class UsuarioService {
 
         if(! $email)
             array_push($erros, "O campo [Email] é obrigatório.");
-
-        if(! $telefone)
+        /**
+        if($telefone)
             array_push($erros, "O campo [telefone] é obrigatório.");
-
+ */
         if(! $cpf)
             array_push($erros, "O campo [cpf] é obrigatório.");
 

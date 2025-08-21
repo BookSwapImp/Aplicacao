@@ -34,7 +34,7 @@ require_once(__DIR__ . "/../include/menu.php");
                         <input type="hidden" name="action" value="anuncio">
                         <input type="hidden" name="id" value="<?= $a->getId()?>">
                         <button class="anuncioButton"type="submit">       
-                            <img src="<?= $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>">
+                            <img src="<?= BASEURL_ARQUIVOS ."/". $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>">
                         </button>
                         <button class="anuncioButton"type="submit">
                             <h3><?=$a->getNomeLivro()?></h3><!-- nome -->

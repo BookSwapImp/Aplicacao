@@ -1,8 +1,7 @@
 <?php
-require_once(__DIR__ . "/../include/header.php");
-require_once(__DIR__ . "/../include/menu.php");
+include_once(__DIR__.'/../include/header.php');
+include_once(__DIR__.'/../include/menu.php');
 ?>
-
 <main>
     <div class="container">
         <h3 class="text-center mb-4">Cadastrar Novo Endereço</h3>
@@ -62,11 +61,11 @@ require_once(__DIR__ . "/../include/menu.php");
                                 <label for="rua">Rua:</label>
                                 <input type="text" id="rua" name="rua" required>
 
-
                                 <label for="numero">Número da Residência:</label>
                                 <input type="text" id="numero" name="numero" required>
 
-                                <button type="submit">Cadastrar Endereço</button>
+                               <button type="submit">Cadastrar Endereço</button>
+                               <a href="<?= BASEURL . '/controller/EnderecosController.php?action=' ?>">Cancelar</a>
                             </form>
                     </div>
                 </div>
@@ -76,5 +75,5 @@ require_once(__DIR__ . "/../include/menu.php");
 </main>
 
 <?php
-require_once(__DIR__ . "/../include/footer.php");
+include_once(__DIR__.'/../include/footer.php');
 ?>

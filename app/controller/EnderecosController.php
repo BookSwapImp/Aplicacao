@@ -25,11 +25,22 @@ class EnderecosController extends Controller {
         $usuario = $this->usuarioDao->findById($idUsuarioLogado);
         return $usuario;
     }
-    
+    protected function procurarEnderecoId(int $id){
+        return $this->enderecoDAO->findByUsuarioId($id);
+    }
+    protected function listarEnderecosUserId(int $id){
+        return $this->enderecoDAO->listEnderecosByUsuarioId($id);
+    }
     protected function cadastroEnderecoPage(){
         $dados['usuario'] = $this->procurarUsuarioId();
         $this->loadView("cadastro/cadastroEndereco.php", $dados);
     }
+    protected function enderecoPage(){
+        $dados['usuario'] = $this->procurarUsuarioId();
+        $dados['endereco'] = $this->listarEnderecosUserId($dados['usuario']->getId());
+        $this->loadView("enderecos/endereco.php", $dados);
+    }
+
   
     protected function cadastroEnderecoOn()  {
                 // Receber dados do formulário com estrutura correta
@@ -72,7 +83,9 @@ class EnderecosController extends Controller {
                     $this->loadView("cadastro/cadastroEndereco.php", $dados, $msgErro);
                 }
             }
-
+    protected function editarEnderecosPage() {
+    $dados['usuario'] = $this->procurarUsuarioId();
+    $this->loadView("enderecos/editarEnderecos.php", $dados);
+    }
 }
-
 new EnderecosController();

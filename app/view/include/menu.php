@@ -45,7 +45,7 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
 
                             </li>
                              <li>
-                                <a class="dropdown-item" href="<?= BASEURL . '/controller/EnderecoController.php?action=cadastroEnderecoPage' ?>">Endereços</a>
+                                <a class="dropdown-item" href="<?= BASEURL . '/controller/EnderecosController.php?action=enderecoPage' ?>">Endereços</a>
                             </li>
                             <li>
                                 <a class="dropdown-item text-danger" href="<?= LOGOUT_PAGE ?>">Sair da conta</a>

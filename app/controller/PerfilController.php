@@ -46,13 +46,20 @@ class PerfilController extends Controller {
         $email = isset($_POST['email']) ? trim($_POST['email']) : null;
         $cpf = isset($_POST['cpf']) ? trim($_POST['cpf']) : null;
         $telefone = isset($_POST['telefone']) ? trim($_POST['telefone']) : null;
-        $imagem = isset($_FILES['foto_perfil']) ? $_FILES['foto_perfil'] : null;
-       // Obter ID do usuário logado
+        
+        // Obter ID do usuário logado
         $idUsuario = $this->getIdUsuarioLogado();
         
-        // Validar campos
-        $erros = $this->usuarioService->validarDados($nome, $email, $telefone,$cpf);
-       $this->saveFotoUser($imagem);
+        // Validar campos obrigatórios (sem foto)
+        $erros = $this->usuarioService->validarDados($nome, $email, $telefone, $cpf);
+        
+        // Validar foto apenas se foi enviada
+        $errosFoto = [];
+        if ($imagem && $imagem['error'] !== UPLOAD_ERR_NO_FILE) {
+            $errosFoto = $this->usuarioService->validarFotoPerfil($imagem);
+        }
+        
+        $erros = array_merge($erros, $errosFoto);
 
         if(empty($erros)) {
             // Atualizar perfil do usuário
@@ -66,13 +73,17 @@ class PerfilController extends Controller {
             // Se foi enviada nova foto, salva e apaga a anterior
             if ($imagem && $imagem['error'] === UPLOAD_ERR_OK) {
                 $arquivoService = new ArquivoService();
-                $novoNomeFoto   = $arquivoService->salvarArquivo($imagem);
+                $novoNomeFoto = $arquivoService->salvarArquivo($imagem);
                 // Apaga foto anterior se existir
                 $fotoAntiga = $this->procurarUsuarioId()->getFotoDePerfil();
                 if ($fotoAntiga && $fotoAntiga !== 'basePfp.jpeg') {
                     $arquivoService->excluirArquivo($fotoAntiga);
                 }
                 $usuario->setFotoDePerfil($novoNomeFoto);
+            } else {
+                // Manter foto existente quando nenhuma nova foto é enviada
+                $fotoAtual = $this->procurarUsuarioId()->getFotoDePerfil();
+                $usuario->setFotoDePerfil($fotoAtual);
             }
 
             // Atualizar usuário

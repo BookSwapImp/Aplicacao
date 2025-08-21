@@ -11,7 +11,15 @@ class EnderecoDAO {
     public function __construct() {
         $this->conn = Connection::getConn();
     }
-
+    public function listEnderecosByUsuarioId(int $idUser) {
+        $conn = Connection::getConn();
+        $sql = "SELECT * FROM enderecos WHERE usuarios_id = :usuarios_id ORDER BY id";
+        $stm = $conn->prepare($sql);
+        $stm->bindValue(':usuarios_id', $idUser);
+        $stm->execute();
+        $result = $stm->fetchAll();
+        return $this->mapEnderecos($result);
+    }
     /**
      * Insere um novo endereço no banco de dados
      */
@@ -38,7 +46,24 @@ class EnderecoDAO {
         
         return $stmt->execute();
     }
-
+    public function mapEnderecos($result){
+        $enderecos =array();
+        foreach ($result as $row) {    
+            $endereco = new Endereco();
+            $endereco->setId($row['id']);
+            $endereco->setNome($row['nome']);
+            $endereco->setUsuariosId($row['usuarios_id']);
+            $endereco->setRua($row['rua']);
+            $endereco->setCidade($row['cidade']);
+            $endereco->setEstado($row['estado']);
+            $endereco->setCep($row['cep']);
+            $endereco->setNumb($row['numero']);
+            $endereco->setMain($row['main']);
+            $enderecos = $endereco;
+        }
+        return $enderecos;
+    }
+    
     /**
      * Busca todos os endereços de um usuário
      */

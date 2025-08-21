@@ -55,9 +55,9 @@ class AnunciosDAO{
         foreach ($result as $reg) {
             $anuncio = new Anuncios();
             $usuario = new Usuario();
-            $usuario->setId($reg['usuarios_id']);
+           // $usuario->setId($reg['usuarios_id']);
             $anuncio->setId($reg['id']);
-            $anuncio->setUsuarioId( $usuario);
+            $anuncio->setUsuarioId( $usuario->setId($reg['usuarios_id']));
             $anuncio->setNomeLivro( $reg['nome_livro']);
             $anuncio->setImagemLivro($reg['imagem_livro']);
             $anuncio->setDescricao($reg['descricao']);
@@ -67,6 +67,12 @@ class AnunciosDAO{
             array_push($anuncios, $anuncio);
         }
         return $anuncios;
+    }
+    public function excluirAnuncios(int $idLivro) {
+        $conn = Connection::getConn();
+        $sql = "DELETE FROM anuncios WHERE id = ?";
+        $stm = $conn->prepare($sql);
+        $stm->execute([$idLivro]);
     }
     public function insertAnuncios(Anuncios $anuncio) {
         $conn = Connection::getConn();
@@ -88,19 +94,45 @@ class AnunciosDAO{
                     :status,
                     :estado_con
                 )";
+        
+        $stm = $conn->prepare($sql);
+        $stm->bindValue("usuarios_id", $anuncio->getUsuarioIdInt());
+        $stm->bindValue("nome_livro", $anuncio->getNomeLivro());
+        $stm->bindValue("imagem_livro", $anuncio->getImagemLivro());
+        $stm->bindValue("descricao", $anuncio->getDescricao());
+        
+        // Format DateTime for SQL
+        $dataPublicacao = $anuncio->getDataPublicacao();
+        $stm->bindValue("data_publicacao", $dataPublicacao->format('Y-m-d H:i:s'));
+      
+        
+        $stm->bindValue("status", $anuncio->getStatus());
+        $stm->bindValue("estado_con", $anuncio->getEstadoCon());
+
+        $stm->execute();
+        }
+    public function updateAnuncios(Anuncios $anuncio) {
+        $conn = Connection::getConn();
+          $sql = "UPDATE anuncios SET
+                    usuarios_id  = :usuarios_id,
+                    nome_livro = :nome_livro,
+                    imagem_livro = :imagem_livro,
+                    descricao = :descricao,
+                    data_publicacao = :data_publicacao,
+                    estado_con = :estado_con,
+                    status = 'ativo'
+                WHERE id = :id";
 
         $stm = $conn->prepare($sql);
         $stm->bindValue("usuarios_id", $anuncio->getUsuarioIdInt());
         $stm->bindValue("nome_livro", $anuncio->getNomeLivro());
         $stm->bindValue("imagem_livro", $anuncio->getImagemLivro());
         $stm->bindValue("descricao", $anuncio->getDescricao());
-        $stm->bindValue("data_publicacao", $anuncio->getDataPublicacao());
-        $stm->bindValue("status", $anuncio->getStatus());
+        $stm->bindValue("data_publicacao", $anuncio->getDataPublicacao()->format('Y-m-d H:i:s'));
         $stm->bindValue("estado_con", $anuncio->getEstadoCon());
+        $stm->bindValue("id", $anuncio->getId());
 
         $stm->execute();
-        }
-
-
+    }
 }
 ?>
