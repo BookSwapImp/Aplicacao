@@ -75,11 +75,11 @@ class UsuarioDAO {
         $stm->execute([$telefone]);
         $result = $stm->fetchAll();
         $usuarios = $this->mapUsuarios($result);
-        if(count($usuarios) == 1){
-            return false; // Telefone já existe
-        }
+        
+        if(count($usuarios) == 1)
+            return $usuarios[0];
         elseif(count($usuarios) == 0)
-            return true; // Telefone disponível
+            return null;
 
         die("UsuarioDAO.findByTelefone()" . 
             " - Erro: mais de um usuário encontrado.");
@@ -107,11 +107,10 @@ class UsuarioDAO {
         $stm->execute([$cpf]);
         $result = $stm->fetchAll();
         $usuarios = $this->mapUsuarios($result);
-        if(count($usuarios) == 1){
-            return false; // CPF já existe
-        }
+        if(count($usuarios) == 1)
+            return $usuarios[0];
         elseif(count($usuarios) == 0)
-            return true; // CPF disponível
+            return null;
 
         die("UsuarioDAO.findByCpf()" . 
             " - Erro: mais de um usuário encontrado.");

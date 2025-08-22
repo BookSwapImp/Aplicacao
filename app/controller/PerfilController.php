@@ -5,12 +5,13 @@ require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
 require_once(__DIR__ . "/../model/Usuario.php");
-
+require_once(__DIR__ . "/../service/EditarService.php");
 class PerfilController extends Controller {
 
     private UsuarioDAO $usuarioDao;
     private UsuarioService $usuarioService;
     private ArquivoService $arquivoService;
+    private EditarService $editarService;
 
     public function __construct() {
         if(! $this->usuarioEstaLogado())
@@ -19,6 +20,7 @@ class PerfilController extends Controller {
         $this->usuarioDao = new UsuarioDAO();
         $this->usuarioService = new UsuarioService();
         $this->arquivoService = new ArquivoService();
+        $this->editarService = new EditarService();
 
         $this->handleAction();    
     }
@@ -51,12 +53,13 @@ class PerfilController extends Controller {
         $idUsuario = $this->getIdUsuarioLogado();
         
         // Validar campos obrigatórios (sem foto)
-        $erros = $this->usuarioService->validarDados($nome, $email, $telefone, $cpf);
-        
+        $erros =$this->usuarioService->validarNomeEmail($nome, $email);
+        $erros = $this->editarService->validarCampos(  $this->getIdUsuarioLogado(),$cpf, $telefone);
+
         // Validar foto apenas se foi enviada
         $errosFoto = [];
         if ($imagem && $imagem['error'] !== UPLOAD_ERR_NO_FILE) {
-            $errosFoto = $this->usuarioService->validarFotoPerfil($imagem);
+            $errosFoto = $this->arquivoService->validarArquivo($imagem);
         }
         
         $erros = array_merge($erros, $errosFoto);

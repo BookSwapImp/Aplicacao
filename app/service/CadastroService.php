@@ -53,7 +53,8 @@ class CadastroService {
                 // Verifica se o telefone já está cadastrado
                 $telefoneLimpo = preg_replace('/[^0-9]/', '', $telefone);
                 $telefoneInt = (int)$telefoneLimpo;
-                if (!$this->usuarioDAO->findByTelefone($telefoneInt)) {
+                $usuarioComTelefone = $this->usuarioDAO->findByTelefone($telefoneInt);
+                if ($usuarioComTelefone !== null) {
                     array_push($arrayMsg, "Este telefone já está cadastrado no sistema.");
                 }
             }
@@ -84,7 +85,8 @@ class CadastroService {
                 // Verifica se o CPF já está cadastrado
                 if (strlen($cpf) == 11) {
                     $cpfInt = (int)$cpf;
-                    if (!$this->usuarioDAO->findByCpf($cpfInt)) {
+                    $usuarioComCpf = $this->usuarioDAO->findByCpf($cpfInt);
+                    if ($usuarioComCpf !== null) {
                         array_push($arrayMsg, "Este CPF já está cadastrado no sistema.");
                     }
                 }

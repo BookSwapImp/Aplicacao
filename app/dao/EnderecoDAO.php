@@ -11,15 +11,7 @@ class EnderecoDAO {
     public function __construct() {
         $this->conn = Connection::getConn();
     }
-    public function listEnderecosByUsuarioId(int $idUser) {
-        $conn = Connection::getConn();
-        $sql = "SELECT * FROM enderecos WHERE usuarios_id = :usuarios_id ORDER BY id";
-        $stm = $conn->prepare($sql);
-        $stm->bindValue(':usuarios_id', $idUser);
-        $stm->execute();
-        $result = $stm->fetchAll();
-        return $this->mapEnderecos($result);
-    }
+
     /**
      * Insere um novo endereço no banco de dados
      */
@@ -75,4 +67,5 @@ class EnderecoDAO {
         
         return $stmt->fetchAll(PDO::FETCH_ASSOC);
     }
+    
 }

@@ -9,10 +9,12 @@ class EditarService {
         $this->usuarioDAO = new UsuarioDAO;
     }
 
-     public function validarCampos(?string $cpf, ?string $telefone ) {
+     public function validarCampos(?int $idUser,?string $cpf, ?string $telefone ) {
         $arrayMsg = [];
+        $usuario = $this->usuarioDAO->findById($idUser);
+        
 
-if ($telefone) {
+    if ($telefone) {
             $erros = $this->validarTelefoneBrasileiro($telefone);
             if (!empty($erros)) {
                 $arrayMsg = array_merge($arrayMsg, $erros);
@@ -20,8 +22,13 @@ if ($telefone) {
                 // Verifica se o telefone já está cadastrado
                 $telefoneLimpo = preg_replace('/[^0-9]/', '', $telefone);
                 $telefoneInt = (int)$telefoneLimpo;
-                if (!$this->usuarioDAO->findByTelefone($telefoneInt)) {
+               
+                $aux= $this->usuarioDAO->findByTelefone($telefone);
+                $idAux = $aux ? $aux->getId() : null;
+                if ($aux !== null) {
+                   if ($usuario->getId() !== $idAux) {
                     array_push($arrayMsg, "Este telefone já está cadastrado no sistema.");
+                    }
                 }
             }
         }
@@ -51,8 +58,11 @@ if ($telefone) {
                 // Verifica se o CPF já está cadastrado
                 if (strlen($cpf) == 11) {
                     $cpfInt = (int)$cpf;
-                    if (!$this->usuarioDAO->findByCpf($cpfInt)) {
-                        array_push($arrayMsg, "Este CPF já está cadastrado no sistema.");
+                    $userAux = $this->usuarioDAO->findByCpf($cpfInt);
+                    if($userAux !== null){
+                        if ($usuario->getId() !== $userAux->getId()) {
+                                array_push($arrayMsg, "Este CPF já está cadastrado no sistema.");
+                        } 
                     }
                 }
             }

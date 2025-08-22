@@ -7,55 +7,40 @@ require_once(__DIR__."/dao/EnderecoDAO.php");
 $EnderecoDAO = new EnderecoDAO();
 $enderecos = $EnderecoDAO->listEnderecosByUsuarioId(1);
 
-// Análise do foreach atual - está correto!
-echo "<h2>Análise do foreach atual:</h2>";
-echo "<p>O foreach está corretamente implementado, iterando sobre os endereços e exibindo as propriedades.</p>";
+echo "\nDebug - Tipo de retorno: " . gettype($enderecos);
+if (is_object($enderecos)) {
+    echo "\nÉ um objeto da classe: " . get_class($enderecos);
+} elseif (is_array($enderecos)) {
+    echo "\nÉ um array com " . count($enderecos) . " elementos";
+}
 
-// Teste do foreach atual
-echo "<h3>Teste do foreach atual:</h3>";
+printf("<pre>%s</pre>", print_r($enderecos, true));
+
+echo "\nEndereços encontrados:\n";
 if (empty($enderecos)) {
     echo "Nenhum endereço encontrado.";
 } else {
-    echo "Endereços encontrados:<br>";
-    foreach ($enderecos as $e) {
-        echo "ID: " . $e->getId() . "<br>";
-        echo "Nome: " . $e->getNome() . "<br>";
-        echo "Rua: " . $e->getRua() . "<br>";
-        echo "Cidade: " . $e->getCidade() . "<br>";
-        echo "Estado: " . $e->getEstado() . "<br>";
-        echo "CEP: " . $e->getCep() . "<br>";
-        echo "Número: " . $e->getNumb() . "<br>";
-        echo "<hr>";
+    // Handle both single object and array scenarios
+    if (is_array($enderecos)) {
+        // If it's an array of objects
+        foreach ($enderecos as $endereco) {
+            echo "ID: " . $endereco->getId() . "\n";
+            echo "Nome: " . $endereco->getNome() . "\n";
+            echo "Rua: " . $endereco->getRua() . "\n";
+            echo "Cidade: " . $endereco->getCidade() . "\n";
+            echo "Estado: " . $endereco->getEstado() . "\n";
+            echo "CEP: " . $endereco->getCep() . "\n";
+            echo "Número: " . $endereco->getNumb() . "\n";
+            echo "------------------------\n";
+        }
+    } else {
+        // If it's a single object (current buggy behavior)
+        echo "ID: " . $enderecos->getId() . "\n";
+        echo "Nome: " . $enderecos->getNome() . "\n";
+        echo "Rua: " . $enderecos->getRua() . "\n";
+        echo "Cidade: " . $enderecos->getCidade() . "\n";
+        echo "Estado: " . $enderecos->getEstado() . "\n";
+        echo "CEP: " . $enderecos->getCep() . "\n";
+        echo "Número: " . $enderecos->getNumb() . "\n";
     }
-}
-
-// Exemplo com dois foreach aninhados
-echo "<h2>Exemplo com dois foreach aninhados:</h2>";
-
-// Simulando dados para demonstrar dois foreach
-$usuarios = [
-    ['id' => 1, 'nome' => 'João', 'enderecos' => $enderecos],
-    ['id' => 2, 'nome' => 'Maria', 'enderecos' => $enderecos]
-];
-
-echo "<h3>Usuários e seus endereços:</h3>";
-foreach ($usuarios as $usuario) {
-    echo "<h4>Usuário: " . $usuario['nome'] . " (ID: " . $usuario['id'] . ")</h4>";
-    
-    foreach ($usuario['enderecos'] as $endereco) {
-        echo "Endereço: " . $endereco->getRua() . ", " . $endereco->getCidade() . "<br>";
-    }
-    echo "<br>";
-}
-
-// Exemplo com índices
-echo "<h2>Exemplo com índices:</h2>";
-$contador = 0;
-foreach ($usuarios as $indiceUsuario => $usuario) {
-    echo "Usuário " . ($indiceUsuario + 1) . ": " . $usuario['nome'] . "<br>";
-    
-    foreach ($usuario['enderecos'] as $indiceEndereco => $endereco) {
-        echo "  Endereço " . ($indiceEndereco + 1) . ": " . $endereco->getRua() . "<br>";
-    }
-    echo "<br>";
 }

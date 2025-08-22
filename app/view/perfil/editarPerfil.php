@@ -83,7 +83,7 @@ require_once(__DIR__ . "/../include/menu.php");
                                    name="telefone" 
                                    value="<?= htmlspecialchars($dados['usuario']->getTelefone()) ?>"
                                    maxlength="15"
-                                   placeholder="(00) 00000-0000">
+                                   placeholder="00000000000">
                         </div>
 
                         <!-- Botões -->

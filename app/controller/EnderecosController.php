@@ -29,7 +29,7 @@ class EnderecosController extends Controller {
         return $this->enderecoDAO->findByUsuarioId($id);
     }
     protected function listarEnderecosUserId(int $id){
-        return $this->enderecoDAO->listEnderecosByUsuarioId($id);
+        return $this->enderecoDAO->findByUsuarioId($id);
     }
     protected function cadastroEnderecoPage(){
         $dados['usuario'] = $this->procurarUsuarioId();
@@ -37,7 +37,8 @@ class EnderecosController extends Controller {
     }
     protected function enderecoPage(){
         $dados['usuario'] = $this->procurarUsuarioId();
-        $dados['endereco'] = $this->listarEnderecosUserId($dados['usuario']->getId());
+        // findByUsuarioId retorna linhas associativas para a view
+        $dados['enderecos'] = $this->listarEnderecosUserId($dados['usuario']->getId());
         $this->loadView("enderecos/endereco.php", $dados);
     }
 
