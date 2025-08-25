@@ -38,8 +38,8 @@ require_once(__DIR__ . "/../include/menu.php");
                         <td><?= htmlspecialchars($row['numero']) ?></td>
                         <td><?= htmlspecialchars($row['main']) ?></td>
                         <td>
-                            <a href="<?= BASEURL ?>/controller/EnderecosController.php?action=editar&id=<?= $row['id'] ?>" class="btn btn-sm btn-primary">Editar</a>
-                            <a href="<?= BASEURL ?>/controller/EnderecosController.php?action=excluir&id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Confirmar exclusão?')">Excluir</a>
+                            <a href="<?= BASEURL ?>/controller/EnderecosController.php?action=editarEnderecoPage&id=<?= $row['id'] ?>" class="btn btn-sm btn-primary">Editar</a>
+                            <a href="<?= BASEURL ?>/controller/EnderecosController.php?action=DeletarEnderecos&id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Confirmar exclusão?')">Excluir</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>

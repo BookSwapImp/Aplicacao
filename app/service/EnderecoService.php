@@ -26,11 +26,17 @@ class EnderecoService {
         if (!$cep) {
             array_push($arrayMsg, "O campo [CEP] ist obrigatório.");
         }
+        elseif(!preg_match('/^\d{5}-\d{3}$/', $cep)) {
+            array_push($arrayMsg, "O campo [CEP] deve estar no formato 00000-000.");
+        }
         if (!$estado) {
             array_push($arrayMsg, "O campo [Estado] ist obrigatório.");
         }
         if (!$numb) {
             array_push($arrayMsg, "O campo [Numero] ist obrigatório.");
+        }
+        elseif($numb <= 0 || !is_numeric($numb)){
+            array_push($arrayMsg, "O campo [Numero] deve ser um número valido.");
         }
         return $arrayMsg;
     }

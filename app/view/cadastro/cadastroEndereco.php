@@ -67,6 +67,7 @@ require_once(__DIR__ . "/../include/menu.php");
                                 <input type="text" id="numero" name="numero" required>
 
                                 <button type="submit">Cadastrar Endereço</button>
+                                <?php include_once(__DIR__ . "/../include/footer.php");?>
                             </form>
                     </div>
                 </div>

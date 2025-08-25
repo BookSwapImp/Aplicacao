@@ -53,7 +53,7 @@ class PerfilController extends Controller {
         $idUsuario = $this->getIdUsuarioLogado();
         
         // Validar campos obrigatórios (sem foto)
-        $erros =$this->usuarioService->validarNomeEmail($nome, $email);
+        
         $erros = $this->editarService->validarCampos(  $this->getIdUsuarioLogado(),$cpf, $telefone);
 
         // Validar foto apenas se foi enviada

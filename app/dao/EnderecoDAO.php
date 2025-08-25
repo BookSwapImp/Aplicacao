@@ -55,7 +55,13 @@ class EnderecoDAO {
         }
         return $enderecos;
     }
-    
+    public function deleteEndereco(int $id){
+        $sql = "DELETE FROM enderecos WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        return $stmt->execute();
+    }
+
     /**
      * Busca todos os endereços de um usuário
      */

@@ -41,6 +41,10 @@ class EnderecosController extends Controller {
         $dados['enderecos'] = $this->listarEnderecosUserId($dados['usuario']->getId());
         $this->loadView("enderecos/endereco.php", $dados);
     }
+    protected function editarEnderecosPage() {
+    $dados['usuario'] = $this->procurarUsuarioId();
+    $this->loadView("enderecos/editarEnderecos.php", $dados);
+    }
 
   
     protected function cadastroEnderecoOn()  {
@@ -84,9 +88,13 @@ class EnderecosController extends Controller {
                     $this->loadView("cadastro/cadastroEndereco.php", $dados, $msgErro);
                 }
             }
-    protected function editarEnderecosPage() {
-    $dados['usuario'] = $this->procurarUsuarioId();
-    $this->loadView("enderecos/editarEnderecos.php", $dados);
+    protected function DeletarEnderecos(){
+
+        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $this->enderecoDAO->deleteEndereco($id);
+        $this->enderecoPage();
     }
+            
+    
 }
 new EnderecosController();
