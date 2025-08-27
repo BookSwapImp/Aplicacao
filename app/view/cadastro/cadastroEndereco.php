@@ -64,7 +64,8 @@ require_once(__DIR__ . "/../include/menu.php");
 
 
                                 <label for="numero">Número da Residência:</label>
-                                <input type="text" id="numero" name="numero" required>
+                                <input type="text" id="numb" name="numb" required>
+                                <?php include_once(__DIR__.'/../include/msg.php')?>
 
                                 <button type="submit">Cadastrar Endereço</button>
                                 <?php include_once(__DIR__ . "/../include/footer.php");?>

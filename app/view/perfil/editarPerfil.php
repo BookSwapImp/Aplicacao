@@ -64,7 +64,7 @@ require_once(__DIR__ . "/../include/menu.php");
 
                         <!-- CPF -->
                         <div class="mb-3">
-                            <label for="cpf" class="form-label">CPF *</label>
+                            <label for="cpf" class="form-label">CPF *</label> <p>sem pontos e sem caracteres especiais</p>
                             <input type="text" 
                                    class="form-control" 
                                    id="cpf" 
@@ -76,7 +76,7 @@ require_once(__DIR__ . "/../include/menu.php");
 
                         <!-- Telefone -->
                         <div class="mb-3">
-                            <label for="telefone" class="form-label">Telefone</label>
+                            <label for="telefone" class="form-label">Telefone</label><p>sem pontos e sem caracteres especiais</p>
                             <input type="text" 
                                    class="form-control" 
                                    id="telefone" 

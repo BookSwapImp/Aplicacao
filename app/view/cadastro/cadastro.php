@@ -6,30 +6,33 @@
 require_once(__DIR__ . "/../include/headerMenuLoginCasdatro.php");
 ?>
              <h2 class="mb-4 text-center">Cadastro</h2>
+              <p> todos que tiverem '*' são obrigatorios
+              </p>
                     <form id="frmCadastro" action="<?=BASEURL?>/controller/CadastroController.php?action=cadastrar" method="POST">
                    
                         <div class="mb-3">
-                            <label for="txtNome" class="form-label">Nome Completo:</label>
+                            <label for="txtNome" class="form-label">*Nome Completo:</label>
+                           
                             <input type="text" name="nome" id="txtNome" class="form-control" placeholder="Informe o seu nome" value="<?= $dados['nome'] ?? '' ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="txtEmail" class="form-label">Email:</label>
+                            <label for="txtEmail" class="form-label">*Email:</label>
                             <input type="text" name="email" id="txtEmail" class="form-control" placeholder="Informe o email" value="<?= $dados['email'] ?? '' ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="txtSenha" class="form-label">Senha:</label>
+                            <label for="txtSenha" class="form-label">*Senha:</label>
                             <input type="password" name="senha" id="txtSenha" class="form-control" placeholder="Informe a senha" value="<?= $dados['senha'] ?? '' ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="txtConfSenha" class="form-label">Confirme sua senha:</label>
+                            <label for="txtConfSenha" class="form-label">*Confirme sua senha:</label>
                             <input type="password" name="confSenha" id="txtConfSenha" class="form-control" placeholder="Confirme sua senha" value="<?= $dados['confSenha'] ?? '' ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="intTelefone" class="form-label">Telefone:</label>
+                            <label for="intTelefone" class="form-label">Telefone: </label><p>sem pontos e sem caracteres especiais</p>
                             <input type="tel" name="telefone" id="intTelefone" class="form-control" placeholder="Informe o telefone" value="<?= $dados['telefone'] ?? '' ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="cpf" class="form-label">CPF:</label>
+                            <label for="cpf" class="form-label">*CPF: </label><p>sem pontos e sem caracteres especiais</p>
                             <input type="text" name="cpf" id="cpf" class="form-control" placeholder="Informe o CPF" value="<?= $dados['cpf'] ?? '' ?>">
                         </div>
                         <div class="mb-3">

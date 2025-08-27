@@ -25,9 +25,7 @@ class EnderecosController extends Controller {
         $usuario = $this->usuarioDao->findById($idUsuarioLogado);
         return $usuario;
     }
-    protected function procurarEnderecoId(int $id){
-        return $this->enderecoDAO->findByUsuarioId($id);
-    }
+   
     protected function listarEnderecosUserId(int $id){
         return $this->enderecoDAO->findByUsuarioId($id);
     }
@@ -39,6 +37,7 @@ class EnderecosController extends Controller {
         $dados['usuario'] = $this->procurarUsuarioId();
         // findByUsuarioId retorna linhas associativas para a view
         $dados['enderecos'] = $this->listarEnderecosUserId($dados['usuario']->getId());
+       // print_r($dados['enderecos']);
         $this->loadView("enderecos/endereco.php", $dados);
     }
     protected function editarEnderecosPage() {
@@ -55,11 +54,15 @@ class EnderecosController extends Controller {
                 $cep = isset($_POST['cep']) ? trim($_POST['cep']) : null;
                 $estado = isset($_POST['estado']) ? trim($_POST['estado']) : null;
                 $numb = isset($_POST['numb']) ? (int)trim($_POST['numb']) : null;
-                $main = isset($_POST['main']) ? trim($_POST['main']) : 'normal';
-                
+             
                 // Obter ID do usuário logado
                 $idUsuario = $this->getIdUsuarioLogado();
-                
+                $main = $this->enderecoDAO->findMainEnderecos($idUsuario);
+                if(count($main) == 0){
+                    $main = 'main';
+                } else {
+                    $main = 'normal';
+                }
                 // Validar campos
                 $erros = $this->enderecoService->validarCampos($rua, $cidade, $cep, $estado, $numb);
                 

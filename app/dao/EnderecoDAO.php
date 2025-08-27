@@ -11,6 +11,15 @@ class EnderecoDAO {
     public function __construct() {
         $this->conn = Connection::getConn();
     }
+    public function findMainEnderecos (int $id){
+        $sql = "SELECT * FROM enderecos WHERE id=:id AND main = 'main' ";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        $result =$stmt->fetchAll();
+        return $this->mapEnderecos($result);
+    }
 
     /**
      * Insere um novo endereço no banco de dados
@@ -59,19 +68,20 @@ class EnderecoDAO {
         $sql = "DELETE FROM enderecos WHERE id = :id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':id', $id);
-        return $stmt->execute();
+
+        $result =$stmt->execute();
+        return $this->mapEnderecos($result);
     }
 
     /**
      * Busca todos os endereços de um usuário
      */
-    public function findByUsuarioId(int $usuarioId): array {
+    public function findByUsuarioId(int $usuarioId) {
         $sql = "SELECT * FROM enderecos WHERE usuarios_id = :usuarios_id";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':usuarios_id', $usuarioId);
         $stmt->execute();
-        
-        return $stmt->fetchAll(PDO::FETCH_ASSOC);
+        return $this->mapEnderecos($stmt->fetchAll());
     }
     
 }

@@ -26,8 +26,8 @@ class EnderecoService {
         if (!$cep) {
             array_push($arrayMsg, "O campo [CEP] ist obrigatório.");
         }
-        elseif(!preg_match('/^\d{5}-\d{3}$/', $cep)) {
-            array_push($arrayMsg, "O campo [CEP] deve estar no formato 00000-000.");
+        elseif(!preg_match('/^\d{5}\d{3}$/', $cep)) {
+            array_push($arrayMsg, "O campo [CEP] deve estar no formato 00000000.");
         }
         if (!$estado) {
             array_push($arrayMsg, "O campo [Estado] ist obrigatório.");

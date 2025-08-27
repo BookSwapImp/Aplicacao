@@ -174,37 +174,7 @@ DEFAULT CHARACTER SET = utf8mb4
 COLLATE = utf8mb4_0900_ai_ci;
 
 
--- -----------------------------------------------------
--- Table `cancelamento`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `cancelamento` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `compra_id` INT NOT NULL,
-  `usuarios_id` INT NOT NULL,
-  `anuncios_id` INT NOT NULL,
-  `usuarios_vendedor_id` INT NOT NULL,
-  `data_cancelamento` DATETIME NOT NULL,
-  `motivo do cancelamento` VARCHAR(255) NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `compra_ibfk_10`
-    FOREIGN KEY (`usuarios_id`)
-    REFERENCES `usuarios` (`id`),
-  CONSTRAINT `compra_ibfk_20`
-    FOREIGN KEY (`anuncios_id`)
-    REFERENCES `anuncios` (`id`),
-  CONSTRAINT `fk_cancelamento_compra1`
-    FOREIGN KEY (`compra_id`)
-    REFERENCES `compra` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_cancelamento_usuarios1`
-    FOREIGN KEY (`usuarios_vendedor_id`)
-    REFERENCES `usuarios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
+
 
 -- Desativar checagem de chaves estrangeiras temporariamente
 SET FOREIGN_KEY_CHECKS = 0;
