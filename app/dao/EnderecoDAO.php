@@ -24,7 +24,7 @@ class EnderecoDAO {
     /**
      * Insere um novo endereço no banco de dados
      */
-    public function insertEndereco(Endereco $endereco): bool {
+    public function insertEndereco(Endereco $endereco){
         $sql = "INSERT INTO enderecos (nome, usuarios_id, rua, cidade, estado, cep, numero, main) 
                 VALUES (:nome, 
                 :usuarios_id, 
@@ -47,20 +47,20 @@ class EnderecoDAO {
         
         return $stmt->execute();
     }
-    public function mapEnderecos($result){
+    public function mapEnderecos(array $result){
         $enderecos =array();
-        foreach ($result as $row) {    
+        foreach ($result as $reg) {    
             $endereco = new Endereco();
-            $endereco->setId($row['id']);
-            $endereco->setNome($row['nome']);
-            $endereco->setUsuariosId($row['usuarios_id']);
-            $endereco->setRua($row['rua']);
-            $endereco->setCidade($row['cidade']);
-            $endereco->setEstado($row['estado']);
-            $endereco->setCep($row['cep']);
-            $endereco->setNumb($row['numero']);
-            $endereco->setMain($row['main']);
-            $enderecos = $endereco;
+            $endereco->setId($reg['id']);
+            $endereco->setNome($reg['nome']);
+            $endereco->setUsuariosId($reg['usuarios_id']);
+            $endereco->setRua($reg['rua']);
+            $endereco->setCidade($reg['cidade']);
+            $endereco->setEstado($reg['estado']);
+            $endereco->setCep($reg['cep']);
+            $endereco->setNumb($reg['numero']);
+            $endereco->setMain($reg['main']);
+            $enderecos[] = $endereco;
         }
         return $enderecos;
     }
@@ -69,8 +69,7 @@ class EnderecoDAO {
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':id', $id);
 
-        $result =$stmt->execute();
-        return $this->mapEnderecos($result);
+        return $stmt->execute();
     }
 
     /**
@@ -81,6 +80,7 @@ class EnderecoDAO {
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':usuarios_id', $usuarioId);
         $stmt->execute();
+        
         return $this->mapEnderecos($stmt->fetchAll());
     }
     

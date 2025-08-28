@@ -36,8 +36,10 @@ class EnderecosController extends Controller {
     protected function enderecoPage(){
         $dados['usuario'] = $this->procurarUsuarioId();
         // findByUsuarioId retorna linhas associativas para a view
-        $dados['enderecos'] = $this->listarEnderecosUserId($dados['usuario']->getId());
-       // print_r($dados['enderecos']);
+        $dados['enderecos'] = $this->listarEnderecosUserId($this->getIdUsuarioLogado()); 
+       
+        //print_r($dados['enderecos']);
+     
         $this->loadView("enderecos/endereco.php", $dados);
     }
     protected function editarEnderecosPage() {
@@ -57,15 +59,18 @@ class EnderecosController extends Controller {
              
                 // Obter ID do usuário logado
                 $idUsuario = $this->getIdUsuarioLogado();
-                $main = $this->enderecoDAO->findMainEnderecos($idUsuario);
-                if(count($main) == 0){
+                $endereco = $this->enderecoDAO->findMainEnderecos($idUsuario);
+                if(count($endereco)==0){
                     $main = 'main';
                 } else {
                     $main = 'normal';
                 }
                 // Validar campos
                 $erros = $this->enderecoService->validarCampos($rua, $cidade, $cep, $estado, $numb);
-                
+                $limite = $this->listarEnderecosUserId($idUsuario);
+                if(count($limite) >= 3) {
+                    $erros[] = "Limite de 3 endereços atingido.";
+                }
                 if(empty($erros)) {
                     // Criar objeto Endereco
                     $endereco = new Endereco();
@@ -82,7 +87,7 @@ class EnderecosController extends Controller {
                    $this->enderecoDAO->insertEndereco($endereco);
                     
                     // Redirecionar para página de sucesso
-                    header("Location: " . BASEURL . "/controller/MenuController.php?action=meusLivrosPage");
+                    header("Location: " . BASEURL . "/controller/EnderecosController.php?action=EnderecosPage");
                     exit;
                 } else {
                     // Retornar com erros

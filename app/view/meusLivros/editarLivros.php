@@ -58,7 +58,7 @@ include_once(__DIR__ . "/../include/menu.php");
                                           name="descricao" 
                                           rows="4"
                                           placeholder="Descreva o livro, autor, edição, etc."
-                                          maxlength="45"
+                                    
                                           required><?= isset($dados['descricao']) ? htmlspecialchars($dados['descricao']) : '' ?></textarea>
                             </div>
 

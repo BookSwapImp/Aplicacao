@@ -198,7 +198,7 @@ class UsuarioDAO {
     }
 
     //Método para converter um registro da base de dados em um objeto Usuario
-    private function mapUsuarios($result) {
+    private function mapUsuarios($result):array {
         $usuarios = array();
         foreach ($result as $reg) {
             $usuario = new Usuario();
@@ -210,8 +210,8 @@ class UsuarioDAO {
             $usuario->setSenha($reg['senha']);
             $usuario->setTipo($reg['tipo']);
             $usuario->setStatus($reg['status']);
-            
             $usuario->setFotoDePerfil($reg['foto_de_perfil']);
+            
             array_push($usuarios, $usuario);
         }
 

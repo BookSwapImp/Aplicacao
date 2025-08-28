@@ -15,7 +15,6 @@ require_once(__DIR__ . "/../include/menu.php");
         <table class="table table-striped">
             <thead>
                 <tr>
-                    <th>ID</th>
                     <th>Nome</th>
                     <th>Rua</th>
                     <th>Cidade</th>
@@ -29,17 +28,16 @@ require_once(__DIR__ . "/../include/menu.php");
             <tbody>
                 <?php foreach ($dados['enderecos'] as $row): ?>
                     <tr>
-                        <td><?= htmlspecialchars($row['id']) ?></td>
-                        <td><?= htmlspecialchars($row['nome']) ?></td>
-                        <td><?= htmlspecialchars($row['rua']) ?></td>
-                        <td><?= htmlspecialchars($row['cidade']) ?></td>
-                        <td><?= htmlspecialchars($row['cep']) ?></td>
-                        <td><?= htmlspecialchars($row['estado']) ?></td>
-                        <td><?= htmlspecialchars($row['numero']) ?></td>
-                        <td><?= htmlspecialchars($row['main']) ?></td>
+                        <td><?= htmlspecialchars($row->getNome()) ?></td>
+                        <td><?= htmlspecialchars($row->getRua()) ?></td>
+                        <td><?= htmlspecialchars($row->getCidade()) ?></td>
+                        <td><?= htmlspecialchars($row->getCep()) ?></td>
+                        <td><?= htmlspecialchars($row->getEstado()) ?></td>
+                        <td><?= htmlspecialchars($row->getNumb()) ?></td>
+                        <td><?= htmlspecialchars($row->getMain()) ?></td>
                         <td>
-                            <a href="<?= BASEURL ?>/controller/EnderecosController.php?action=editarEnderecoPage&id=<?= $row['id'] ?>" class="btn btn-sm btn-primary">Editar</a>
-                            <a href="<?= BASEURL ?>/controller/EnderecosController.php?action=DeletarEnderecos&id=<?= $row['id'] ?>" class="btn btn-sm btn-danger" onclick="return confirm('Confirmar exclusão?')">Excluir</a>
+                            <a href="<?= BASEURL ?>/controller/EnderecosController.php?action=editarEnderecoPage&id=<?= $row->getId() ?>" class="btn btn-sm btn-primary">Editar</a>
+                            <a href="<?= BASEURL ?>/controller/EnderecosController.php?action=DeletarEnderecos&id=<?= $row->getId() ?>" class="btn btn-sm btn-danger" onclick="return confirm('Confirmar exclusão?')">Excluir</a>
                         </td>
                     </tr>
                 <?php endforeach; ?>
