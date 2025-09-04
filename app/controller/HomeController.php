@@ -12,9 +12,7 @@ class HomeController extends Controller {
 
     public function __construct() {
         //Verificar se o usuário está logado
-        if(! $this->usuarioEstaLogado())
-            return;
-
+     
         $this->usuarioDAO = new UsuarioDAO();
         $this->anunciosDAO = new AnunciosDAO();
 
@@ -22,7 +20,10 @@ class HomeController extends Controller {
         $this->handleAction();
     }
        protected function home(string $msgErro = "", string $msgSucesso = "") {
-        $dados = $this->anunciosDAO->listAnuncio();
+        if($this->getIdUsuarioLogado())
+            $dados = $this->anunciosDAO->listANuncioWithoutAnuncioUser($this->getIdUsuarioLogado());
+        else
+            $dados = $this->anunciosDAO->listAnuncio();
 
         $this->loadView("home/home.php", $dados,  $msgErro, $msgSucesso);
     }

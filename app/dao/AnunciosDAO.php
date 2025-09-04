@@ -19,6 +19,16 @@ class AnunciosDAO{
         $result = $stm->fetchAll();
         return $this->mapAnuncios($result);
     }
+    public function listAnuncioWithoutAnuncioUser($usuarios_id){
+        $conn = Connection::getConn();
+        $sql = "SELECT * FROM anuncios an
+                WHERE status ='ativo' AND BINARY an.usuarios_id != ?";
+        
+        $stm = $conn->prepare($sql);
+        $stm->execute([$usuarios_id]);
+        $result = $stm->fetchAll();
+        return $this->mapAnuncios($result); 
+    }
         public function findAnunciosByUsuariosId(int $usuariosId){
             $conn = Connection::getConn();
             $sql = "SELECT * FROM anuncios an

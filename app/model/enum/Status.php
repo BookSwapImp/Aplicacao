@@ -3,11 +3,11 @@ class Status {
 
     public static string $SEPARADOR = "|";
 
-    const ATIVADO = "ATIVADO";
-    const DESATIVADO = "DESATIVADO";
+    const ATIVO = "ativo";
+    const INATIVO = "inativo";
 
     public static function getAllAsArray() {
-        return [Status::ATIVADO, Status::DESATIVADO];
+        return [Status::ATIVO, Status::INATIVO];
     }
 
 }

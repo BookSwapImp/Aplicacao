@@ -4,46 +4,48 @@
 
 require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
-
+require_once("CaracteresService.php");
 
 class CadastroService {
         private $usuarioDAO;
+        private $caracteresService;
         function __construct() {
         $this->usuarioDAO = new UsuarioDAO;
+        $this->caracteresService = new CaracteresService();
     }
   
     // Valida os campos obrigatórios de um usuário
     public function validarCampos(?string $nome, ?string $email, ?string $senha,?string $confSenha,?string $cpf, ?string $telefone) {
         $arrayMsg = [];
        
-        if (!$nome) {
+        if (!$nome) 
             array_push($arrayMsg, "O campo [Nome] é obrigatório.");
+        else{
+            $ivalidado = $this->caracteresService->CaracteresInvalidos($nome);
+            array_push($arrayMsg, $ivalidado);
         }   
         
-        if (!$email) {
-            array_push($arrayMsg, "O campo [Email] é obrigatório.");
-        }  
+        if (!$email) 
+            array_push($arrayMsg, "O campo [Email] é obrigatório.");  
         //verifica o formato do email
         elseif (!filter_var($email, FILTER_VALIDATE_EMAIL)) {
             array_push($arrayMsg, "O campo [Email] está em formato inválido.");
         }
         else {  // verifica se o email já existe no banco
+            $ivalidado = $this->caracteresService->CaracteresInvalidos($email);
+            array_push($arrayMsg, $ivalidado);
             $usuarioExistente = $this->usuarioDAO->findByEmail($email);
             if ($usuarioExistente !== null) {
                 array_push($arrayMsg, "O Email já está cadastrado no sistema.");
             }
         }
         
-        if (!$senha) {
+        if (!$senha) 
             array_push($arrayMsg, "O campo [Senha] é obrigatório.");
-        }
-        elseif(!$confSenha){
+        elseif(!$confSenha)
             array_push($arrayMsg, "Você deve verificar sua senha! No campo [Verificar senha].");            
-        }
-        elseif($senha !== $confSenha){
+        elseif($senha !== $confSenha)
             array_push($arrayMsg, "O campo [Verificar senha] deve estar igual a senha");
-        }
-        
         // Validação de telefone brasileiro
         if ($telefone) {
             $erros = $this->validarTelefoneBrasileiro($telefone);

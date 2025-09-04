@@ -7,16 +7,9 @@ require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
     <main>
-        <section class="hero-section">
-            <img src="<?=BASEURL_ARQUIVOS?>/bookSwapLogo7.jpeg" alt="BookSwap Logo Grande">
-            <span>BookSwap</span>
-        </section>
-
         <section class="featured-books">
-            <h2>LIVROS EM DESTAQUE</h2>
             <div class="book-grid">
                 <!-- Livro 1 -->
-
             <?php 
                 if(empty($dados)):
                     echo'não á livros';
