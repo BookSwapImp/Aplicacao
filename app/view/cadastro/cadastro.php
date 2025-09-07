@@ -33,7 +33,7 @@ require_once(__DIR__ . "/../include/headerMenuLoginCasdatro.php");
                         </div>
                         <div class="mb-3">
                             <label for="cpf" class="form-label">*CPF: </label><p class="text-muted">sem pontos e sem caracteres especiais</p>
-                            <input type="text" name="cpf" id="cpf" class="form-control" placeholder="Informe o CPF" value="<?= $dados['cpf'] ?? '' ?>">
+                            <input type="text" name="cpf" id="cpf" class="form-control" placeholder="Informe o CPF" formaction='000.000.000-00'value="<?= $dados['cpf'] ?? '' ?>">
                         </div>
                         <div class="mb-3">
                             <?php include_once(__DIR__ . "/../include/msg.php") ?> 

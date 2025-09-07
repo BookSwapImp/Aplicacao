@@ -32,6 +32,11 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
 
                 <!-- Menu do usuário -->
                 <ul class="navbar-nav">
+                    <?php if (!isset($_SESSION[SESSAO_USUARIO_ID])): ?>
+                          <li class="nav-item">
+                                <a class="nav-link fw-semibold" href="<?= BASEURL . '/controller/LoginController.php?action=Login'?>">Iniciar Sessão</a>
+                            </li>
+                        <?php else: ?>
                     <li class="nav-item dropdown">
                         <a class="nav-link dropdown-toggle fw-semibold" href="#" id="navbarUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
                             <?= $nome ?>
@@ -52,6 +57,7 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
                             </li>
                         </ul>
                     </li>
+                    <?php endif; ?>
                 </ul>
             </div>
         </div>

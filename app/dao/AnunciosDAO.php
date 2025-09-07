@@ -29,7 +29,7 @@ class AnunciosDAO{
         $result = $stm->fetchAll();
         return $this->mapAnuncios($result); 
     }
-        public function findAnunciosByUsuariosId(int $usuariosId){
+        public function findAnunciosByUsuariosId( $usuariosId){
             $conn = Connection::getConn();
             $sql = "SELECT * FROM anuncios an
                     WHERE BINARY an.usuarios_id = ?";

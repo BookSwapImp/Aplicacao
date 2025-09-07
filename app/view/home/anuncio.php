@@ -9,18 +9,21 @@ require_once(__DIR__ . "/../include/menu.php");
 ?>
 
 <div class="fade-in">
-    <h2>Detalhes do Anúncio</h2>
     <?php if (!empty($dados['anuncio']) && $dados['anuncio'] !== null): ?>
         <div class="anuncio-details">
-            <div>
-                <img src="<?= BASEURL_ARQUIVOS .DIRECTORY_SEPARATOR.htmlspecialchars($dados['anuncio']->getImagemLivro()) ?>" alt="<?= htmlspecialchars($dados['anuncio']->getNomeLivro()) ?>" style="max-width: 300px; max-height: 400px;">
-                <h3><?= htmlspecialchars($dados['anuncio']->getNomeLivro()) ?></h3>
-                <p><strong>Descrição:</strong> <?= htmlspecialchars($dados['anuncio']->getDescricao()) ?></p>
-                <p><strong>Publicado em:</strong> <?= htmlspecialchars($dados['anuncio']->getDataPublicacao()->format('d/m/Y')) ?></p>
-            </div>
-            <div>
-                <p><?= htmlspecialchars($dados['anuncio']->getDescricao()) ?></p>
-                <button class="trade-button"id='<?= htmlspecialchars($dados['anuncio']->getId()) ?>'>Trocar</button>
+            <div class="row">
+                <div class="col-md-6">
+                    <img src="<?= BASEURL_ARQUIVOS .DIRECTORY_SEPARATOR.htmlspecialchars($dados['anuncio']->getImagemLivro()) ?>" alt="<?= htmlspecialchars($dados['anuncio']->getNomeLivro()) ?>" class="img-fluid">
+                </div>
+                <div class="col-md-6">
+                    <h3><?= htmlspecialchars($dados['anuncio']->getNomeLivro()) ?></h3>
+                    <p><strong>Descrição:</strong> <?= htmlspecialchars($dados['anuncio']->getDescricao()) ?></p>
+                    <p><strong>Publicado em:</strong> <?= htmlspecialchars($dados['anuncio']->getDataPublicacao()->format('d/m/Y')) ?></p>
+                    <form method="POST" action="<?= BASEURL ?>/controller/HomeController.php?action=trade">
+                        <input type="hidden" name="anuncio_id" value="<?= htmlspecialchars($dados['anuncio']->getId()) ?>">
+                        <button type="submit" class="btn btn-primary">Trocar</button>
+                    </form>
+                </div>
             </div>
         </div>
     <?php else: ?>

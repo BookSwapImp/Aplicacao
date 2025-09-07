@@ -46,13 +46,14 @@ class PerfilController extends Controller {
         $imagem = isset($_FILES['foto_perfil']) ? $_FILES['foto_perfil'] : null;
         $nome = isset($_POST['nome']) ? trim($_POST['nome']) : null;
         $email = isset($_POST['email']) ? trim($_POST['email']) : null;
-        $cpf = isset($_POST['cpf']) ? trim($_POST['cpf']) : null;
-        $telefone = isset($_POST['telefone']) ? trim($_POST['telefone']) : null;
+        $cpf = isset($_POST['cpf']) ? (int)trim($_POST['cpf']) : null;
+        $telefone = isset($_POST['telefone']) ? (int)trim($_POST['telefone']) : null;
         
         // Obter ID do usuário logado
         $idUsuario = $this->getIdUsuarioLogado();
         
         // Validar campos obrigatórios (sem foto)
+        $erros =
         
         $erros = $this->editarService->validarCampos(  $this->getIdUsuarioLogado(),$cpf, $telefone);
 

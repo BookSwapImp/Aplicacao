@@ -17,7 +17,7 @@ class CadastroService {
     // Valida os campos obrigatórios de um usuário
     public function validarCampos(?string $nome, ?string $email, ?string $senha,?string $confSenha,?string $cpf, ?string $telefone) {
         $arrayMsg = [];
-       
+         //loop para validar caracteres invalidos
         if (!$nome) 
             array_push($arrayMsg, "O campo [Nome] é obrigatório.");
         else{
@@ -32,8 +32,6 @@ class CadastroService {
             array_push($arrayMsg, "O campo [Email] está em formato inválido.");
         }
         else {  // verifica se o email já existe no banco
-            $ivalidado = $this->caracteresService->CaracteresInvalidos($email);
-            array_push($arrayMsg, $ivalidado);
             $usuarioExistente = $this->usuarioDAO->findByEmail($email);
             if ($usuarioExistente !== null) {
                 array_push($arrayMsg, "O Email já está cadastrado no sistema.");
@@ -61,7 +59,8 @@ class CadastroService {
                 }
             }
         }
-
+      
+        // Validar CPF
         if (!$cpf) {
             array_push($arrayMsg, "O campo [CPF] é obrigatório.");
         }

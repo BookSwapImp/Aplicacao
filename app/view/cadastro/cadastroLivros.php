@@ -60,16 +60,6 @@ require_once(__DIR__ . "/../include/menu.php");
                                     <option value="bom">Bom</option>
                                 </select>
                             </div>
-
-                            <!-- Status -->
-                            <div class="mb-3">
-                                <label for="status" class="form-label">Status *</label>
-                                <select class="form-select" id="status" name="status" required>
-                                    <option value="ativo">Ativo</option>
-                                    <option value="inativo">Inativo</option>
-                                </select>
-                            </div>
-
                             <!-- Botões -->
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">
                                 <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=meusLivrosPage' ?>" 

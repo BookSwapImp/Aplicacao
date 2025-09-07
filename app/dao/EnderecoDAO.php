@@ -11,14 +11,47 @@ class EnderecoDAO {
     public function __construct() {
         $this->conn = Connection::getConn();
     }
-    public function findMainEnderecos (int $id){
-        $sql = "SELECT * FROM enderecos WHERE id=:id AND main = 'main' ";
+    public function findMainEnderecosExist(int $usuarioId) {
+        $sql = "SELECT * FROM enderecos WHERE usuarios_id = :usuarios_id AND main = 'main'";
         $stmt = $this->conn->prepare($sql);
-        $stmt->bindValue(':id', $id);
+        $stmt->bindValue(':usuarios_id', $usuarioId);
         $stmt->execute();
-
-        $result =$stmt->fetchAll();
-        return $this->mapEnderecos($result);
+        
+        $result = $stmt->fetchAll();
+        if ($result) {
+            $enderecos = $this->mapEnderecos($result);
+            return $enderecos[0]; // Retorna o primeiro endereço principal encontrado
+        }
+        return null; // Retorna null se nenhum endereço principal for encontrado
+    }
+    public function unsetMainEnderecos(int $usuarioId){
+        $sql = "UPDATE enderecos SET main = 'normal' WHERE main ='main' AND usuarios_id = :usuarios_id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':usuarios_id', $usuarioId);
+        return $stmt->execute();
+    }
+    public function updateEndereco(Endereco $endereco){
+        $sql = "UPDATE enderecos 
+                SET nome = :nome, 
+                    rua = :rua, 
+                    cidade = :cidade, 
+                    estado = :estado, 
+                    cep = :cep, 
+                    numero = :numero,
+                    main = :main
+                WHERE id = :id";
+                
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':nome', $endereco->getNome());
+        $stmt->bindValue(':rua', $endereco->getRua());
+        $stmt->bindValue(':cidade', $endereco->getCidade());
+        $stmt->bindValue(':estado', $endereco->getEstado());
+        $stmt->bindValue(':cep', $endereco->getCep());
+        $stmt->bindValue(':numero', $endereco->getNumb());
+        $stmt->bindValue(':main', $endereco->getMain());
+        $stmt->bindValue(':id', $endereco->getId());
+        
+        return $stmt->execute();
     }
 
     /**
@@ -73,6 +106,23 @@ class EnderecoDAO {
     }
 
     /**
+     * Busca um endereço por ID
+     */
+    public function findById(int $id) {
+        $sql = "SELECT * FROM enderecos WHERE id = :id";
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':id', $id);
+        $stmt->execute();
+
+        $result = $stmt->fetchAll();
+        if ($result) {
+            $enderecos = $this->mapEnderecos($result);
+            return $enderecos[0]; // Retorna o endereço encontrado
+        }
+        return null; // Retorna null se nenhum endereço for encontrado
+    }
+
+    /**
      * Busca todos os endereços de um usuário
      */
     public function findByUsuarioId(int $usuarioId) {
@@ -80,7 +130,7 @@ class EnderecoDAO {
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':usuarios_id', $usuarioId);
         $stmt->execute();
-        
+
         return $this->mapEnderecos($stmt->fetchAll());
     }
     

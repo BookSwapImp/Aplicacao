@@ -12,37 +12,32 @@ require_once(__DIR__ . "/../include/menu.php");
     <?php if (!isset($dados['enderecos']) || empty($dados['enderecos'])): ?>
         <div class="alert alert-info">Nenhum endereço cadastrado.</div>
     <?php else: ?>
-        <table class="table table-striped">
-            <thead>
-                <tr>
-                    <th>Nome</th>
-                    <th>Rua</th>
-                    <th>Cidade</th>
-                    <th>CEP</th>
-                    <th>Estado</th>
-                    <th>Número</th>
-                    <th>Main</th>
-                    <th>Ações</th>
-                </tr>
-            </thead>
-            <tbody>
-                <?php foreach ($dados['enderecos'] as $row): ?>
-                    <tr>
-                        <td><?= htmlspecialchars($row->getNome()) ?></td>
-                        <td><?= htmlspecialchars($row->getRua()) ?></td>
-                        <td><?= htmlspecialchars($row->getCidade()) ?></td>
-                        <td><?= htmlspecialchars($row->getCep()) ?></td>
-                        <td><?= htmlspecialchars($row->getEstado()) ?></td>
-                        <td><?= htmlspecialchars($row->getNumb()) ?></td>
-                        <td><?= htmlspecialchars($row->getMain()) ?></td>
-                        <td>
-                            <a href="<?= BASEURL ?>/controller/EnderecosController.php?action=editarEnderecoPage&id=<?= $row->getId() ?>" class="btn btn-sm btn-primary">Editar</a>
-                            <a href="<?= BASEURL ?>/controller/EnderecosController.php?action=DeletarEnderecos&id=<?= $row->getId() ?>" class="btn btn-sm btn-danger" onclick="return confirm('Confirmar exclusão?')">Excluir</a>
-                        </td>
-                    </tr>
-                <?php endforeach; ?>
-            </tbody>
-        </table>
+        <div class="row row-cols-1 row-cols-md-2 g-3">
+            <?php foreach ($dados['enderecos'] as $row): ?>
+                <div class="col">
+                    <div class="card h-100">
+                        <div class="card-body"></div>
+                            <h5 class="card-title"><?= htmlspecialchars($row->getNome()) ?></h5>
+                            <p class="card-text mb-1"><strong>Rua:</strong> <?= htmlspecialchars($row->getRua()) ?></p>
+                            <p class="card-text mb-1"><strong>Cidade:</strong> <?= htmlspecialchars($row->getCidade()) ?></p>
+                            <p class="card-text mb-1"><strong>Estado:</strong> <?= htmlspecialchars($row->getEstado()) ?></p>
+                            <p class="card-text mb-1"><strong>CEP:</strong> <?= htmlspecialchars($row->getCep()) ?></p>
+                            <p class="card-text mb-1"><strong>Número:</strong> <?= htmlspecialchars($row->getNumb()) ?></p>
+                            <p class="card-text"><small class="text-muted"><?= htmlspecialchars($row->getMain() ? 'principal':'normal') ?></small></p>
+                        
+                            <form method="POST" action="<?= BASEURL ?>/controller/EnderecosController.php?action=editarEnderecosPage" style="display:inline;">
+                                <input type="hidden" name="id" value="<?= $row->getId() ?>">
+                                <button type="submit" class="btn btn-sm btn-primary btn-left">Editar</button>
+                            </form>
+                            <form method="POST" action="<?= BASEURL ?>/controller/EnderecosController.php?action=DeletarEnderecos" style="display:inline;">
+                                <input type="hidden" name="id" value="<?= $row->getId() ?>">
+                                <button type="submit" class="btn btn-sm btn-danger" onclick="return confirm('Confirmar exclusão?')">Excluir</button>
+                            </form>
+                        </div>
+                    </div>
+                </div>
+            <?php endforeach; ?>
+        </div>
     <?php endif; ?>
 </div>
 

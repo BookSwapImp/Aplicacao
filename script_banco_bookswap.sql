@@ -38,29 +38,6 @@ CREATE TABLE IF NOT EXISTS `anuncios` (
   DEFAULT CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;
 
-
--- -----------------------------------------------------
--- Table `compra`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `compra` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `usuarios_id` INT NOT NULL,
-  `anuncios_id` INT NOT NULL,
-  `valor_pago` FLOAT NOT NULL,
-  `data_pagamento` DATETIME NOT NULL,
-  `codigo_transacao` VARCHAR(255) DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `compra_ibfk_1`
-    FOREIGN KEY (`usuarios_id`)
-    REFERENCES `usuarios` (`id`),
-  CONSTRAINT `compra_ibfk_2`
-    FOREIGN KEY (`anuncios_id`)
-    REFERENCES `anuncios` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
-
-
 -- -----------------------------------------------------
 -- Table `denuncia`
 -- -----------------------------------------------------
@@ -109,16 +86,24 @@ CREATE TABLE IF NOT EXISTS `enderecos` (
 -- -----------------------------------------------------
 CREATE TABLE IF NOT EXISTS `troca` (
   `id` INT NOT NULL AUTO_INCREMENT,
-  `anuncios_id_1` INT NOT NULL,
-  `anuncios_id_2` INT NOT NULL,
+  `anuncios_id_oferta` INT NOT NULL,
+  `usuarios_id_oferta` INT NOT NULL,
+  `anuncios_id_solicitador` INT NOT NULL,
+  `usuarios_id_solicitador` INT NOT NULL,
   `data_troca` DATETIME NOT NULL,
   PRIMARY KEY (`id`),
   CONSTRAINT `troca_ibfk_1`
-    FOREIGN KEY (`anuncios_id_1`)
+    FOREIGN KEY (`anuncios_id_ofertado`)
     REFERENCES `anuncios` (`id`),
   CONSTRAINT `troca_ibfk_2`
-    FOREIGN KEY (`anuncios_id_2`)
-    REFERENCES `anuncios` (`id`)
+    FOREIGN KEY (`anuncios_id_solicitado`)
+    REFERENCES `anuncios` (`id`),
+  CONSTRAINT `troca_ibfk_3`
+    FOREIGN KEY (`usuarios_id_ofertado`)
+    REFERENCES `usuarios` (`id`),
+  CONSTRAINT `troca_ibfk_4`
+    FOREIGN KEY (`usuarios_id_solicitado`)
+    REFERENCES `usuarios` (`id`)
 ) ENGINE = InnoDB
   DEFAULT CHARACTER SET = utf8mb4
   COLLATE = utf8mb4_0900_ai_ci;

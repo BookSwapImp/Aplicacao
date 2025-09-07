@@ -44,7 +44,11 @@ class EnderecosController extends Controller {
     }
     protected function editarEnderecosPage() {
     $dados['usuario'] = $this->procurarUsuarioId();
-    $this->loadView("enderecos/editarEnderecos.php", $dados);
+    $id = isset($_POST['id']) ? (int)$_POST['id'] : (isset($_GET['id']) ? (int)$_GET['id'] : 0);
+    if($id > 0){
+        $dados['endereco'] = $this->enderecoDAO->findById($id);
+    }
+    $this->loadView("cadastro/cadastroEndereco.php", $dados);
     }
 
   
@@ -59,8 +63,8 @@ class EnderecosController extends Controller {
              
                 // Obter ID do usuário logado
                 $idUsuario = $this->getIdUsuarioLogado();
-                $endereco = $this->enderecoDAO->findMainEnderecos($idUsuario);
-                if(count($endereco)==0){
+                $endereco = $this->enderecoDAO->findMainEnderecosExist($idUsuario);
+                if($endereco === null){
                     $main = 'main';
                 } else {
                     $main = 'normal';
@@ -96,9 +100,57 @@ class EnderecosController extends Controller {
                     $this->loadView("cadastro/cadastroEndereco.php", $dados, $msgErro);
                 }
             }
+    protected function editarEnderecosOn()  {
+                // Receber dados do formulário com estrutura correta
+                $id = isset($_POST['id']) ? (int)trim($_POST['id']) : 0;
+                $nome = isset($_POST['nome']) ? trim($_POST['nome']) : null;
+                $rua = isset($_POST['rua']) ? trim($_POST['rua']) : null;
+                $cidade = isset($_POST['cidade']) ? trim($_POST['cidade']) : null;
+                $cep = isset($_POST['cep']) ? trim($_POST['cep']) : null;
+                $estado = isset($_POST['estado']) ? trim($_POST['estado']) : null;
+                $numb = isset($_POST['numb']) ? (int)trim($_POST['numb']) : null;
+                $main = isset($_POST['main']) ? trim($_POST['main']) : null;
+             
+                // Obter ID do usuário logado
+                $idUsuario = $this->getIdUsuarioLogado();
+                
+                // Validar campos
+                $erros = $this->enderecoService->validarCampos($rua, $cidade, $cep, $estado, $numb);
+                
+                if(empty($erros)) {
+                    // Criar objeto Endereco
+                    $endereco = new Endereco();
+                    $endereco->setId($id);
+                    $endereco->setNome($nome);
+                    $endereco->setUsuariosId($idUsuario);
+                    $endereco->setRua($rua);
+                    $endereco->setCidade($cidade);
+                    $endereco->setCep($cep);
+                    $endereco->setEstado($estado);
+                    $endereco->setNumb($numb);
+                    if($main === 'main'){
+                        $this->enderecoDAO->unsetMainEnderecos($idUsuario);
+                        $endereco->setMain('main');
+                    }else {
+                        $endereco->setMain('normal');
+                    }
+                    
+                    // Salvar endereço
+                   $this->enderecoDAO->updateEndereco($endereco);
+                    
+                    // Redirecionar para página de sucesso
+                    header("Location: " . BASEURL . "/controller/EnderecosController.php?action=enderecoPage");
+                    exit;
+                } else {
+                    // Retornar com erros
+                    $dados['usuario'] = $this->procurarUsuarioId();
+                    $msgErro = implode("<br>", $erros);
+                    $this->loadView("enderecos/enderecoEditar.php", $dados, $msgErro);
+                }
+            }
     protected function DeletarEnderecos(){
 
-        $id = isset($_GET['id']) ? (int)$_GET['id'] : 0;
+        $id = isset($_POST['id']) ? (int)$_POST['id'] : 0;
         $this->enderecoDAO->deleteEndereco($id);
         $this->enderecoPage();
     }

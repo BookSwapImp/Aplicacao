@@ -13,10 +13,22 @@ class CadastroLivroService{
         $arrayMsg = []; 
         if (!$anuncio->getNomeLivro()) 
             array_push($arrayMsg, "O campo [Nome] é obrigatório.");
-        else{
-            $ivalidado = $this->caracteresService->CaracteresInvalidos($anuncio->getNomeLivro());
-            array_push($arrayMsg, $ivalidado);
-        }
+        if (!$anuncio->getDescricao()) 
+            array_push($arrayMsg, "O campo [Descrição] é obrigatório.");
+        if (!$anuncio->getEstadoCon()) 
+            array_push($arrayMsg, "O campo [Estado de conservação] é obrigatório.");
+        if (!$anuncio->getUsuarioId()) 
+            array_push($arrayMsg, "erro o Usuario id não foi verficado.");        
+            // loop para verficar caractere invalidos
+        if (!$anuncio->getNomeLivro() || !$anuncio->getDescricao()) 
+            $aux = $anuncio->getNomeLivro().$anuncio->getDescricao();     
+           for ($i=0; $i < strlen($aux); $i++) { 
+               $ivalidado = $this->caracteresService->CaracteresInvalidos($aux[$i]);
+               if ($ivalidado) {
+                   array_push($arrayMsg, $ivalidado);
+                   return $arrayMsg;
+                }
+           } 
         return $arrayMsg;
     }
 }

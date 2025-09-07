@@ -5,23 +5,27 @@ require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../model/Anuncios.php");
 require_once(__DIR__ . "/../dao/AnunciosDAO.php");
+require_once(__DIR__ . "/../service/CadastroLivroService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
 
 
 class MeusLivrosController extends Controller {
-
+    private Usuario $usuario;
     private UsuarioDAO $usuarioDao;
     private Anuncios $anuncios;
     private AnunciosDAO $anunciosDao;
+    private CadastroLivroService $cadastroLivroService;
     private ArquivoService $arquivoService;
 
     public function __construct() {
         if(! $this->usuarioEstaLogado())
             return;
+        $this->usuario = new Usuario();
         $this->usuarioDao = new UsuarioDAO();
         $this->anuncios = new Anuncios();
         $this->anunciosDao = new AnunciosDAO();
         $this->arquivoService = new ArquivoService();
+        $this->cadastroLivroService = new CadastroLivroService();
 
         $this->handleAction();    
     }
@@ -65,6 +69,7 @@ class MeusLivrosController extends Controller {
     protected function editarLivro(){
         // Receber dados do formulário
         $idLivro = isset($_POST['id_livro']) ? (int)trim($_POST['id_livro']) : null;
+        $id = $this->getIdUsuarioLogado();
         $nomeLivro = isset($_POST['nome_livro']) ? trim($_POST['nome_livro']) : null;
         $imagemLivro = isset($_FILES['imagem_livro']) ? $_FILES['imagem_livro'] : null;
         $descricao = isset($_POST['descricao']) ? trim($_POST['descricao']) : null;
@@ -72,12 +77,13 @@ class MeusLivrosController extends Controller {
         $status = 'ativo';
         
         // Validar campos
-        $erros = [];
-        if (!$idLivro) $erros[] = "ID do livro é obrigatório";
-        if (!$nomeLivro) $erros[] = "Nome do livro é obrigatório";
-        if (!$descricao) $erros[] = "Descrição é obrigatória";
-        if (!$estadoCon) $erros[] = "Estado de conservação é obrigatório";
-        
+        $this->anuncios->setId($idLivro);
+        $this->anuncios->setUsuarioId($this->usuario->setId($id));
+        $this->anuncios->setNomeLivro($nomeLivro);
+        $this->anuncios->setDescricao($descricao);
+        $this->anuncios->setEstadoCon($estadoCon);
+        $erros = $this->cadastroLivroService->validarCampos($this->anuncios);
+
         // Só valida a imagem se uma nova foi enviada (opcional)
         if ($imagemLivro && $imagemLivro['size'] > 0) {
             $errosArquivo = $this->arquivoService->validarArquivo($imagemLivro);
@@ -157,9 +163,14 @@ class MeusLivrosController extends Controller {
         
         // Validar campos (implementar validação adequada)
         $erros = [];
-        if (!$nomeLivro) $erros[] = "Nome do livro é obrigatório";
-        if (!$descricao) $erros[] = "Descrição é obrigatória";
-        if (!$estadoCon) $erros[] = "Estado de conservação é obrigatório";
+  
+        $this->anuncios->setId(null);
+        $this->anuncios->setUsuarioId($this->usuario->setId($idUsuario));
+        $this->anuncios->setNomeLivro($nomeLivro);
+        $this->anuncios->setDescricao($descricao);
+        $this->anuncios->setEstadoCon($estadoCon);
+        $this->anuncios->setStatus($status);
+        $erros = $this->cadastroLivroService->validarCampos($this->anuncios);
         $errosArquivo = $this->arquivoService->validarArquivo($imagemLivro);
         if (!empty($errosArquivo)) {
             $erros = array_merge($erros, $errosArquivo);
