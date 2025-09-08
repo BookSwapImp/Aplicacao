@@ -135,3 +135,5 @@ class EnderecoDAO {
     }
     
 }
+$dao = new EnderecoDAO();
+echo $dao->findMainEnderecosExist(1);

@@ -6,7 +6,10 @@ class Trocas {
     private ?Anuncios $anuncios_id_oferta;
     private ?Usuario $usuarios_id_oferta;
     private ?Anuncios $anuncios_id_solicitador;
-    private ?Usuario $usuarios_id_solicitador;  
+    private ?Usuario $usuarios_id_solicitador;
+    private ?DateTime $data_troca;
+    private ?string $sec_code;
+      
 
     /**
      * Get the value of id
@@ -94,6 +97,42 @@ class Trocas {
     public function setUsuariosIdSolicitador(?Usuario $usuarios_id_solicitador): self
     {
         $this->usuarios_id_solicitador = $usuarios_id_solicitador;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of data_troca
+     */
+    public function getDataTroca(): ?DateTime
+    {
+        return $this->data_troca;
+    }
+
+    /**
+     * Set the value of data_troca
+     */
+    public function setDataTroca(?DateTime $data_troca): self
+    {
+        $this->data_troca = $data_troca;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of sec_code
+     */
+    public function getSecCode(): ?string
+    {
+        return $this->sec_code;
+    }
+
+    /**
+     * Set the value of sec_code
+     */
+    public function setSecCode(?string $sec_code): self
+    {
+        $this->sec_code = $sec_code;
 
         return $this;
     }
