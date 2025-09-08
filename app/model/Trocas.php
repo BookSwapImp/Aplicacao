@@ -9,7 +9,8 @@ class Trocas {
     private ?Usuario $usuarios_id_solicitador;
     private ?DateTime $data_troca;
     private ?string $sec_code;
-      
+    private ?string $status;  
+    
 
     /**
      * Get the value of id
@@ -133,6 +134,24 @@ class Trocas {
     public function setSecCode(?string $sec_code): self
     {
         $this->sec_code = $sec_code;
+
+        return $this;
+    }
+
+    /**
+     * Get the value of status
+     */
+    public function getStatus(): ?string
+    {
+        return $this->status;
+    }
+
+    /**
+     * Set the value of status
+     */
+    public function setStatus(?string $status): self
+    {
+        $this->status = $status;
 
         return $this;
     }

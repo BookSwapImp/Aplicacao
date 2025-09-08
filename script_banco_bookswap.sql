@@ -91,6 +91,7 @@ CREATE TABLE IF NOT EXISTS `troca` (
   `anuncios_id_solicitador` INT NOT NULL,
   `usuarios_id_solicitador` INT NOT NULL,
   `data_troca` DATETIME NOT NULL,
+  `status` ENUM('inativo','ativo'),
   PRIMARY KEY (`id`),
   CONSTRAINT `troca_ibfk_1`
     FOREIGN KEY (`anuncios_id_ofertado`)

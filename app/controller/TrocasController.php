@@ -1,6 +1,5 @@
 <?php
-require_once(__DIR__.'Controller');
-require_once(__DIR__.'/../model/Trocas.php');
+require_once(__DIR__ . '/../controller/Controller.php');
 require_once(__DIR__.'/../dao/TrocasDAO.php'); 
 class TrocasController extends Controller{
     private Usuario $usuario;
@@ -15,5 +14,11 @@ class TrocasController extends Controller{
     
         $this->handleAction(); 
     }
+
+    protected function trocasPages(){
+        $dados = array();
+        $this->loadView('trocas/trocas.php',$dados);
+    }
     
 }
+new TrocasController();

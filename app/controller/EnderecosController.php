@@ -53,6 +53,7 @@ class EnderecosController extends Controller {
 
   
     protected function cadastroEnderecoOn()  {
+        
                 // Receber dados do formulário com estrutura correta
                 $nome = isset($_POST['nome']) ? trim($_POST['nome']) : null;
                 $rua = isset($_POST['rua']) ? trim($_POST['rua']) : null;
@@ -60,15 +61,37 @@ class EnderecosController extends Controller {
                 $cep = isset($_POST['cep']) ? trim($_POST['cep']) : null;
                 $estado = isset($_POST['estado']) ? trim($_POST['estado']) : null;
                 $numb = isset($_POST['numb']) ? (int)trim($_POST['numb']) : null;
+                $mainAux = isset($_POST['main'])? isset($_POST['main']): null;
              
                 // Obter ID do usuário logado
                 $idUsuario = $this->getIdUsuarioLogado();
-                $endereco = $this->enderecoDAO->findMainEnderecosExist($idUsuario);
-                if($endereco === null){
-                    $main = 'main';
-                } else {
-                    $main = 'normal';
+                $enderecos = $this->enderecoDAO->findEnderecosExist($idUsuario);
+                
+                if(isset($mainAux) && $mainAux == "main"){
+                    foreach($enderecos as $end){
+                        if($end->getMain() == "main"){
+                            $end->setMain("normal");
+                             $this->enderecoDAO->updateEndereco($end);
+                        }   
+                    }   
                 }
+                //cai aqui quando o usuario seleciona o endereco normal
+                else {
+                    $hasMainAdress = false;
+                    foreach($enderecos as $end){
+
+                        if($end->getMain() == "main"){
+                            $hasMainAdress = true;
+                        }
+                        
+                    }
+                    if($hasMainAdress) {
+                        $main = "normal";
+                    } else {
+                        $main = "main";
+                    }
+                }
+
                 // Validar campos
                 $erros = $this->enderecoService->validarCampos($rua, $cidade, $cep, $estado, $numb);
                 $limite = $this->listarEnderecosUserId($idUsuario);
@@ -109,14 +132,47 @@ class EnderecosController extends Controller {
                 $cep = isset($_POST['cep']) ? trim($_POST['cep']) : null;
                 $estado = isset($_POST['estado']) ? trim($_POST['estado']) : null;
                 $numb = isset($_POST['numb']) ? (int)trim($_POST['numb']) : null;
-                $main = isset($_POST['main']) ? trim($_POST['main']) : null;
+                $mainAux = isset($_POST['main']) ? trim($_POST['main']) : null;
              
                 // Obter ID do usuário logado
                 $idUsuario = $this->getIdUsuarioLogado();
-                
+              
                 // Validar campos
                 $erros = $this->enderecoService->validarCampos($rua, $cidade, $cep, $estado, $numb);
                 
+                $enderecos = $this->enderecoDAO->findEnderecosExist($this->getIdUsuarioLogado());
+                if(isset($mainAux) && $mainAux == "main"){
+                    foreach($enderecos as $end){
+                        if($end->getMain() == "main"){
+                            $end->setMain("normal");
+                             $this->enderecoDAO->updateEndereco($end);
+                        }   
+                    }   
+                }
+                elseif(isset($mainAux) && $mainAux == "normal"){
+                    foreach($enderecos as $end){
+                        if($end->getMain() == "normal"){
+                            $main = 'main';
+                        }   
+                    }   
+                }
+                //cai aqui quando o usuario seleciona o endereco normal
+                else {
+                    $hasMainAdress = false;
+                    foreach($enderecos as $end){
+
+                        if($end->getMain() == "main"){
+                            $hasMainAdress = true;
+                        }
+                        
+                    }
+                    if($hasMainAdress) {
+                        $main = "normal";
+                    } else {
+                        $main = "main";
+                    }
+                }
+
                 if(empty($erros)) {
                     // Criar objeto Endereco
                     $endereco = new Endereco();
@@ -130,10 +186,13 @@ class EnderecosController extends Controller {
                     $endereco->setNumb($numb);
                     if($main === 'main'){
                         $this->enderecoDAO->unsetMainEnderecos($idUsuario);
-                        $endereco->setMain('main');
-                    }else {
-                        $endereco->setMain('normal');
+                        $endereco->setMain($main);
                     }
+                    elseif($main === null){
+                    $endereco->setMain('main');  
+                    }  
+                    else
+                    $endereco->setMain($main);
                     
                     // Salvar endereço
                    $this->enderecoDAO->updateEndereco($endereco);

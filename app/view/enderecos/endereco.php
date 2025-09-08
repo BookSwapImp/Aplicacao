@@ -12,6 +12,7 @@ require_once(__DIR__ . "/../include/menu.php");
     <?php if (!isset($dados['enderecos']) || empty($dados['enderecos'])): ?>
         <div class="alert alert-info">Nenhum endereço cadastrado.</div>
     <?php else: ?>
+
         <div class="row row-cols-1 row-cols-md-2 g-3">
             <?php foreach ($dados['enderecos'] as $row): ?>
                 <div class="col">
@@ -23,7 +24,7 @@ require_once(__DIR__ . "/../include/menu.php");
                             <p class="card-text mb-1"><strong>Estado:</strong> <?= htmlspecialchars($row->getEstado()) ?></p>
                             <p class="card-text mb-1"><strong>CEP:</strong> <?= htmlspecialchars($row->getCep()) ?></p>
                             <p class="card-text mb-1"><strong>Número:</strong> <?= htmlspecialchars($row->getNumb()) ?></p>
-                            <p class="card-text"><small class="text-muted"><?= htmlspecialchars($row->getMain() ? 'principal':'normal') ?></small></p>
+                            <p class="card-text"><small class="text-muted"><?= htmlspecialchars($row->getMain())?></small></p>
                         
                             <form method="POST" action="<?= BASEURL ?>/controller/EnderecosController.php?action=editarEnderecosPage" style="display:inline;">
                                 <input type="hidden" name="id" value="<?= $row->getId() ?>">

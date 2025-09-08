@@ -11,8 +11,8 @@ class EnderecoDAO {
     public function __construct() {
         $this->conn = Connection::getConn();
     }
-    public function findMainEnderecosExist(int $usuarioId) {
-        $sql = "SELECT * FROM enderecos WHERE usuarios_id = :usuarios_id AND main = 'main'";
+    public function findEnderecosExist(int $usuarioId) {
+        $sql = "SELECT * FROM enderecos WHERE usuarios_id = :usuarios_id ";
         $stmt = $this->conn->prepare($sql);
         $stmt->bindValue(':usuarios_id', $usuarioId);
         $stmt->execute();
@@ -20,7 +20,7 @@ class EnderecoDAO {
         $result = $stmt->fetchAll();
         if ($result) {
             $enderecos = $this->mapEnderecos($result);
-            return $enderecos[0]; // Retorna o primeiro endereço principal encontrado
+            return $enderecos; // Retorna o primeiro endereço principal encontrado
         }
         return null; // Retorna null se nenhum endereço principal for encontrado
     }
@@ -81,7 +81,7 @@ class EnderecoDAO {
         return $stmt->execute();
     }
     public function mapEnderecos(array $result){
-        $enderecos =array();
+        $enderecos  =array();
         foreach ($result as $reg) {    
             $endereco = new Endereco();
             $endereco->setId($reg['id']);
@@ -135,5 +135,3 @@ class EnderecoDAO {
     }
     
 }
-$dao = new EnderecoDAO();
-echo $dao->findMainEnderecosExist(1);
