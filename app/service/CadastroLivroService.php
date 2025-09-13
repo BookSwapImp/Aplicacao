@@ -20,7 +20,7 @@ class CadastroLivroService{
         if (!$anuncio->getUsuarioId()) 
             array_push($arrayMsg, "erro o Usuario id não foi verficado.");        
             // loop para verficar caractere invalidos
-        if (!$anuncio->getNomeLivro() || !$anuncio->getDescricao()) 
+        /*if (!$anuncio->getNomeLivro() || !$anuncio->getDescricao()) 
             $aux = $anuncio->getNomeLivro().$anuncio->getDescricao();     
            for ($i=0; $i < strlen($aux); $i++) { 
                $ivalidado = $this->caracteresService->CaracteresInvalidos($aux[$i]);
@@ -29,6 +29,7 @@ class CadastroLivroService{
                    return $arrayMsg;
                 }
            } 
+                */
         return $arrayMsg;
     }
 }

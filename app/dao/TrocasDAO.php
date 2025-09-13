@@ -16,7 +16,8 @@ class TrocasDAO{
         $result = $stm->fetchAll();
         return $this->mapTrocas($result);
     }
-        public function listById($id){
+   
+    public function listById($id){
         $sql = 'SELECT * FROM troca WHERE id=:id';
         $stm = $this->conexao->prepare($sql);
         $stm->bindValue('id', $id);
@@ -73,5 +74,3 @@ class TrocasDAO{
     }
     
 }
-$td = new TrocasDAO();
-$result = $td->listByIdUsuario(1);

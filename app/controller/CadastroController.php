@@ -17,27 +17,20 @@ class CadastroController extends Controller{
         $this->loadView("cadastro/cadastro.php", []);
     }
      /* Método para Cadastrar um usuário a partir dos dados informados no formulário */
-     protected function cadastrar(){
-      
-         
-      //  $this->loadView("cadastro/cadastro.php", []);
+     protected function cadastrar(){ 
         $nome = isset($_POST['nome']) ? trim($_POST['nome']) : null; 
         $email = isset($_POST['email']) ? trim($_POST['email']) : null;
         $senha = isset($_POST['senha']) ? trim($_POST['senha']) : null;
         $telefone = isset($_POST['telefone']) ? trim($_POST['telefone']) : null;
         $cpf = isset($_POST['cpf']) ? trim($_POST['cpf']) : null;
         $confSenha = isset($_POST['confSenha']) ? trim($_POST['confSenha']) : null;// para verificar a senha
-       // $erros=[];
-       // $msg=[];
-       $errosRetornados = $this->cadastroService->validarCampos($nome, $email, $senha, $confSenha, $cpf, $telefone);
+        $errosRetornados = $this->cadastroService->validarCampos($nome, $email, $senha, $confSenha, $cpf, $telefone);
 
         // Se $errosRetornados não for um array (ou seja, se for false ou null), use um array vazio.
         $erros = is_array($errosRetornados) ? $errosRetornados : [];
       
         
         if (empty($erros)) {
-            // Se não há erros de validação
-           //echo 'cadastro enviado';
             $usuario = new Usuario();
             $usuario->setNome($nome);
             $usuario->setEmail($email);
@@ -47,12 +40,10 @@ class CadastroController extends Controller{
             $usuario->setTipo("usuario");
             $usuario->setStatus("ativo");
 
-            // Inserir no banco
             $this->usuarioDao->insert($usuario);
 
         // A linha abaixo passa $msg, mas se não há erros, $msg será vazia.
-            //$this->loadView("cadastro/cadastro_sucesso.php", $dados,$msg); // Exemplo de view de sucesso
-            header("location: " . LOGIN_PAGE);
+             header("location: " . LOGIN_PAGE);
             exit;
         }  else {
               // echo'cadastro  enviado';

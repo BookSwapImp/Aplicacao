@@ -21,8 +21,8 @@ class CadastroService {
         if (!$nome) 
             array_push($arrayMsg, "O campo [Nome] é obrigatório.");
         else{
-            $ivalidado = $this->caracteresService->CaracteresInvalidos($nome);
-            array_push($arrayMsg, $ivalidado);
+          //  $ivalidado = $this->caracteresService->CaracteresInvalidos($nome);
+           // array_push($arrayMsg, $ivalidado);
         }   
         
         if (!$email) 

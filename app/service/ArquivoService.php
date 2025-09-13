@@ -74,8 +74,8 @@ public function excluirArquivo(string $nomeArquivo) {
         if (unlink($arquivoCompleto)) {
             return true;
         } else {
+           // throw new Exception("Falha ao apagar o arquivo: " . $arquivoCompleto);
             return false;
-            throw new Exception("Falha ao apagar o arquivo: " . $arquivoCompleto);
         }
     } else {
         return false;

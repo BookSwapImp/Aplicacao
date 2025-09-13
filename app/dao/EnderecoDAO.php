@@ -19,11 +19,23 @@ class EnderecoDAO {
         
         $result = $stmt->fetchAll();
         if ($result) {
-            $enderecos = $this->mapEnderecos($result);
-            return $enderecos; // Retorna o primeiro endereço principal encontrado
+            return true; // Retorna o primeiro endereço principal encontrado
         }
         return null; // Retorna null se nenhum endereço principal for encontrado
     }
+    public function findEnderecosSetMainExist(int $usuarioId){
+        $sql = 'SELECT * FROM enderecos WHERE usuarios_id = :usuarios_id AND main = "main"';
+        $stmt = $this->conn->prepare($sql);
+        $stmt->bindValue(':usuarios_id', $usuarioId);
+        $stmt->execute();
+        $result = $stmt->fetchAll();
+        if ($result) {
+            return true; // Retorna o primeiro endereço principal encontrado
+        }
+        return null;
+        
+    }
+    
     public function unsetMainEnderecos(int $usuarioId){
         $sql = "UPDATE enderecos SET main = 'normal' WHERE main ='main' AND usuarios_id = :usuarios_id";
         $stmt = $this->conn->prepare($sql);
@@ -81,7 +93,7 @@ class EnderecoDAO {
         return $stmt->execute();
     }
     public function mapEnderecos(array $result){
-        $enderecos  =array();
+        $enderecos  = array();
         foreach ($result as $reg) {    
             $endereco = new Endereco();
             $endereco->setId($reg['id']);
