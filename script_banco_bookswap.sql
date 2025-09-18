@@ -1,166 +1,282 @@
+-- MySQL dump 10.13  Distrib 8.0.33, for Win64 (x86_64)
+--
+-- Host: localhost    Database: bookswap
+-- ------------------------------------------------------
+-- Server version	8.0.35
 
--- -----------------------------------------------------
--- Table `usuarios`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `usuarios` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(45) NOT NULL,
-  `email` VARCHAR(255) NOT NULL,
-  `senha`VARCHAR(255) NOT NULL,
-  `foto_de_perfil` VARCHAR(255) DEFAULT NULL,
-  `telefone` VARCHAR(15) DEFAULT NULL,
-  `cpf` VARCHAR(14) NOT NULL,
-  `tipo` ENUM('USUARIO', 'ADMINISTRADOR') NOT NULL,
-  `status` ENUM('ativo', 'inativo') NOT NULL,
+/*!40101 SET @OLD_CHARACTER_SET_CLIENT=@@CHARACTER_SET_CLIENT */;
+/*!40101 SET @OLD_CHARACTER_SET_RESULTS=@@CHARACTER_SET_RESULTS */;
+/*!40101 SET @OLD_COLLATION_CONNECTION=@@COLLATION_CONNECTION */;
+/*!50503 SET NAMES utf8 */;
+/*!40103 SET @OLD_TIME_ZONE=@@TIME_ZONE */;
+/*!40103 SET TIME_ZONE='+00:00' */;
+/*!40014 SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0 */;
+/*!40014 SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0 */;
+/*!40101 SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='NO_AUTO_VALUE_ON_ZERO' */;
+/*!40111 SET @OLD_SQL_NOTES=@@SQL_NOTES, SQL_NOTES=0 */;
+
+--
+-- Table structure for table `anuncios`
+--
+
+DROP TABLE IF EXISTS `anuncios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `anuncios` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `usuarios_id` int NOT NULL,
+  `nome_livro` varchar(55) NOT NULL,
+  `descricao` varchar(45) NOT NULL,
+  `data_publicacao` datetime NOT NULL,
+  `status` enum('ativo','inativo','finalizado') NOT NULL,
+  `estado_con` enum('mal','medio','bom') NOT NULL,
+  `imagem_livro` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `anuncios_ibfk_1` (`usuarios_id`),
+  CONSTRAINT `anuncios_ibfk_1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `anuncios`
+--
+
+LOCK TABLES `anuncios` WRITE;
+/*!40000 ALTER TABLE `anuncios` DISABLE KEYS */;
+INSERT INTO `anuncios` VALUES (2,2,'Ilíada','Livro novo','2025-07-05 14:41:29','ativo','bom','iliada.png'),(12,1,'O Pequeno Livro','O pequeno livro, Marcelo Cipis','2025-08-18 01:04:45','ativo','bom','arquivo_68a5cce03b241_1755696352.jpeg'),(18,1,'the making of prince of persia','Relato da criação de prince of persia','2025-09-10 15:54:40','ativo','bom','arquivo_68c183207a565_1757512480.png');
+/*!40000 ALTER TABLE `anuncios` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `avaliacao`
+--
+
+DROP TABLE IF EXISTS `avaliacao`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `avaliacao` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `usuarios_id` int NOT NULL,
+  `descricao` varchar(60) NOT NULL,
+  `nota` int NOT NULL,
+  `usuarios_id_denunciado` int NOT NULL,
+  `anuncios_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `enderecos_ibfk_10` (`usuarios_id`),
+  KEY `fk_avaliacao_usuarios1` (`usuarios_id_denunciado`),
+  KEY `fk_avaliacao_anuncios1` (`anuncios_id`),
+  CONSTRAINT `enderecos_ibfk_10` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`),
+  CONSTRAINT `fk_avaliacao_anuncios1` FOREIGN KEY (`anuncios_id`) REFERENCES `anuncios` (`id`),
+  CONSTRAINT `fk_avaliacao_usuarios1` FOREIGN KEY (`usuarios_id_denunciado`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `avaliacao`
+--
+
+LOCK TABLES `avaliacao` WRITE;
+/*!40000 ALTER TABLE `avaliacao` DISABLE KEYS */;
+/*!40000 ALTER TABLE `avaliacao` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `compra`
+--
+
+DROP TABLE IF EXISTS `compra`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `compra` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `usuarios_id` int NOT NULL,
+  `anuncios_id` int NOT NULL,
+  `valor_pago` float NOT NULL,
+  `data_pagamento` datetime NOT NULL,
+  `codigo_transacao` varchar(255) DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `compra_ibfk_1` (`usuarios_id`),
+  KEY `compra_ibfk_2` (`anuncios_id`),
+  CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`),
+  CONSTRAINT `compra_ibfk_2` FOREIGN KEY (`anuncios_id`) REFERENCES `anuncios` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `compra`
+--
+
+LOCK TABLES `compra` WRITE;
+/*!40000 ALTER TABLE `compra` DISABLE KEYS */;
+/*!40000 ALTER TABLE `compra` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `denuncia`
+--
+
+DROP TABLE IF EXISTS `denuncia`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `denuncia` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(255) NOT NULL,
+  `anuncios_id` int NOT NULL,
+  `usuarios_id` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `denuncia_ibfk_1` (`anuncios_id`),
+  KEY `denuncia_ibfk_2` (`usuarios_id`),
+  CONSTRAINT `denuncia_ibfk_1` FOREIGN KEY (`anuncios_id`) REFERENCES `anuncios` (`id`),
+  CONSTRAINT `denuncia_ibfk_2` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `denuncia`
+--
+
+LOCK TABLES `denuncia` WRITE;
+/*!40000 ALTER TABLE `denuncia` DISABLE KEYS */;
+/*!40000 ALTER TABLE `denuncia` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `enderecos`
+--
+
+DROP TABLE IF EXISTS `enderecos`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `enderecos` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `usuarios_id` int NOT NULL,
+  `rua` varchar(60) NOT NULL,
+  `cidade` varchar(45) NOT NULL,
+  `cep` varchar(45) NOT NULL,
+  `nome` varchar(80) NOT NULL,
+  `numero` int NOT NULL,
+  `main` enum('main','normal') DEFAULT 'normal',
+  `estado` char(2) NOT NULL,
+  `status` enum('inativo','ativo') DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `enderecos_ibfk_1` (`usuarios_id`),
+  CONSTRAINT `enderecos_ibfk_1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `enderecos`
+--
+
+LOCK TABLES `enderecos` WRITE;
+/*!40000 ALTER TABLE `enderecos` DISABLE KEYS */;
+INSERT INTO `enderecos` VALUES (8,1,'av.Paraná','Foz do Iguaçu','85868160','Minha casa',4555,'normal','PR',NULL),(11,23,'av.Paraná','Foz do Iguaçu','85868160','Nova Casa',45555,'main','PR',NULL);
+/*!40000 ALTER TABLE `enderecos` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `relatorio`
+--
+
+DROP TABLE IF EXISTS `relatorio`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `relatorio` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `descricao` varchar(255) NOT NULL,
+  `Tipo_de_denuncia` enum('anuncio','usuario') NOT NULL,
+  `denuncia_id` int NOT NULL,
+  `status_denunciado` enum('destivado','liberado') NOT NULL,
+  `relatorio_status` enum('ativo','inativo') NOT NULL,
+  `data` datetime NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_Relatorio_denuncia1` (`denuncia_id`),
+  CONSTRAINT `fk_Relatorio_denuncia1` FOREIGN KEY (`denuncia_id`) REFERENCES `denuncia` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `relatorio`
+--
+
+LOCK TABLES `relatorio` WRITE;
+/*!40000 ALTER TABLE `relatorio` DISABLE KEYS */;
+/*!40000 ALTER TABLE `relatorio` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `troca`
+--
+
+DROP TABLE IF EXISTS `troca`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `troca` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `anuncios_id_oferta` int NOT NULL,
+  `anuncios_id_solicitador` int NOT NULL,
+  `data_troca` datetime NOT NULL,
+  `usuarios_id_oferta` int NOT NULL,
+  `usuarios_id_solicitador` int NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `troca_ibfk_1` (`anuncios_id_oferta`),
+  KEY `troca_ibfk_2` (`anuncios_id_solicitador`),
+  KEY `troca_ibfk_3` (`usuarios_id_oferta`),
+  KEY `troca_ibfk_4` (`usuarios_id_solicitador`),
+  CONSTRAINT `troca_ibfk_1` FOREIGN KEY (`anuncios_id_oferta`) REFERENCES `anuncios` (`id`),
+  CONSTRAINT `troca_ibfk_2` FOREIGN KEY (`anuncios_id_solicitador`) REFERENCES `anuncios` (`id`),
+  CONSTRAINT `troca_ibfk_3` FOREIGN KEY (`usuarios_id_oferta`) REFERENCES `usuarios` (`id`),
+  CONSTRAINT `troca_ibfk_4` FOREIGN KEY (`usuarios_id_solicitador`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `troca`
+--
+
+LOCK TABLES `troca` WRITE;
+/*!40000 ALTER TABLE `troca` DISABLE KEYS */;
+/*!40000 ALTER TABLE `troca` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `usuarios`
+--
+
+DROP TABLE IF EXISTS `usuarios`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!50503 SET character_set_client = utf8mb4 */;
+CREATE TABLE `usuarios` (
+  `id` int NOT NULL AUTO_INCREMENT,
+  `nome` varchar(45) NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `senha` varchar(255) NOT NULL,
+  `telefone` varchar(15) DEFAULT NULL,
+  `cpf` varchar(14) NOT NULL,
+  `tipo` enum('USUARIO','ADMINISTRADOR') NOT NULL,
+  `status` enum('ativo','inativo') NOT NULL,
+  `foto_de_perfil` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
 
+--
+-- Dumping data for table `usuarios`
+--
 
--- -----------------------------------------------------
--- Table `anuncios`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `anuncios` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `usuarios_id` INT NOT NULL,
-  `nome_livro` VARCHAR(55) NOT NULL,
-  `imagem_livro` VARCHAR(255) NOT NULL,
-  `descricao` VARCHAR(45) NOT NULL,
-  `data_publicacao` DATETIME NOT NULL,
- `status` ENUM('ativo', 'inativo', 'finalizado') NOT NULL,
-  `estado_con` ENUM('mal', 'medio', 'bom') NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `anuncios_ibfk_1`
-    FOREIGN KEY (`usuarios_id`)
-    REFERENCES `usuarios` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+LOCK TABLES `usuarios` WRITE;
+/*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
+INSERT INTO `usuarios` VALUES (1,'Lionel','root.silva@email.com','$2y$10$9H8nNzW7tM7cGhy6r59gYuKuflEGKzKGOMPv86yUhJbySUNnnY42y','67981883427','94434593021','USUARIO','ativo','arquivo_68a5cec7e90b9_1755696839.png'),(2,'João Root da Silva','joao.silva@email.com','$2y$10$k5MaEAVH3jchFAjMBLr2qeH4ZPgmN8Ob4uIYbvh5PQY5PuEOnJ3Mq','','15985363031','USUARIO','ativo',NULL),(3,'Vitin','Vitin@email.com','$2y$10$F9f926/f2nN48SjG9TaXseuh3NkFoD0O.5axioMDsRoO0OmmvwrAG','459999999','99949494944','USUARIO','ativo',NULL),(4,'kauana silva dos reis','kauanaareis@hotmail.com','$2y$10$Po7VYc6RmGw4Vggp1qkTSetx5197Dpug16LZ8x4i4xWb0cUiM4COS','4576893369','03647599704','USUARIO','ativo',NULL),(12,'janin','janin@email.com','$2y$10$1da0rSrFoUrXmWvuFl6l9OZ3wQNpXd9V.mvaGmVMYp2BR4Ttu9zdO','4596996999','12345678909','USUARIO','ativo',NULL),(15,'natan','natan@email.com','$2y$10$0eEDWtP5WDKQqXVJ2IKxkOA2M3Wa3Z7pyRSL7MZnt7BqAzBP62KOu','null()','12345678909','USUARIO','ativo',NULL),(17,'json','json.silva@email.com','$2y$10$9H8nNzW7tM7cGhy6r59gYuKuflEGKzKGOMPv86yUhJbySUNnnY42y','12345678901','123456789','ADMINISTRADOR','ativo',NULL),(20,'Lionel','joao@email.com','$2y$10$ciMCgdsgQTUI2TbYOBL1au6tMbfoE1WP7G5kFdUXAeo5Qc8IkbmGW',NULL,'12769996908','USUARIO','ativo',NULL),(21,'Adrian José','adrianJose@gmail.com','$2y$10$kCs5RzdkmdLA4VkjnrOtde1c3YFFTXqRuTmLZ07kE6SOOlD5MgUqy',NULL,'02005955981','USUARIO','ativo','arquivo_689dee52c49a9_1755180626.png'),(22,'Aberto Phonix','alberto@email.com','$2y$10$1c/WbCVZr1G23eep97942u73inS.VIys6BrsACtL33dayt0sH1zei','0','86081641910','USUARIO','ativo','arquivo_68a5d0d09a8f1_1755697360.jpg'),(23,'Isaac Miguel André Bernardes','IsaacEmail.com@gmail.com','$2y$10$rMb7tktNK9pNjeeJoywZPuulFrMs1WNadnAdmkXS0CnqhK54/cRzW','45993526039','21589473060','USUARIO','ativo','arquivo_68c172e04e4d0_1757508320.jpeg');
+/*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
+UNLOCK TABLES;
+/*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
--- -----------------------------------------------------
--- Table `denuncia`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `denuncia` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `descricao` VARCHAR(255) NOT NULL,
-  `anuncios_id` INT NOT NULL,
-  `usuarios_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `denuncia_ibfk_1`
-    FOREIGN KEY (`anuncios_id`)
-    REFERENCES `anuncios` (`id`),
-  CONSTRAINT `denuncia_ibfk_2`
-    FOREIGN KEY (`usuarios_id`)
-    REFERENCES `usuarios` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
+/*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
+/*!40014 SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS */;
+/*!40014 SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS */;
+/*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
+/*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
+/*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+/*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
-
--- -----------------------------------------------------
--- Table `enderecos`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `enderecos` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `nome` VARCHAR(60) NOT NULL,
-  `usuarios_id` INT NOT NULL,
-  `rua` VARCHAR(60) NOT NULL,
-  `cidade` VARCHAR(45) NOT NULL,
-  `cep` VARCHAR(9) NOT NULL,
-  `estado` VARCHAR(45) NOT NULL,
-  `numb` INT(10) NOT NULL,
-  `main` ENUM('main','normal'),
-
-  PRIMARY KEY (`id`),
-  CONSTRAINT `enderecos_ibfk_1`
-    FOREIGN KEY (`usuarios_id`)
-    REFERENCES `usuarios` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `troca`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `troca` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `anuncios_id_oferta` INT NOT NULL,
-  `usuarios_id_oferta` INT NOT NULL,
-  `anuncios_id_solicitador` INT NOT NULL,
-  `usuarios_id_solicitador` INT NOT NULL,
-  `data_troca` DATETIME NOT NULL,
-  `status` ENUM('inativo','ativo'),
-  PRIMARY KEY (`id`),
-  CONSTRAINT `troca_ibfk_1`
-    FOREIGN KEY (`anuncios_id_ofertado`)
-    REFERENCES `anuncios` (`id`),
-  CONSTRAINT `troca_ibfk_2`
-    FOREIGN KEY (`anuncios_id_solicitado`)
-    REFERENCES `anuncios` (`id`),
-  CONSTRAINT `troca_ibfk_3`
-    FOREIGN KEY (`usuarios_id_ofertado`)
-    REFERENCES `usuarios` (`id`),
-  CONSTRAINT `troca_ibfk_4`
-    FOREIGN KEY (`usuarios_id_solicitado`)
-    REFERENCES `usuarios` (`id`)
-) ENGINE = InnoDB
-  DEFAULT CHARACTER SET = utf8mb4
-  COLLATE = utf8mb4_0900_ai_ci;
-
--- -----------------------------------------------------
--- Table `avaliacao`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `avaliacao` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `usuarios_id` INT NOT NULL,
-  `descricao` VARCHAR(60) NOT NULL,
-  `nota` INT(2) NOT NULL,
-  `usuarios_id_denunciado` INT NOT NULL,
-  `anuncios_id` INT NOT NULL,
-  PRIMARY KEY (`id`),
-  CONSTRAINT `enderecos_ibfk_10`
-    FOREIGN KEY (`usuarios_id`)
-    REFERENCES `usuarios` (`id`),
-  CONSTRAINT `fk_avaliacao_usuarios1`
-    FOREIGN KEY (`usuarios_id_denunciado`)
-    REFERENCES `usuarios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION,
-  CONSTRAINT `fk_avaliacao_anuncios1`
-    FOREIGN KEY (`anuncios_id`)
-    REFERENCES `anuncios` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
--- -----------------------------------------------------
--- Table `Relatorio`
--- -----------------------------------------------------
-CREATE TABLE IF NOT EXISTS `Relatorio` (
-  `id` INT NOT NULL AUTO_INCREMENT,
-  `descricao` VARCHAR(255) NOT NULL,
-  `Tipo_de_denuncia` ENUM("anuncio", "usuario") NOT NULL,
-  `denuncia_id` INT NOT NULL,
-  `status_denunciado` ENUM("destivado", "liberado") NOT NULL,
-  `relatorio_status` ENUM('ativo', 'inativo') NOT NULL,
-  `data` DATETIME NOT NULL,
-  PRIMARY KEY (`id`),
-   CONSTRAINT `fk_Relatorio_denuncia1`
-    FOREIGN KEY (`denuncia_id`)
-    REFERENCES `denuncia` (`id`)
-    ON DELETE NO ACTION
-    ON UPDATE NO ACTION)
-ENGINE = InnoDB
-DEFAULT CHARACTER SET = utf8mb4
-COLLATE = utf8mb4_0900_ai_ci;
-
-
-
-
--- Desativar checagem de chaves estrangeiras temporariamente
-SET FOREIGN_KEY_CHECKS = 0;
+-- Dump completed on 2025-09-18  9:24:52
