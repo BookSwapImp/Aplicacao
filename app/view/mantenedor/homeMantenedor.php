@@ -16,8 +16,7 @@
       font-family: Arial, sans-serif;
     }
     .sidebar {
-      height: 100vh;
-      background-color: #1e293b;
+      background-color: #0a4b7dff;
       color: white;
       padding: 20px;
     }
@@ -57,56 +56,52 @@
     <!-- Sidebar -->
     <div class="sidebar col-2">
         
-      <h6>Página inicial</h6>
+      <a href="http://localhost/Aplicacao/app/controller/HomeController.php?action=home">Página inicial</a>
       <br></br>
       <a href="#">Dashboard</a>
-      <a href="#">Users</a>
-      <a href="#">Books</a>
-      <a href="#">Swaps</a>
-      <a href="#">Reports</a>
+      <a href="#">Usuários</a>
+      <a href="#">Livros</a>
+      <a href="#">Trocas</a>
+      <a href="#">Denúncias</a>
     </div>
-
-    <!-- Main Content -->
+ 
     <div class="content col-10">
       <!-- Barra superior -->
       <div class="top-bar">
         <h2>Dashboard</h2>
         <div>
-          <span class="ms-3 h5">BookSwap</span>
+          <img src="http://localhost/Aplicacao/app/view/mantenedor/Logo_Simples.png"  width=70 height=60>
         </div>
       </div>
 
-      <!-- Metrics -->
       <div class="row mb-4">
         <div class="col-md-4">
           <div class="card-metric bg-white">
             <h2>1,250</h2>
-            <p>Users</p>
+            <p>Usuários</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="card-metric bg-white">
             <h2>830</h2>
-            <p>Books</p>
+            <p>Livros</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="card-metric bg-white">
             <h2>112</h2>
-            <p>Active Swaps</p>
+            <p>Trocas ativas</p>
           </div>
         </div>
       </div>
-
-      <!-- User Management -->
+    <br>
       <div class="row mb-4">
-        <div class="col-md-6">
           <div class="card p-3">
-            <h5>User Management</h5>
+            <h5>Gerenciamento de usuários</h5>
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Name</th>
+                  <th>Nome</th>
                   <th>Email</th>
                   <th>Status</th>
                 </tr>
@@ -116,72 +111,77 @@
                   <td>John Smith</td>
                   <td>john.smith@example.com</td>
                   <td>Active</td>
+                  <td><button class="btn btn-sm btn-secondary">View</button></td>
                 </tr>
                 <tr>
                   <td>Jane Doe</td>
                   <td>jane.doe@example.com</td>
                   <td>Inactive</td>
+                  <td><button class="btn btn-sm btn-secondary">View</button></td>
                 </tr>
                 <tr>
                   <td>Alice Johnson</td>
                   <td>alice.johnson@example.com</td>
                   <td>Active</td>
+                  <td><button class="btn btn-sm btn-secondary">View</button></td>
                 </tr>
                 <tr>
                   <td>Michael Brown</td>
                   <td>michael.brown@example.com</td>
                   <td>Active</td>
+                  <td><button class="btn btn-sm btn-secondary">View</button></td>
                 </tr>
               </tbody>
             </table>
           </div>
         </div>
-
+       
         <!-- Report Management -->
-        <div class="col-md-6">
-          <div class="card p-3">
-            <h5>Report Management</h5>
-            <table class="table table-striped">
-              <thead>
-                <tr>
-                  <th>Date</th>
-                  <th>Type</th>
-                  <th>Status</th>
-                  <th></th>
-                </tr>
-              </thead>
-              <tbody>
-                <tr>
-                  <td>Apr 24, 2024</td>
-                  <td>Swap Issue</td>
-                  <td>Open</td>
-                  <td><button class="btn btn-sm btn-secondary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Apr 23, 2024</td>
-                  <td>Inappropriate Content</td>
-                  <td>Closed</td>
-                  <td><button class="btn btn-sm btn-secondary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Apr 23, 2024</td>
-                  <td>User Misconduct</td>
-                  <td>Closed</td>
-                  <td><button class="btn btn-sm btn-secondary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Apr 22, 2024</td>
-                  <td>Swap Issue</td>
-                  <td>Open</td>
-                  <td><button class="btn btn-sm btn-secondary">View</button></td>
-                </tr>
-              </tbody>
-            </table>
+        <div>
+          <div class="row mb-4">
+            <div class="card p-3">
+              <h5>Gerenciamento de denúncias</h5>
+              <table class="table table-striped">
+                <thead>
+                  <tr>
+                    <th>Data</th>
+                    <th>Tipo</th>
+                    <th>Status</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>Apr 24, 2024</td>
+                    <td>Swap Issue</td>
+                    <td>Open</td>
+                    <td><button class="btn btn-sm btn-secondary">View</button></td>
+                  </tr>
+                  <tr>
+                    <td>Apr 23, 2024</td>
+                    <td>Inappropriate Content</td>
+                    <td>Closed</td>
+                    <td><button class="btn btn-sm btn-secondary">View</button></td>
+                  </tr>
+                  <tr>
+                    <td>Apr 23, 2024</td>
+                    <td>User Misconduct</td>
+                    <td>Closed</td>
+                    <td><button class="btn btn-sm btn-secondary">View</button></td>
+                  </tr>
+                  <tr>
+                    <td>Apr 22, 2024</td>
+                    <td>Swap Issue</td>
+                    <td>Open</td>
+                    <td><button class="btn btn-sm btn-secondary">View</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
           </div>
         </div>
       </div>
     </div>
-  </div>
 
   <!-- Bootstrap JS -->
   <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>

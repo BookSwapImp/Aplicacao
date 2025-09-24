@@ -3,6 +3,8 @@ require_once(__DIR__ . "/../include/header.php");
 require_once(__DIR__ . "/../include/menu.php");
 ?>
 
+<?php print_r ($dados['usuario']); ?>
+
 <div class="container">
     <div class="row justify-content-center">
         <div class="col-md-8">
