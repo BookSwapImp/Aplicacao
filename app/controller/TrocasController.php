@@ -28,30 +28,44 @@ class TrocasController extends Controller{
     }
      protected function trocasIntoPage(){
         $dados = array();
-        $dados['AnuncioOferta'] = $this->anunciosDAO->findAnuncioByAnuncioId($_GET['idAnuncio']);;
+        $dados['AnuncioOferta'] = $this->anunciosDAO->findAnuncioByAnuncioId($_GET['idAnuncio']);
+        
+        $this->verificaIdUser($dados['AnuncioOferta']);
         $dados['AnunciosSolicitador']= $this->anunciosDAO->findAnunciosByUsuariosId($this->getIdUsuarioLogado());
         $this->loadView('trocas/trocasInto.php',$dados); 
     }
     protected function trocaInto(){
         $idAnOferta=isset($_POST['idAnOferta'])?(int)trim($_POST['idAnOferta']): null;
         $idAnSolicitador = isset($_POST['idAnSolicitador'])?(int)trim($_POST['idAnSolicitador']): null;
-        if (!empty($idAnOferta)||$idAnOferta!=null ||!empty($idAnSolicitador) ||$idAnSolicitador!=null ) {
+        
+        if (!empty($idAnOferta) && !empty($idAnSolicitador)  ) {
             $anuncioOferta = $this->anunciosDAO->findAnuncioByAnuncioId($idAnOferta);
+            $this->verificaIdUser(  $anuncioOferta); 
             $anuncioSolicitador = $this->anunciosDAO->findAnuncioByAnuncioId($idAnSolicitador);
             $this->Trocas->setAnunciosIdOferta($anuncioOferta->getId());
             $this->Trocas->setAnunciosIdSolicitador($anuncioSolicitador->getId());
             $this->Trocas->setUsuariosIdOferta($anuncioOferta->getUsuarioId());
-            $this->Trocas->setAnunciosIdOferta($anuncioSolicitador->getUsuarioId()); 
+            $this->Trocas->setUsuariosIdSolicitador($anuncioSolicitador->getUsuarioId());
             $this->Trocas->setSecCode($this->gerarSecCode());
             $this->Trocas->setStatus('inativo');
-            $this->TrocasDAO->insertTroca($this->Trocas);
-            
+             $this->TrocasDAO->insertTroca($this->Trocas);
+            echo"trocas intro funcionou";
         }
-            return $this->trocasPages();
+        else{
+            echo 'trocasInto Falhou';
+            if(empty($idAnOferta)){
+                echo'idAnOferta is empty';
+            }
+            if(empty($idAnSolicitador)){
+                echo'idAnOferta is empty';  
+            }
+        }
+         //  print($anuncioSolicitador);    
+       // //return $this->trocasPages();
     }
     protected function trocasActive(){
         $idTroca = isset($_POST['idTroca'])?(int)trim($_POST['idTroca']) : null;
-        if(!empty($idTrocs)||$idTroca!=null){
+        if(!empty($idTroca)||$idTroca!=null){
             $this->Trocas->setId($idTroca);
             $this->Trocas->setStatus('ativa');
             if($this->Trocas->getUsuariosIdOferta() === $this->getIdUsuarioLogado()) 
@@ -61,7 +75,6 @@ class TrocasController extends Controller{
     }
     protected function trocasConclution($codeSec){
        $idTroca = isset($_POST['idTroca'])?(int)trim($_POST['idTroca']) : null;
-
     }
    
     private function gerarSecCode():string{
@@ -71,6 +84,9 @@ class TrocasController extends Controller{
             $codeSec .= $caracteres[mt_rand(0, strlen($caracteres) - 1)];
         return $codeSec;
     }
-    
+    private function verificaIdUser(Anuncios $ans){
+        if($ans->getUsuarioIdInt() === $this->getIdUsuarioLogado())
+            header("location:" . HOME_PAGE);
+    }
 }
 $new = new TrocasController();
