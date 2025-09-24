@@ -1,5 +1,7 @@
 <?php
 require_once(__DIR__ . "/../model/Trocas.php");
+require_once(__DIR__ . "/../model/Anuncios.php");
+require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../connection/Connection.php");
 
 class TrocasDAO{
@@ -27,31 +29,50 @@ class TrocasDAO{
     }
     public function insertTroca(Trocas $trocas){
         $sql ='INSERT INTO `troca` 
-        (`anuncios_id_oferta`,
-        `usuarios_id_oferta`,
-        `anuncios_id_solicitador`,
-        `usuarios_id_solicitador`,
-        `data_troca`,
-        `status`)
-        VALUES
-        (:anuncios_id_oferta,
-        :usuarios_id_oferta,
-        :anuncios_id_solicitador,
-        :usuarios_id_solicitador,
-        :data_troca,
-        :status
-        )';
+                (`anuncios_id_oferta`,
+                `usuarios_id_oferta`,
+                `anuncios_id_solicitador`,
+                `usuarios_id_solicitador`,
+                `data_troca`,
+                `status`)
+                VALUES
+                (:anuncios_id_oferta,
+                :usuarios_id_oferta,
+                :anuncios_id_solicitador,
+                :usuarios_id_solicitador,
+                :data_troca,
+                :status
+                )';
         $stm =$this->conexao->prepare($sql);
-        $stm->bindValue('anuncios_id_oferta',$trocas->getAnunciosIdOferta());
-        $stm->bindValue('usuarios_id_oferta',$trocas->getUsuariosIdOferta());
-        $stm->bindValue('anuncios_id_solicitador',$trocas->getAnunciosIdSolicitador());
-        $stm->bindValue('usuarios_id_solicitador',$trocas->getUsuariosIdSolicitador());
-        $stm->bindValue('data_troca',$trocas->getDataTroca());
-        $stm->bindValue('status',$trocas->getStatus());
+        // Trocas model stores related Anuncios and Usuario objects. Extract primitive ids/strings before binding.
+        $anunciosOferta = $trocas->getAnunciosIdOferta();
+        $anunciosSolicitador = $trocas->getAnunciosIdSolicitador();
+        $usuariosOferta = $trocas->getUsuariosIdOferta();
+        $usuariosSolicitador = $trocas->getUsuariosIdSolicitador();
+
+        $anunciosOfertaId = $anunciosOferta->getId();
+        $anunciosSolicitadorId = $anunciosSolicitador->getId();
+        $usuariosOfertaId =  $usuariosOferta->getId();         
+        $usuariosSolicitadorId = $usuariosSolicitador->getId();
+
+        // data_troca may be a DateTime object; convert to string if necessary
+        $dataTroca = $trocas->getDataTroca();
+        if ($dataTroca instanceof DateTime) {
+            $dataTrocaStr = $dataTroca->format('Y-m-d H:i:s');
+        } else {
+            $dataTrocaStr = $dataTroca; // could be null or already a string
+        }
+
+        $stm->bindValue('anuncios_id_oferta',   $anunciosOfertaId, PDO::PARAM_INT);
+        $stm->bindValue('usuarios_id_oferta',    $usuariosOfertaId, PDO::PARAM_INT);
+        $stm->bindValue('anuncios_id_solicitador',$anunciosSolicitadorId, PDO::PARAM_INT);
+        $stm->bindValue('usuarios_id_solicitador',$usuariosSolicitadorId, PDO::PARAM_INT);
+        $stm->bindValue('data_troca',$dataTrocaStr, PDO::PARAM_STR);
+        $stm->bindValue('status',$trocas->getStatus(), PDO::PARAM_STR);
         $stm->execute();    
     }
     public function updateTroca(trocas $trocas){
-        $sql ='UPDATE trocas SET
+        $sql ='UPDATE troca SET
         anuncios_id_oferta =:anuncios_id_oferta,
         usuarios_id_oferta =:usuarios_id_oferta,
         anuncios_id_solicitador =:anuncios_id_solicitador,
@@ -61,12 +82,21 @@ class TrocasDAO{
         WHERE id=:id';
         $stm =$this->conexao->prepare($sql);
         $stm->bindValue('id',$trocas->getId());
-        $stm->bindValue('anuncios_id_oferta',$trocas->getAnunciosIdOferta());
-        $stm->bindValue('usuarios_id_oferta',$trocas->getUsuariosIdOferta());
-        $stm->bindValue('anuncios_id_solicitador',$trocas->getAnunciosIdSolicitador());
-        $stm->bindValue('usuarios_id_solicitador',$trocas->getUsuariosIdSolicitador());
-        $stm->bindValue('data_troca',$trocas->getDataTroca());
-        $stm->bindValue('status',$trocas->getStatus());
+        // Extract primitive ids like in insert
+        $anunciosOfertaId = $trocas->getAnunciosIdOferta();
+        $anunciosSolicitadorId = $trocas->getAnunciosIdSolicitador();
+        $usuariosOfertaId = $trocas->getUsuariosIdOferta();
+        $usuariosSolicitadorId = $trocas->getUsuariosIdSolicitador();
+
+        $dataTroca = $trocas->getDataTroca();
+        $dataTrocaStr = $dataTroca instanceof DateTime ? $dataTroca->format('Y-m-d H:i:s') : $dataTroca;
+
+        $stm->bindValue('anuncios_id_oferta',$anunciosOfertaId, PDO::PARAM_INT);
+        $stm->bindValue('usuarios_id_oferta',$usuariosOfertaId, PDO::PARAM_INT);
+        $stm->bindValue('anuncios_id_solicitador',$anunciosSolicitadorId, PDO::PARAM_INT);
+        $stm->bindValue('usuarios_id_solicitador',$usuariosSolicitadorId, PDO::PARAM_INT);
+        $stm->bindValue('data_troca',$dataTrocaStr, PDO::PARAM_STR);
+        $stm->bindValue('status',$trocas->getStatus(), PDO::PARAM_STR);
         $stm->execute();    
     }
     public function deleteTrocar(int $id){
@@ -80,6 +110,7 @@ class TrocasDAO{
         foreach($result as $row){
             $troca = new Trocas();
             $troca->setId($row['id']);
+            // Restore original mapping: set raw values (ids/strings) on the Trocas object
             $troca->setAnunciosIdOferta($row['anuncios_id_oferta']);
             $troca->setUsuariosIdOferta($row['usuarios_id_oferta']);
             $troca->setAnunciosIdSolicitador($row['anuncios_id_solicitador']);

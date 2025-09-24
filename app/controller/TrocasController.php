@@ -37,18 +37,21 @@ class TrocasController extends Controller{
     protected function trocaInto(){
         $idAnOferta=isset($_POST['idAnOferta'])?(int)trim($_POST['idAnOferta']): null;
         $idAnSolicitador = isset($_POST['idAnSolicitador'])?(int)trim($_POST['idAnSolicitador']): null;
-        
         if (!empty($idAnOferta) && !empty($idAnSolicitador)  ) {
             $anuncioOferta = $this->anunciosDAO->findAnuncioByAnuncioId($idAnOferta);
-            $this->verificaIdUser(  $anuncioOferta); 
+            $this->verificaIdUser(  $anuncioOferta);
+            $anuncioAux = new Anuncios();
             $anuncioSolicitador = $this->anunciosDAO->findAnuncioByAnuncioId($idAnSolicitador);
-            $this->Trocas->setAnunciosIdOferta($anuncioOferta->getId());
-            $this->Trocas->setAnunciosIdSolicitador($anuncioSolicitador->getId());
+            $anuncioAux->setId($anuncioSolicitador->getId());
+            $this->Trocas->setAnunciosIdOferta( $anuncioAux);
+            $anuncioAux->setId($anuncioOferta->getId());
+            $this->Trocas->setAnunciosIdSolicitador($anuncioAux);
             $this->Trocas->setUsuariosIdOferta($anuncioOferta->getUsuarioId());
             $this->Trocas->setUsuariosIdSolicitador($anuncioSolicitador->getUsuarioId());
             $this->Trocas->setSecCode($this->gerarSecCode());
             $this->Trocas->setStatus('inativo');
-             $this->TrocasDAO->insertTroca($this->Trocas);
+            $this->Trocas->setDataTroca(new DateTime());
+            $this->TrocasDAO->insertTroca($this->Trocas); // Reset ID for potential future use
             echo"trocas intro funcionou";
         }
         else{
@@ -60,8 +63,9 @@ class TrocasController extends Controller{
                 echo'idAnOferta is empty';  
             }
         }
+    
          //  print($anuncioSolicitador);    
-       // //return $this->trocasPages();
+       return $this->trocasPages();
     }
     protected function trocasActive(){
         $idTroca = isset($_POST['idTroca'])?(int)trim($_POST['idTroca']) : null;
