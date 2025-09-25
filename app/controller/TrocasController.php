@@ -23,7 +23,16 @@ class TrocasController extends Controller{
 
     protected function trocasPages(){
         $dados = array();
-        $dados['Trocas'] = $this->TrocasDAO->listByIdUsuario($this->getIdUsuarioLogado());
+        $trocas = $this->TrocasDAO->listByIdUsuario($this->getIdUsuarioLogado());
+      //  São os $dados["oferta"]  $dados["solicitador"]
+        foreach($trocas as $tr){
+            $oferta = is_numeric($tr->getAnunciosIdOferta());
+            $solicitador = is_numeric($tr->getAnunciosIdSolicitador());
+            if($oferta == $this->getIdUsuarioLogado()) 
+                $dados["oferta"]= $this->anunciosDAO->findAnuncioByAnuncioId($oferta);
+            if($solicitador ==$this->getIdUsuarioLogado())
+                $dados["solicitador"]= $this->anunciosDAO->findAnuncioByAnuncioId($solicitador);
+        } 
         $this->loadView('trocas/trocas.php',$dados );
     }
      protected function trocasIntoPage(){
@@ -52,7 +61,7 @@ class TrocasController extends Controller{
             $this->Trocas->setStatus('inativo');
             $this->Trocas->setDataTroca(new DateTime());
             $this->TrocasDAO->insertTroca($this->Trocas); // Reset ID for potential future use
-            echo"trocas intro funcionou";
+            
         }
         else{
             echo 'trocasInto Falhou';
