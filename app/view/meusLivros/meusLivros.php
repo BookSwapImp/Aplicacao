@@ -26,28 +26,32 @@ require_once(__DIR__ . "/../include/menu.php");
     </div>
 </div>
   <h1><!--<?=$dados['usuario']->getNome()?>--></h1>
-<div class="container">          
+<div class="container mt-4">
     <?php if (empty($dados['anuncios'])): ?>
-           
-                    <p>Não há livros cadastrados.</p>
+        <p>Não há livros cadastrados.</p>
     <?php else: ?>
-        <?php foreach ($dados['anuncios'] as $a): ?>
-            <div class="book-card" style="max-width: 300px;">
-                    <img src="<?= BASEURL_ARQUIVOS."/".htmlspecialchars($a->getImagemLivro())?>" alt="<?= htmlspecialchars($a->getNomeLivro())?>" style="    max-width: 300px;
-                    height: auto;
-                    margin-bottom: 10px;">
-                    <h3><?=htmlspecialchars($a->getNomeLivro())?></h3><!-- nome -->
-                    <p><?=htmlspecialchars($a->getDescricao())?></p><!--descricao-->
-                    <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
-                           <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=deletarLivro&idLivro=' . $a->getId() ?>" 
-                       class="btn btn-danger" 
-                       onclick="return confirm('Tem certeza que deseja deletar este livro?')">Deletar</a>
-                    <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=editarLivroPage&idLivro=' . $a->getId() ?>" class="btn btn-primary">Editar</a>
- 
-            </div>
-        <?php endforeach;?>
+        <div class="d-flex flex-wrap gap-3">
+            <?php foreach ($dados['anuncios'] as $a): ?>
+                <div class="card" style="width: 18rem;">
+                    <img class="card-img-top" 
+                         src="<?= BASEURL_ARQUIVOS."/".htmlspecialchars($a->getImagemLivro())?>" 
+                         alt="<?= htmlspecialchars($a->getNomeLivro())?>">
+                    <div class="card-body">
+                        <h5 class="card-title"><?=htmlspecialchars($a->getNomeLivro())?></h5>
+                        <p class="card-text"><?=htmlspecialchars($a->getDescricao())?></p>
+                        <p class="text-muted">Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
+                        <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=deletarLivro&idLivro=' . $a->getId() ?>" 
+                           class="btn btn-danger btn-sm"
+                           onclick="return confirm('Tem certeza que deseja deletar este livro?')">Deletar</a>
+                        <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=editarLivroPage&idLivro=' . $a->getId() ?>" 
+                           class="btn btn-primary btn-sm">Editar</a>
+                    </div>
+                </div>
+            <?php endforeach;?>
+        </div>
     <?php endif;?>
- </div>   
+</div>
+
        
 
 
