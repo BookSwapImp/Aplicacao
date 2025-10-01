@@ -66,5 +66,12 @@ class Controller {
 
         return 0;
     }
+    protected function gerarSecCode():string{
+        $caracteres = 'ABCDEFGHIJKlMNOPQRSTUWXYZabcdefghijkmopqrstuwxyz1234567890';
+        $codeSec = '';
+        for ($i = 0; $i < 6; $i++) 
+            $codeSec .= $caracteres[mt_rand(0, strlen($caracteres) - 1)];
+        return $codeSec;
+    }
    
 }

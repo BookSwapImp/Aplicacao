@@ -47,7 +47,9 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
                             </li>
                             <li>
                                 <a class="dropdown-item" href="<?= BASEURL . '/controller/MeusLivrosController.php?action=meusLivrosPage' ?>">Meus Livros</a>
-
+                            </li>
+                               <li>
+                                <a class="dropdown-item" href="<?= BASEURL . '/controller/TrocasController.php?action=trocasPages' ?>">Trocas</a>
                             </li>
                              <li>
                                 <a class="dropdown-item" href="<?= BASEURL . '/controller/EnderecosController.php?action=enderecoPage' ?>">Endereços</a>

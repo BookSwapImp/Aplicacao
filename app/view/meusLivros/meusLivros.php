@@ -43,7 +43,6 @@ require_once(__DIR__ . "/../include/menu.php");
                        class="btn btn-danger" 
                        onclick="return confirm('Tem certeza que deseja deletar este livro?')">Deletar</a>
                     <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=editarLivroPage&idLivro=' . $a->getId() ?>" class="btn btn-primary">Editar</a>
- 
             </div>
         <?php endforeach;?>
     <?php endif;?>
