@@ -218,6 +218,8 @@ CREATE TABLE `troca` (
   `data_troca` datetime NOT NULL,
   `usuarios_id_oferta` int NOT NULL,
   `usuarios_id_solicitador` int NOT NULL,
+  `status` ENUM('ativo','inativo') NOT NULL,
+  `sec_code` char(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `troca_ibfk_1` (`anuncios_id_oferta`),
   KEY `troca_ibfk_2` (`anuncios_id_solicitador`),
