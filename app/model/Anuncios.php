@@ -11,6 +11,9 @@ class Anuncios implements JsonSerializable {
     private ?string $status; // pode ser 'ativo', 'inativo' ou 'finalizado'
     private ?string $estado_con; // pode ser 'mal', 'medio' ou 'bom'
 
+    //Atributo auxiliar para armazenar o status da troca
+    private ?bool $status_troca;
+
 
     
      public function jsonSerialize(): array
@@ -175,4 +178,15 @@ class Anuncios implements JsonSerializable {
 
         return $this;
     }
+    public function getStatusTroca(): bool
+    {
+        return $this->status_troca;
+    }
+    public function setStatusTroca(?bool $status_troca): self
+    {
+           $this->status_troca = $status_troca;
+
+           return $this;
+    }
+
 }
