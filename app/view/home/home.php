@@ -29,15 +29,17 @@ require_once(__DIR__ . "/../include/menu.php");
                         <button class="anuncioButton"type="submit "src="Aplicacao/app/controller/?>">       
                             <img src="<?= BASEURL_ARQUIVOS ."/". $a->getImagemLivro()?>" alt="<?= $a->getNomeLivro()?>">
                         </button>
-                        <button class="anuncioButton"type="submit">
+                        <button class="anuncioButton" type="submit" style="display: left;">
                             <h3><?=$a->getNomeLivro()?></h3><!-- nome -->
                         </button>
                     </form>
-                    <form action="<?php ?>">
-                    <p><?=$a->getDescricao()?></p><!--descricao-->
-                    <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
-                    <button class="trade-button"id='<?=$a->getId()?>'>Trocar</button>
-                    </form>    
+                    <form method="GET" action="TrocasController.php">
+                        <input type="hidden" name="action" value="trocasIntoPage">
+                        <input type="hidden" name="idAnuncio" value="<?=$a->getId()?>">
+                        <p><?=$a->getDescricao()?></p><!--descricao-->
+                        <p>Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
+                        <button type="submit" class="trade-button" id='<?=$a->getId()?>'>Trocar</button>
+                    </form>
                     </div>
                 </div>
               <?php 

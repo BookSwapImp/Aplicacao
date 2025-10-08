@@ -130,7 +130,7 @@ class AnunciosDAO{
                     descricao = :descricao,
                     data_publicacao = :data_publicacao,
                     estado_con = :estado_con,
-                    status = 'ativo'
+                    status = :status
                 WHERE id = :id";
 
         $stm = $conn->prepare($sql);
@@ -140,6 +140,7 @@ class AnunciosDAO{
         $stm->bindValue("descricao", $anuncio->getDescricao());
         $stm->bindValue("data_publicacao", $anuncio->getDataPublicacao()->format('Y-m-d H:i:s'));
         $stm->bindValue("estado_con", $anuncio->getEstadoCon());
+        $stm->bindValue("status", $anuncio->getStatus());
         $stm->bindValue("id", $anuncio->getId());
 
         $stm->execute();

@@ -17,7 +17,7 @@ require_once(__DIR__ . "/../include/header.php");
                 <option value="<?= $ans->getId();?>"><?= $ans->getNomeLivro();?></option>        
              <?php endforeach;?>
          </select>
-            <input type="hidden" name="idAnOferta" id="idAnOferta" value="<?=$dados['AnuncioOferta']->getid();?>">
+            <input type="hidden" name="idAnOferta" id="idAnOferta" value="<?=$dados['AnuncioOferta']->getId();?>">
             <button class="btn btn-primary" type="submit">confirmar</button>
             <button class="btn btn-danger">cancelar</button>
         </form>
