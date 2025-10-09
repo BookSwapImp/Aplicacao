@@ -14,7 +14,7 @@ class TrocasDAO{
     public function __construct() {
         $this->conexao = Connection::getConn();
     }
-    public function findByIdTroca($idTroca){
+    public function findByIdTroca(Int $idTroca){
         $sql= 'SELECT * FROM troca WHERE id = :id ';
         $stm=$this->conexao->prepare($sql);
         $stm->bindValue('id',$idTroca);

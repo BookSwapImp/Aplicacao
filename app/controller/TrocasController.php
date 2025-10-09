@@ -116,32 +116,61 @@ class TrocasController extends Controller{
         }
         return $this->trocasPages();
     }
-   /* private function deleteTrade(int $idTroca){
-       $troca = $this->TrocasDAO->findByIdTroca($idTroca) ;
-       $idSolict =  $troca->getUsuariosIdOferta()->getId();
-       $idOfert = $troca->getUsuariosIdSolicitador()->getId();
+    private function deleteTrade(int $idTroca){
+        if (empty($idTroca))
+            $idTroca= isset($_POST['idTroca'])? (int)trim($_POST['idTroca']): null; 
+       $troca = $this->TrocasDAO->findByIdTroca($idTroca);
+       $trocaObj = $troca[0];
+       $idSolict =  $trocaObj->getUsuariosIdOferta();
+       $idOfert = $trocaObj->getUsuariosIdSolicitador()->getId();
        if ($idSolict === $this->getIdUsuarioLogado() || $idOfert ===$this->getIdUsuarioLogado()) {
-        # code...
+           $this->TrocasDAO->deleteTrocas($trocaObj->getId()); 
        }
-    }*/
+       return $this->trocasPages();
+    }
     protected function inputCodeSec(){
-       $secCode = isset($_GET['codeSec'])? (int)trim($_GET['codeSec']) : null; 
+
+       $secCode = isset($_POST['codeSec'])? trim($_POST['codeSec']) : null; 
        $idTroca = isset($_POST['idTroca'])?(int)trim($_POST['idTroca']) : null;
-        return;
-       if (!empty($secCode)){
-         $troca =$this->TrocasDAO->findByIdTroca($idTroca); 
-        if(!empty($troca) && $troca->getSecCode() === $secCode){
-
+       if (!empty($secCode) && !empty($idTroca)){
+         $troca =$this->TrocasDAO->findByIdTroca($idTroca); $trocaObj=$troca[0];
+       if ($trocaObj->getUsuariosIdOferta()->getId() === $this->getIdUsuarioLogado()) {    
+         print_r($trocaObj->getSecCode()); echo' '; print_r($secCode);exit;
+        if(!empty($trocaObj) && $trocaObj->getSecCode() === $secCode){
+            $valid = $this->exgangeAnuncios($idTroca);
+           print_r($valid);exit;
+            if($valid === true) 
+                $this->TrocasDAO->deleteTrocas($idTroca);
+            }
+          }
         }
-         else{
-
-        }}
-       else
+        else{
+            echo'erro'; exit;
+        }
         return $this->trocasPages();
     }
     
     private function exgangeAnuncios(Int $idTroca){
-        
+     $troca= $this->TrocasDAO->findByIdTroca($idTroca);$trocaObj = $troca[0];
+     $idAuxUserSolicitador = $trocaObj->getUsuarioIdSolicitador()->getId();
+     $idAuxUserOferta = $trocaObj->getUsuarioIdSolicitador()->getId();
+     $idAuxAnSolicitador = $trocaObj->getUsuarioIdSolicitador()->getId();
+     $idAuxAnOferta = $trocaObj->getUsuariosIdOferta()->getId();
+     $auxAnOferta = $this->anunciosDAO->findAnuncioByAnuncioId($idAuxAnOferta);
+     $auxAnSolicitador = $this->anunciosDAO->findAnuncioByAnuncioId($idAuxAnSolicitador);
+     if (!empty($auxAnSolicitador())&&!empty($auxAnOferta())) {
+        $newAnSolicitador = $auxAnSolicitador[0]; 
+        $newAnOferta = $auxAnOferta[0];
+        $newAnSolicitador->setUsuariosId()->setId($idAuxUserOferta);
+        $newAnOferta->setUsuariosId()->setId($idAuxAnSolicitador);
+        $newAnSolicitador->setStatus();
+        $anArray =[$newAnSolicitador,$newAnOferta];
+        for ($i=0; $i < 1; $i++) { 
+            $this->TrocasDAO->updateTroca($anArray[$i]);
+        }
+        return true;
+     }
+     return false;
     }
    
     private function verificaAtivo(){

@@ -35,7 +35,11 @@ function showSecCode(cod) {
                 <p>user name</p>
                 <p>Troca Iniciada: </p>
                 <?php if($of['anuncio']->getStatusTroca() === true):?>
-                    <input type="number" name="codeSec"id="codeSec">
+                 <form method="POST" action="?action=inputCodeSec">
+                   <input type="hidden" name="idTroca" value="<?=$of['trocaId']?>">
+                   <input name="codeSec"id="codeSec">
+                    <button class="btn btn-primary" type="submit">comfir</button>
+                 </form>
                 <?php else:?>
                     <form method="POST" action="?action=trocasActive">
                         <input type="hidden" name="idTroca" value="<?=$of['trocaId']?>">
