@@ -73,8 +73,14 @@ include_once(__DIR__ . "/../include/menu.php");
                         </select>
                             </div>
 
-                            <!-- Status - Hidden field always set to 'ativo' -->
-                            <input type="hidden" name="status" value="ativo">
+                            <!-- Status -->
+                            <div class="mb-3">
+                                <label for="status" class="form-label">Visibilidade do Anúncio *</label>
+                                <select class="form-select" id="status" name="status" required>
+                                    <option value="publico" <?= (isset($dados['status']) && $dados['status'] == 'ativo') ? 'selected' : '' ?>>Público</option>
+                                    <option value="privado" <?= (isset($dados['status']) && $dados['status'] == 'inativo') ? 'selected' : '' ?>>Privado</option>
+                                </select>
+                            </div>
 
                             <!-- Botões -->
                             <div class="d-grid gap-2 d-md-flex justify-content-md-end">

@@ -74,7 +74,8 @@ class MeusLivrosController extends Controller {
         $imagemLivro = isset($_FILES['imagem_livro']) ? $_FILES['imagem_livro'] : null;
         $descricao = isset($_POST['descricao']) ? trim($_POST['descricao']) : null;
         $estadoCon = isset($_POST['estado_con']) ? trim($_POST['estado_con']) : null;
-        $status = 'ativo';
+        $statusInput = isset($_POST['status']) ? trim($_POST['status']) : null;
+        $status = ($statusInput === 'publico') ? 'ativo' : 'inativo';
         
         // Validar campos
         $this->anuncios->setId($idLivro);

@@ -14,6 +14,14 @@ class TrocasDAO{
     public function __construct() {
         $this->conexao = Connection::getConn();
     }
+    public function findByIdTroca(Int $idTroca){
+        $sql= 'SELECT * FROM troca WHERE id = :id ';
+        $stm=$this->conexao->prepare($sql);
+        $stm->bindValue('id',$idTroca);
+        $stm->execute();
+        $result = $stm->fetchAll();
+       return $this->mapTrocas($result);
+    }
     public function listByIdUsuario($idUser){
         $sql = 'SELECT * FROM troca WHERE  usuarios_id_oferta = :idUser || usuarios_id_solicitador =:idUser';
         $stm = $this->conexao->prepare($sql);
@@ -108,7 +116,7 @@ class TrocasDAO{
         $stm->bindValue('status',$trocas->getStatus(), PDO::PARAM_STR);
         $stm->execute();    
     }
-    public function deleteTrocar(int $id){
+    public function deleteTrocas(int $id){
         $sql = 'DELETE FROM troca WHERE id = :id';
         $stm = $this->conexao->prepare($sql);
         $stm->bindValue('id',$id);

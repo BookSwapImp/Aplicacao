@@ -40,6 +40,7 @@ require_once(__DIR__ . "/../include/menu.php");
                         <h5 class="card-title"><?=htmlspecialchars($a->getNomeLivro())?></h5>
                         <p class="card-text"><?=htmlspecialchars($a->getDescricao())?></p>
                         <p class="text-muted">Anuncio Publicado: <?=$a->getDataPublicacao()->format('d/m/Y');?></p>
+                        <p class="text-muted">Status: <?= $a->getStatus() === 'ativo' ? 'Público' : 'Privado' ?></p>
                         <a href="<?= BASEURL . '/controller/MeusLivrosController.php?action=deletarLivro&idLivro=' . $a->getId() ?>" 
                            class="btn btn-danger btn-sm"
                            onclick="return confirm('Tem certeza que deseja deletar este livro?')">Deletar</a>
