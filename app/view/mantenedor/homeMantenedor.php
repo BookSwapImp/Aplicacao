@@ -77,13 +77,13 @@
       <div class="row mb-4">
         <div class="col-md-4">
           <div class="card-metric bg-white">
-            <h2>1,250</h2>
+            <h2><?= $dados['numeroUsuarios'] ?></h2>
             <p>Usuários</p>
           </div>
         </div>
         <div class="col-md-4">
           <div class="card-metric bg-white">
-            <h2>830</h2>
+            <h2><?= $dados['numeroLivros'] ?></h2>
             <p>Livros</p>
           </div>
         </div>
@@ -107,30 +107,17 @@
                 </tr>
               </thead>
               <tbody>
+                <?php foreach ($dados['usuarios'] as $usuario) : ?>
+                
                 <tr>
-                  <td>John Smith</td>
-                  <td>john.smith@example.com</td>
-                  <td>Active</td>
+                  <td><?= $usuario->getNome()  ?></td>
+                  <td><?= $usuario->getEmail() ?></td>
+                  <td><?= $usuario->getStatus() ?></td>
                   <td><button class="btn btn-sm btn-secondary">View</button></td>
                 </tr>
-                <tr>
-                  <td>Jane Doe</td>
-                  <td>jane.doe@example.com</td>
-                  <td>Inactive</td>
-                  <td><button class="btn btn-sm btn-secondary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Alice Johnson</td>
-                  <td>alice.johnson@example.com</td>
-                  <td>Active</td>
-                  <td><button class="btn btn-sm btn-secondary">View</button></td>
-                </tr>
-                <tr>
-                  <td>Michael Brown</td>
-                  <td>michael.brown@example.com</td>
-                  <td>Active</td>
-                  <td><button class="btn btn-sm btn-secondary">View</button></td>
-                </tr>
+
+                <?php endforeach; ?>
+                
               </tbody>
             </table>
           </div>
