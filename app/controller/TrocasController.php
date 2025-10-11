@@ -135,7 +135,7 @@ class TrocasController extends Controller{
        if (!empty($secCode) && !empty($idTroca)){
          $troca =$this->TrocasDAO->findByIdTroca($idTroca); $trocaObj=$troca[0];
        if ($trocaObj->getUsuariosIdOferta()->getId() === $this->getIdUsuarioLogado()) {    
-         print_r($trocaObj->getSecCode()); echo' '; print_r($secCode);exit;
+        // print_r($trocaObj->getSecCode()); echo' '; print_r($secCode);exit;
         if(!empty($trocaObj) && $trocaObj->getSecCode() === $secCode){
             $valid = $this->exgangeAnuncios($idTroca);
            print_r($valid);exit;
@@ -152,10 +152,10 @@ class TrocasController extends Controller{
     
     private function exgangeAnuncios(Int $idTroca){
      $troca= $this->TrocasDAO->findByIdTroca($idTroca);$trocaObj = $troca[0];
-     $idAuxUserSolicitador = $trocaObj->getUsuarioIdSolicitador()->getId();
-     $idAuxUserOferta = $trocaObj->getUsuarioIdSolicitador()->getId();
-     $idAuxAnSolicitador = $trocaObj->getUsuarioIdSolicitador()->getId();
-     $idAuxAnOferta = $trocaObj->getUsuariosIdOferta()->getId();
+     $idAuxUserSolicitador = $trocaObj->getUsuariosIdSolicitador()->getId();
+     $idAuxUserOferta = $trocaObj->getUsuariosIdSolicitador()->getId();
+     $idAuxAnSolicitador = $trocaObj->getAnunciosIdSolicitador()->getId();
+     $idAuxAnOferta = $trocaObj->getAnunciosIdOferta()->getId();
      $auxAnOferta = $this->anunciosDAO->findAnuncioByAnuncioId($idAuxAnOferta);
      $auxAnSolicitador = $this->anunciosDAO->findAnuncioByAnuncioId($idAuxAnSolicitador);
      if (!empty($auxAnSolicitador())&&!empty($auxAnOferta())) {
