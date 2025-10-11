@@ -1,24 +1,42 @@
 <?php
-require_once(__DIR__.'/../dao/UsuarioDAO.php');
+require_once(__DIR__ . '/../dao/UsuarioDAO.php');
 require_once(__DIR__ . "/Controller.php");
-require_once(__DIR__.'/../model/enum/UsuarioPapel.php');
-    class MantenedorController extends Controller{
-        private Usuario $usuario;
-        private UsuarioDAO $usuarioDAO;
-        public function __construct(){
-            if(!$this->usuarioEstaLogado())
-                return;
-             $this->usuarioDAO = new UsuarioDAO();
-             $userType = $this->usuarioDAO->findById($this->getIdUsuarioLogado()); 
+require_once(__DIR__ . '/../model/enum/UsuarioPapel.php');
 
-             if($userType !==  UsuarioPapel::ADMINISTRADOR)
-                 header("location: " . LOGIN_PAGE);
-             $this->usuario = new Usuario();   
-        }
-        protected function mantenedorPage(){
-            $dados= array();
-            $this->loadView("mantenedor/mantenedor.php",$dados);   
-        }
+class MantenedorController extends Controller
+{
+    private Usuario $usuario;
+    private UsuarioDAO $usuarioDAO;
+    
+    public function __construct()
+    {
+        if (!$this->usuarioEstaLogado())
+            return;
+
+        $this->usuarioDAO = new UsuarioDAO();
+        $userType = $this->usuarioDAO->findById($this->getIdUsuarioLogado());
+
+        if ($userType->getTipo() !==  UsuarioPapel::ADMINISTRADOR)
+            header("location: " . LOGIN_PAGE);
+        
+        $this->usuario = new Usuario();
+
+        //Tratar a ação solicitada no parâmetro "action"
+        $this->handleAction();
     }
- 
-   new MantenedorController(); 
+
+    protected function home()
+    {
+        $dados = array();
+
+        $dados['usuarios'] = $this->usuarioDAO->list();
+        // $dados['denuncias'] = $this->denunciasDAO->listAllDenuncias(); ;;
+
+        $dados['numeroLivros'] = 999;
+        $dados['numeroUsuarios'] = $this->usuarioDAO->quantidadeUsuarios();
+        
+        $this->loadView("mantenedor/homeMantenedor.php", $dados);
+    }
+}
+
+new MantenedorController();
