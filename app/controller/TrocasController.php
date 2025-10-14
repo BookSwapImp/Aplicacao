@@ -138,14 +138,11 @@ class TrocasController extends Controller{
         // print_r($trocaObj->getSecCode()); echo' '; print_r($secCode);exit;
         if(!empty($trocaObj) && $trocaObj->getSecCode() === $secCode){
             $valid = $this->exgangeAnuncios($idTroca);
-           print_r($valid);exit;
             if($valid === true) 
                 $this->TrocasDAO->deleteTrocas($idTroca);
+                return header('Location: '. BASEURL."/controller/MeusLivrosController.php?action=meusLivrosPage");
             }
           }
-        }
-        else{
-            echo'erro'; exit;
         }
         return $this->trocasPages();
     }
@@ -153,20 +150,23 @@ class TrocasController extends Controller{
     private function exgangeAnuncios(Int $idTroca){
      $troca= $this->TrocasDAO->findByIdTroca($idTroca);$trocaObj = $troca[0];
      $idAuxUserSolicitador = $trocaObj->getUsuariosIdSolicitador()->getId();
-     $idAuxUserOferta = $trocaObj->getUsuariosIdSolicitador()->getId();
+     $idAuxUserOferta = $trocaObj->getUsuariosIdOferta()->getId();
      $idAuxAnSolicitador = $trocaObj->getAnunciosIdSolicitador()->getId();
      $idAuxAnOferta = $trocaObj->getAnunciosIdOferta()->getId();
      $auxAnOferta = $this->anunciosDAO->findAnuncioByAnuncioId($idAuxAnOferta);
      $auxAnSolicitador = $this->anunciosDAO->findAnuncioByAnuncioId($idAuxAnSolicitador);
-     if (!empty($auxAnSolicitador())&&!empty($auxAnOferta())) {
-        $newAnSolicitador = $auxAnSolicitador[0]; 
-        $newAnOferta = $auxAnOferta[0];
-        $newAnSolicitador->setUsuariosId()->setId($idAuxUserOferta);
-        $newAnOferta->setUsuariosId()->setId($idAuxAnSolicitador);
-        $newAnSolicitador->setStatus();
+     if (!empty($auxAnSolicitador)&&!empty($auxAnOferta)) {
+        // aqui onde ocorre a troca dos livros
+        $newIdUserSolicit = new Usuario(); $newIdUserSolicit->setId($idAuxUserOferta);
+        $newIdUserOfert = new Usuario();$newIdUserOfert->setId($idAuxUserSolicitador);
+        $newAnSolicitador = $auxAnSolicitador;$newAnSolicitador->setStatus(Status::INATIVO);  
+        $newAnOferta = $auxAnOferta; $newAnOferta->setStatus(Status::INATIVO);
+        $newAnSolicitador->setUsuarioId($newIdUserSolicit);
+        $newAnOferta->setUsuarioId($newIdUserOfert);
         $anArray =[$newAnSolicitador,$newAnOferta];
-        for ($i=0; $i < 1; $i++) { 
-            $this->TrocasDAO->updateTroca($anArray[$i]);
+        for ($i=0; $i < 1; $i++) {
+          
+            //$this->anunciosDAO->updateAnuncios($anArray[$i]);
         }
         return true;
      }
