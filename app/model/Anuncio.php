@@ -1,7 +1,8 @@
 <?php
 require_once(__DIR__."/Usuario.php");
 
-class Anuncios implements JsonSerializable {
+class Anuncio implements JsonSerializable {
+
     private ?int $id;
     private ?Usuario $usuario_id;
     private ?string $nome_livro;
@@ -37,6 +38,11 @@ class Anuncios implements JsonSerializable {
      */
     public function setId(?int $id): self
     {
+    
+        if($id == null || $id < 0){
+            throw new InvalidArgumentException("ID inválido.");
+        }
+
         $this->id = $id;
 
         return $this;

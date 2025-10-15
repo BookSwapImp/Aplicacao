@@ -1,15 +1,15 @@
 <?php
-include_once(__DIR__."/../model/Anuncios.php");
+include_once(__DIR__."/../model/Anuncio.php");
 require_once('CaracteresService.php');
 
 class CadastroLivroService{
     private $anuncio;
     private $caracteresService;
         function __construct() {
-        $this->anuncio = new Anuncios;
+        $this->anuncio = new Anuncio;
         $this->caracteresService = new CaracteresService();
     }
-    public function validarCampos(?Anuncios $anuncio){
+    public function validarCampos(?Anuncio $anuncio){
         $arrayMsg = []; 
         if (!$anuncio->getNomeLivro()) 
             array_push($arrayMsg, "O campo [Nome] é obrigatório.");

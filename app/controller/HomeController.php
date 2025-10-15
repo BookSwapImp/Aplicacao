@@ -2,21 +2,21 @@
 
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
-require_once(__DIR__ . "/../dao/AnunciosDAO.php");
+require_once(__DIR__ . "/../dao/AnuncioDAO.php");
 require_once(__DIR__ . "/../util/config.php");
 
 class HomeController extends Controller
 {
 
     private UsuarioDAO $usuarioDAO;
-    private AnunciosDAO $anunciosDAO;
+    private AnuncioDAO $anuncioDAO;
 
     public function __construct()
     {
         //Verificar se o usuário está logado
 
         $this->usuarioDAO = new UsuarioDAO();
-        $this->anunciosDAO = new AnunciosDAO();
+        $this->anuncioDAO = new AnuncioDAO();
 
         //Tratar a ação solicitada no parâmetro "action"
         $this->handleAction();
@@ -25,16 +25,16 @@ class HomeController extends Controller
     protected function home(string $msgErro = "", string $msgSucesso = "")
     {
         if ($this->getIdUsuarioLogado())
-            $dados = $this->anunciosDAO->listANuncioWithoutAnuncioUser($this->getIdUsuarioLogado());
+            $dados = $this->anuncioDAO->listANuncioWithoutAnuncioUser($this->getIdUsuarioLogado());
         else
-            $dados = $this->anunciosDAO->listAnuncio();
+            $dados = $this->anuncioDAO->listAnuncio();
 
         $this->loadView("home/home.php", $dados,  $msgErro, $msgSucesso);
     }
     
     protected function anuncio(string $msgErro = "", string $msgSucesso = "")
     {
-        $anuncio = $this->anunciosDAO->findAnuncioByAnuncioId($_GET['id']);
+        $anuncio = $this->anuncioDAO->findAnuncioByAnuncioId($_GET['id']);
         $dados = ['anuncio' => $anuncio];
         $this->loadView("home/anuncio.php", $dados,  $msgErro, $msgSucesso);
     }

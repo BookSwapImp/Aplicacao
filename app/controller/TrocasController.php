@@ -2,14 +2,14 @@
 require_once(__DIR__ . '/../controller/Controller.php');
 require_once(__DIR__.'/../model/Trocas.php'); 
 require_once(__DIR__.'/../model/enum/Status.php'); 
-require_once(__DIR__.'/../dao/AnunciosDAO.php');
+require_once(__DIR__.'/../dao/AnuncioDAO.php');
 require_once(__DIR__.'/../dao/UsuarioDAO.php');  
 require_once(__DIR__.'/../dao/TrocasDAO.php'); 
 class TrocasController extends Controller{
     private Usuario $usuario;
     private UsuarioDAO $usuarioDAO;
-    private Anuncios $anuncios;
-    private AnunciosDAO $anunciosDAO;
+    private Anuncio $anuncio;
+    private AnuncioDAO $anuncioDAO;
     private Trocas $Trocas;
   
     private $TrocasDAO;
@@ -18,7 +18,7 @@ class TrocasController extends Controller{
         return;
         $this->Trocas = new Trocas();
         $this->TrocasDAO = new TrocasDAO();
-        $this->anunciosDAO= new AnunciosDAO();
+        $this->anuncioDAO= new AnuncioDAO();
         $this->handleAction(); 
     }
   
@@ -36,7 +36,7 @@ class TrocasController extends Controller{
             $atividade = $tr->getStatus();
             //$ trocas esta enviando do anuncio solicitador pis e a oferta do anuncioado
             if($usuarioOfertaId == $this->getIdUsuarioLogado()) {
-                $anuncio = $this->anunciosDAO->findAnuncioByAnuncioId($tr->getAnunciosIdSolicitador()->getId());
+                $anuncio = $this->anuncioDAO->findAnuncioByAnuncioId($tr->getAnunciosIdSolicitador()->getId());
                 if($atividade == Status::ATIVO)
                     $anuncio->setStatusTroca(true);
                 else
@@ -45,7 +45,7 @@ class TrocasController extends Controller{
                 array_push($ofertas, $oferta);
             }
             if($usuarioSolicitador ==$this->getIdUsuarioLogado()){
-                $anuncio = $this->anunciosDAO->findAnuncioByAnuncioId($tr->getAnunciosIdOferta()->getId());
+                $anuncio = $this->anuncioDAO->findAnuncioByAnuncioId($tr->getAnunciosIdOferta()->getId());
                 if($atividade == Status::ATIVO){
                     $anuncio->setStatusTroca(true);
                     $solicit = array('anuncio' => $anuncio, 'trocaId' => $tr->getId(), 'secCode' => $tr->getSecCode());
@@ -64,21 +64,21 @@ class TrocasController extends Controller{
     }
      protected function trocasIntoPage(){
         $dados = array();
-        $dados['AnuncioOferta'] = $this->anunciosDAO->findAnuncioByAnuncioId($_GET['idAnuncio']);
+        $dados['AnuncioOferta'] = $this->anuncioDAO->findAnuncioByAnuncioId($_GET['idAnuncio']);
         
         $this->verificaIdUser($dados['AnuncioOferta']);
-        $dados['AnunciosSolicitador']= $this->anunciosDAO->findAnunciosByUsuariosId($this->getIdUsuarioLogado());
+        $dados['AnunciosSolicitador']= $this->anuncioDAO->findAnunciosByUsuariosId($this->getIdUsuarioLogado());
         $this->loadView('trocas/trocasInto.php',$dados); 
     }
     protected function trocaInto(){
         $idAnOferta=isset($_POST['idAnOferta'])?(int)trim($_POST['idAnOferta']): null;
         $idAnSolicitador = isset($_POST['idAnSolicitador'])?(int)trim($_POST['idAnSolicitador']): null; 
         if (!empty($idAnOferta) && !empty($idAnSolicitador)  ) {
-            $anuncioOferta = $this->anunciosDAO->findAnuncioByAnuncioId($idAnOferta);
-            $anuncioAuxSolict = new Anuncios();$anuncioAuxOferta = new Anuncios();
-            $anuncioSolicitador = $this->anunciosDAO->findAnuncioByAnuncioId($idAnSolicitador);
+            $anuncioOferta = $this->anuncioDAO->findAnuncioByAnuncioId($idAnOferta);
+            $anuncioAuxSolict = new Anuncio();$anuncioAuxOferta = new Anuncio();
+            $anuncioSolicitador = $this->anuncioDAO->findAnuncioByAnuncioId($idAnSolicitador);
             $anuncioAuxSolict->setId($anuncioSolicitador->getId());
-            $this->Trocas->setAnunciosIdOferta( $anuncioAuxOferta);
+            $this->Trocas->setAnunciosIdOferta($anuncioAuxOferta);
             $anuncioAuxOferta->setId($anuncioOferta->getId());
             $this->Trocas->setAnunciosIdSolicitador($anuncioAuxSolict);
             $this->Trocas->setUsuariosIdOferta($anuncioOferta->getUsuarioId());
@@ -156,8 +156,8 @@ class TrocasController extends Controller{
      $idAuxUserOferta = $trocaObj->getUsuarioIdSolicitador()->getId();
      $idAuxAnSolicitador = $trocaObj->getUsuarioIdSolicitador()->getId();
      $idAuxAnOferta = $trocaObj->getUsuariosIdOferta()->getId();
-     $auxAnOferta = $this->anunciosDAO->findAnuncioByAnuncioId($idAuxAnOferta);
-     $auxAnSolicitador = $this->anunciosDAO->findAnuncioByAnuncioId($idAuxAnSolicitador);
+     $auxAnOferta = $this->anuncioDAO->findAnuncioByAnuncioId($idAuxAnOferta);
+     $auxAnSolicitador = $this->anuncioDAO->findAnuncioByAnuncioId($idAuxAnSolicitador);
      if (!empty($auxAnSolicitador())&&!empty($auxAnOferta())) {
         $newAnSolicitador = $auxAnSolicitador[0]; 
         $newAnOferta = $auxAnOferta[0];
@@ -176,7 +176,7 @@ class TrocasController extends Controller{
     private function verificaAtivo(){
 
     }
-    private function verificaIdUser(Anuncios $ans){
+    private function verificaIdUser(Anuncio $ans){
         if($ans->getUsuarioIdInt() === $this->getIdUsuarioLogado())
             header("location:" . HOME_PAGE);
     }

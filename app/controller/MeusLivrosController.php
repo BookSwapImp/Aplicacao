@@ -3,8 +3,8 @@
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 require_once(__DIR__ . "/../model/Usuario.php");
-require_once(__DIR__ . "/../model/Anuncios.php");
-require_once(__DIR__ . "/../dao/AnunciosDAO.php");
+require_once(__DIR__ . "/../model/Anuncio.php");
+require_once(__DIR__ . "/../dao/AnuncioDAO.php");
 require_once(__DIR__ . "/../service/CadastroLivroService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
 
@@ -12,8 +12,8 @@ require_once(__DIR__ . "/../service/ArquivoService.php");
 class MeusLivrosController extends Controller {
     private Usuario $usuario;
     private UsuarioDAO $usuarioDao;
-    private Anuncios $anuncios;
-    private AnunciosDAO $anunciosDao;
+    private Anuncio $anuncio;
+    private AnuncioDAO $anuncioDao;
     private CadastroLivroService $cadastroLivroService;
     private ArquivoService $arquivoService;
 
@@ -22,8 +22,8 @@ class MeusLivrosController extends Controller {
             return;
         $this->usuario = new Usuario();
         $this->usuarioDao = new UsuarioDAO();
-        $this->anuncios = new Anuncios();
-        $this->anunciosDao = new AnunciosDAO();
+        $this->anuncio = new Anuncio();
+        $this->anuncioDao = new AnuncioDAO();
         $this->arquivoService = new ArquivoService();
         $this->cadastroLivroService = new CadastroLivroService();
 
@@ -38,17 +38,17 @@ class MeusLivrosController extends Controller {
     
     protected function procurarAnunciosId(){
         $idUsuarioLogado = $this->getIdUsuarioLogado();
-        $anuncios = $this->anunciosDao->findAnunciosByUsuariosId($idUsuarioLogado);
-        return $anuncios;
+        $anuncio = $this->anuncioDao->findAnunciosByUsuariosId($idUsuarioLogado);
+        return $anuncio;
     }
     protected function procurarAnuncioIdAnuncio($id){
-        $anuncios = $this->anunciosDao->findAnuncioByAnuncioId($id);
-        return $anuncios;
+        $anuncio = $this->anuncioDao->findAnuncioByAnuncioId($id);
+        return $anuncio;
     }
 
     protected function meusLivrosPage() {
         $dados['usuario'] = $this->procurarUsuarioId();
-        $dados['anuncios'] = $this->procurarAnunciosId();
+        $dados['anuncio'] = $this->procurarAnunciosId();
         $this->loadView("meusLivros/meusLivros.php", $dados); 
     }
     protected function editarLivroPage() {
@@ -78,12 +78,12 @@ class MeusLivrosController extends Controller {
         $status = ($statusInput === 'publico') ? 'ativo' : 'inativo';
         
         // Validar campos
-        $this->anuncios->setId($idLivro);
-        $this->anuncios->setUsuarioId($this->usuario->setId($id));
-        $this->anuncios->setNomeLivro($nomeLivro);
-        $this->anuncios->setDescricao($descricao);
-        $this->anuncios->setEstadoCon($estadoCon);
-        $erros = $this->cadastroLivroService->validarCampos($this->anuncios);
+        $this->anuncio->setId($idLivro);
+        $this->anuncio->setUsuarioId($this->usuario->setId($id));
+        $this->anuncio->setNomeLivro($nomeLivro);
+        $this->anuncio->setDescricao($descricao);
+        $this->anuncio->setEstadoCon($estadoCon);
+        $erros = $this->cadastroLivroService->validarCampos($this->anuncio);
 
         // Só valida a imagem se uma nova foi enviada (opcional)
         if ($imagemLivro && $imagemLivro['size'] > 0) {
@@ -120,7 +120,7 @@ class MeusLivrosController extends Controller {
                 }
                 
                 // Salvar alterações
-                $this->anunciosDao->updateAnuncios($anuncioExistente);
+                $this->anuncioDao->updateAnuncios($anuncioExistente);
                 
                 // Redirecionar para página de sucesso
                 header("Location: " . BASEURL . "/controller/MeusLivrosController.php?action=meusLivrosPage");
@@ -140,7 +140,7 @@ class MeusLivrosController extends Controller {
     protected function deletarLivro(){
         $idLivro = isset($_GET['idLivro']) ? (int)trim($_GET['idLivro']):null;
         $this->arquivoService->excluirArquivo($idLivro);
-        $this->anunciosDao->excluirAnuncios($idLivro);
+        $this->anuncioDao->excluirAnuncios($idLivro);
         header("Location: " . BASEURL . "/controller/MeusLivrosController.php?action=meusLivrosPage");
         exit;
     }
@@ -165,13 +165,13 @@ class MeusLivrosController extends Controller {
         // Validar campos (implementar validação adequada)
         $erros = [];
   
-        $this->anuncios->setId(null);
-        $this->anuncios->setUsuarioId($this->usuario->setId($idUsuario));
-        $this->anuncios->setNomeLivro($nomeLivro);
-        $this->anuncios->setDescricao($descricao);
-        $this->anuncios->setEstadoCon($estadoCon);
-        $this->anuncios->setStatus($status);
-        $erros = $this->cadastroLivroService->validarCampos($this->anuncios);
+        $this->anuncio->setId(null);
+        $this->anuncio->setUsuarioId($this->usuario->setId($idUsuario));
+        $this->anuncio->setNomeLivro($nomeLivro);
+        $this->anuncio->setDescricao($descricao);
+        $this->anuncio->setEstadoCon($estadoCon);
+        $this->anuncio->setStatus($status);
+        $erros = $this->cadastroLivroService->validarCampos($this->anuncio);
         $errosArquivo = $this->arquivoService->validarArquivo($imagemLivro);
         if (!empty($errosArquivo)) {
             $erros = array_merge($erros, $errosArquivo);
@@ -187,7 +187,7 @@ class MeusLivrosController extends Controller {
             // Criar objeto Anuncio
             $usuario = new Usuario();
             $usuario->setId($idUsuario);
-            $anuncio = new Anuncios();
+            $anuncio = new Anuncio();
             $anuncio->setUsuarioId($usuario);
             $anuncio->setNomeLivro($nomeLivro);
             $anuncio->setImagemLivro($nomeImagem);
@@ -197,7 +197,7 @@ class MeusLivrosController extends Controller {
             $anuncio->setEstadoCon($estadoCon);
             
             // Salvar anúncio
-            $this->anunciosDao->insertAnuncios($anuncio);
+            $this->anuncioDao->insertAnuncios($anuncio);
 
             // Redirecionar para página de sucesso
             header("Location: " . BASEURL . "/controller/MeusLivrosController.php?action=meusLivrosPage");

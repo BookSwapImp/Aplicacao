@@ -1,11 +1,11 @@
 <?php
 require_once(__DIR__ . "/Usuario.php");
-require_once(__DIR__ . "/Anuncios.php");
+require_once(__DIR__ . "/Anuncio.php");
 class Trocas {
     private ?int $id;
-    private ?Anuncios $anuncios_id_oferta;
+    private ?Anuncio $anuncio_id_oferta;
     private ?Usuario $usuarios_id_oferta;
-    private ?Anuncios $anuncios_id_solicitador;
+    private ?Anuncio $anuncios_id_solicitador;
     private ?Usuario $usuarios_id_solicitador;
     private ?DateTime $data_troca;
     private ?string $sec_code;
@@ -33,17 +33,17 @@ class Trocas {
     /**
      * Get the value of anuncios_id_oferta
      */
-    public function getAnunciosIdOferta(): ?Anuncios
+    public function getAnunciosIdOferta(): ?Anuncio
     {
-        return $this->anuncios_id_oferta;
+        return $this->anuncio_id_oferta;
     }
 
     /**
      * Set the value of anuncios_id_oferta
      */
-    public function setAnunciosIdOferta(?Anuncios $anuncios_id_oferta): self
+    public function setAnunciosIdOferta(?Anuncio $anuncios_id_oferta): self
     {
-        $this->anuncios_id_oferta = $anuncios_id_oferta;
+        $this->anuncio_id_oferta = $anuncios_id_oferta;
 
         return $this;
     }
@@ -69,7 +69,7 @@ class Trocas {
     /**
      * Get the value of anuncios_id_solicitador
      */
-    public function getAnunciosIdSolicitador(): ?Anuncios
+    public function getAnunciosIdSolicitador(): ?Anuncio
     {
         return $this->anuncios_id_solicitador;
     }
@@ -77,7 +77,7 @@ class Trocas {
     /**
      * Set the value of anuncios_id_solicitador
      */
-    public function setAnunciosIdSolicitador(?Anuncios $anuncios_id_solicitador): self
+    public function setAnunciosIdSolicitador(?Anuncio $anuncios_id_solicitador): self
     {
         $this->anuncios_id_solicitador = $anuncios_id_solicitador;
 

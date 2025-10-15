@@ -27,11 +27,11 @@ require_once(__DIR__ . "/../include/menu.php");
 </div>
   <h1><!--<?=$dados['usuario']->getNome()?>--></h1>
 <div class="container mt-4">
-    <?php if (empty($dados['anuncios'])): ?>
+    <?php if (empty($dados['anuncio'])): ?>
         <p>Não há livros cadastrados.</p>
     <?php else: ?>
         <div class="d-flex flex-wrap gap-3">
-            <?php foreach ($dados['anuncios'] as $a): ?>
+            <?php foreach ($dados['anuncio'] as $a): ?>
                 <div class="card" style="width: 18rem;">
                     <img class="card-img-top" 
                          src="<?= BASEURL_ARQUIVOS."/".htmlspecialchars($a->getImagemLivro())?>" 

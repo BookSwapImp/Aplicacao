@@ -13,9 +13,14 @@ class UsuarioDAO {
     }
    
     //Método para listar os usuaários a partir da base de dados
-    public function list() {
+    public function list( int $limit = null) {
+
+        if(!is_null($limit)) {
+            $sql = "SELECT * FROM usuarios u ORDER BY u.nome LIMIT $limit";
+        } else {
+            $sql = "SELECT * FROM usuarios u ORDER BY u.nome";
+        }
      
-        $sql = "SELECT * FROM usuarios u ORDER BY u.nome";
         $stm = $this->conn->prepare($sql);    
         $stm->execute();
         $result = $stm->fetchAll();
@@ -187,7 +192,7 @@ class UsuarioDAO {
 
     //Método para retornar a quantidade de usuários salvos na base
     public function quantidadeUsuarios() {
-      
+
         $sql = "SELECT COUNT(*) AS qtd_usuarios FROM usuarios";
 
         $stm = $this->conn->prepare($sql);
