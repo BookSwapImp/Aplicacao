@@ -116,16 +116,21 @@ class TrocasController extends Controller{
         }
         return $this->trocasPages();
     }
-    private function deleteTrade(int $idTroca){
-        if (empty($idTroca))
-            $idTroca= isset($_POST['idTroca'])? (int)trim($_POST['idTroca']): null; 
+      protected function buttonDeleteTrade(){
+       $idTroca= isset($_POST['idTroca'])? (int)trim($_POST['idTroca']): null;
+       if(!empty($idTroca)){
        $troca = $this->TrocasDAO->findByIdTroca($idTroca);
+       print_r($troca); print_r($idTroca);exit;
        $trocaObj = $troca[0];
        $idSolict =  $trocaObj->getUsuariosIdOferta();
+       $idSolict =  $trocaObj->getUsuariosIdOferta()->getId();
        $idOfert = $trocaObj->getUsuariosIdSolicitador()->getId();
        if ($idSolict === $this->getIdUsuarioLogado() || $idOfert ===$this->getIdUsuarioLogado()) {
-           $this->TrocasDAO->deleteTrocas($trocaObj->getId()); 
-       }
+           $this->TrocasDAO->deleteTroca($trocaObj->getId()); 
+         $id = $trocaObj->getId();
+        $this->TrocasDAO->deleteTroca($id);
+            }
+        }
        return $this->trocasPages();
     }
     protected function inputCodeSec(){
@@ -133,22 +138,26 @@ class TrocasController extends Controller{
        $secCode = isset($_POST['codeSec'])? trim($_POST['codeSec']) : null; 
        $idTroca = isset($_POST['idTroca'])?(int)trim($_POST['idTroca']) : null;
        if (!empty($secCode) && !empty($idTroca)){
-         $troca =$this->TrocasDAO->findByIdTroca($idTroca); $trocaObj=$troca[0];
+         $troca =$this->TrocasDAO->findByIdTroca($idTroca); 
+         $trocaObj=$troca[0];
        if ($trocaObj->getUsuariosIdOferta()->getId() === $this->getIdUsuarioLogado()) {    
-         print_r($trocaObj->getSecCode()); echo' '; print_r($secCode);exit;
+         $idAnDeleteSolict = $trocaObj->getAnunciosIdSolicitador()->getId();
+         $idAnDeleteOfert = $trocaObj->getAnunciosIdOferta()->getId();
         if(!empty($trocaObj) && $trocaObj->getSecCode() === $secCode){
             $valid = $this->exgangeAnuncios($idTroca);
-           print_r($valid);exit;
-            if($valid === true) 
-                $this->TrocasDAO->deleteTrocas($idTroca);
-            }
-          }
-        }
-        else{
-            echo'erro'; exit;
-        }
+        
+            if($valid === true){ 
+                $this->TrocasDAO->deleteTroca($idTroca);
+                $this->TrocasDAO->deleteTrocaByIdAn($idAnDeleteSolict);
+                $this->TrocasDAO->deleteTrocaByIdAn( $idAnDeleteOfert);
+                return header('Location: '. BASEURL."/controller/MeusLivrosController.php?action=meusLivrosPage");
+                 
+               }
+             }
+           }
+         }
         return $this->trocasPages();
-    }
+       }
     
     private function exgangeAnuncios(Int $idTroca){
      $troca= $this->TrocasDAO->findByIdTroca($idTroca);$trocaObj = $troca[0];
@@ -159,13 +168,16 @@ class TrocasController extends Controller{
      $auxAnOferta = $this->anuncioDAO->findAnuncioByAnuncioId($idAuxAnOferta);
      $auxAnSolicitador = $this->anuncioDAO->findAnuncioByAnuncioId($idAuxAnSolicitador);
      if (!empty($auxAnSolicitador())&&!empty($auxAnOferta())) {
-        $newAnSolicitador = $auxAnSolicitador[0]; 
-        $newAnOferta = $auxAnOferta[0];
-        $newAnSolicitador->setUsuariosId()->setId($idAuxUserOferta);
-        $newAnOferta->setUsuariosId()->setId($idAuxAnSolicitador);
-        $newAnSolicitador->setStatus();
+        $newIdUserSolicit = new Usuario(); 
+        $newIdUserOfert = new Usuario();
+        $newIdUserSolicit->setId($idAuxUserOferta);
+        $newIdUserOfert->setId($idAuxUserSolicitador);
+        $newAnSolicitador = $auxAnSolicitador;  
+        $newAnOferta = $auxAnOferta;
+        $newAnSolicitador->setUsuarioId($newIdUserSolicit);
+        $newAnOferta->setUsuarioId($newIdUserOfert);
         $anArray =[$newAnSolicitador,$newAnOferta];
-        for ($i=0; $i < 1; $i++) { 
+        for ($i=0; $i < 2; $i++) { 
             $this->TrocasDAO->updateTroca($anArray[$i]);
         }
         return true;
@@ -173,9 +185,7 @@ class TrocasController extends Controller{
      return false;
     }
    
-    private function verificaAtivo(){
-
-    }
+ 
     private function verificaIdUser(Anuncio $ans){
         if($ans->getUsuarioIdInt() === $this->getIdUsuarioLogado())
             header("location:" . HOME_PAGE);

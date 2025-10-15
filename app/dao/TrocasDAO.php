@@ -1,6 +1,6 @@
 <?php
 require_once(__DIR__ . "/../model/Trocas.php");
-require_once(__DIR__ . "/../model/Anuncios.php");
+require_once(__DIR__ . "/../model/Anuncio.php");
 require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../connection/Connection.php");
 
@@ -116,20 +116,27 @@ class TrocasDAO{
         $stm->bindValue('status',$trocas->getStatus(), PDO::PARAM_STR);
         $stm->execute();    
     }
-    public function deleteTrocas(int $id){
+        public function deleteTroca(int $id){
         $sql = 'DELETE FROM troca WHERE id = :id';
         $stm = $this->conexao->prepare($sql);
         $stm->bindValue('id',$id);
         $stm->execute();
     }
+    public function deleteTrocaByIdAn(int $id){
+          $sql = 'DELETE FROM troca WHERE anuncios_id_solicitador = :id || anuncios_id_oferta = :id' ;
+          $stm = $this->conexao->prepare($sql);
+          $stm->bindValue('id', $id);
+          $stm->execute();
+    }
+  
     private function mapTrocas($result): array {
         $trocas = array();
         foreach($result as $row){
             $troca = new Trocas();
             $usuariosdOferta = new Usuario();
             $usuariosdSolicitador = new Usuario();
-            $anunciosOferta = new Anuncios();
-            $anunciosSolicitador = new Anuncios();
+            $anunciosOferta = new Anuncio();
+            $anunciosSolicitador = new Anuncio();
             $date = new DateTime($row['data_troca']);
             $anunciosOferta->setId($row['anuncios_id_oferta']);
             $anunciosSolicitador->setId($row['anuncios_id_solicitador']);
