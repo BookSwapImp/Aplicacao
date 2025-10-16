@@ -10,6 +10,7 @@ class TrocasDAO{
     private $anunciosSolicitadorIdObj;
     private $usuariosOfertaIdObj;
     private $usuariosSolicitadorIdObj;
+    
 
     public function __construct() {
         $this->conexao = Connection::getConn();
@@ -21,6 +22,17 @@ class TrocasDAO{
         $stm->execute();
         $result = $stm->fetchAll();
        return $this->mapTrocas($result);
+    }
+    public function findTrocasExistByIdAnu(Int $idOferta ,Int $idSolict){
+        $sql = 'SELECT * FROM troca WHERE anuncios_id_oferta = :idOferta AND anuncios_id_solicitador = :idSolict OR anuncios_id_oferta = :idSolict AND anuncios_id_solicitador = :idOferta ';
+        $stm = $this->conexao->prepare($sql);
+        $stm->bindValue(':idOferta', $idOferta);
+        $stm->bindValue(':idSolict', $idSolict);
+        $stm->execute();
+        $result = $stm->fetchAll();
+        if($result)
+            return true;
+        return false;
     }
     public function listByIdUsuario($idUser){
         $sql = 'SELECT * FROM troca WHERE  usuarios_id_oferta = :idUser || usuarios_id_solicitador =:idUser';

@@ -23,7 +23,7 @@ class TrocasController extends Controller{
     }
   
 
-    protected function trocasPages(){
+    protected function trocasPages($msgErro = ""){
         $dados = array();
         $trocas = $this->TrocasDAO->listByIdUsuario($this->getIdUsuarioLogado());
 
@@ -60,20 +60,24 @@ class TrocasController extends Controller{
 
         $dados["solicitacao"] = $solicitacao;
 
-        $this->loadView('trocas/trocas.php',$dados );
+        $this->loadView('trocas/trocas.php',$dados, $msgErro );
     }
-     protected function trocasIntoPage(){
+     protected function trocasIntoPage($msgErro = ""){
         $dados = array();
         $dados['AnuncioOferta'] = $this->anuncioDAO->findAnuncioByAnuncioId($_GET['idAnuncio']);
         
         $this->verificaIdUser($dados['AnuncioOferta']);
         $dados['AnunciosSolicitador']= $this->anuncioDAO->findAnunciosByUsuariosId($this->getIdUsuarioLogado());
-        $this->loadView('trocas/trocasInto.php',$dados); 
+        $this->loadView('trocas/trocasInto.php',$dados , $msgErro); 
     }
     protected function trocaInto(){
         $idAnOferta=isset($_POST['idAnOferta'])?(int)trim($_POST['idAnOferta']): null;
         $idAnSolicitador = isset($_POST['idAnSolicitador'])?(int)trim($_POST['idAnSolicitador']): null; 
-        if (!empty($idAnOferta) && !empty($idAnSolicitador)  ) {
+        if (!empty($idAnOferta) && !empty($idAnSolicitador)) {
+            $valid = $this->TrocasDAO->findTrocasExistByIdAnu($idAnOferta,$idAnSolicitador);
+            if ($valid === true)
+               {$msgErro="Seu Livro ja tem uma troca existente com este anuncio"; 
+                return header("Location: " . BASEURL."/controller/HomeController.php?action=home");}//$this->trocasIntoPage($msgErro)
             $anuncioOferta = $this->anuncioDAO->findAnuncioByAnuncioId($idAnOferta);
             $anuncioAuxSolict = new Anuncio();$anuncioAuxOferta = new Anuncio();
             $anuncioSolicitador = $this->anuncioDAO->findAnuncioByAnuncioId($idAnSolicitador);
@@ -120,7 +124,6 @@ class TrocasController extends Controller{
        $idTroca= isset($_POST['idTroca'])? (int)trim($_POST['idTroca']): null;
        if(!empty($idTroca)){
        $troca = $this->TrocasDAO->findByIdTroca($idTroca);
-       print_r($troca); print_r($idTroca);exit;
        $trocaObj = $troca[0];
        $idSolict =  $trocaObj->getUsuariosIdOferta();
        $idSolict =  $trocaObj->getUsuariosIdOferta()->getId();
@@ -155,9 +158,10 @@ class TrocasController extends Controller{
                }
              }
            }
-         }
-        return $this->trocasPages();
-       }
+        }
+         $msgErro = "Código de segurança inválido";
+         return $this->trocasPages($msgErro);
+    }
     
     private function exgangeAnuncios(Int $idTroca){
      $troca= $this->TrocasDAO->findByIdTroca($idTroca);$trocaObj = $troca[0];
