@@ -1,0 +1,2 @@
+- [x] Correct the SQL query in findTrocasExistByIdAnu method in TrocasDAO.php to check anuncios_id_oferta and anuncios_id_solicitador instead of usuarios_id_oferta and usuarios_id_solicitador.
+- [ ] Test the validation to ensure it properly prevents duplicate trades between the same pair of anuncios and displays the error message.
