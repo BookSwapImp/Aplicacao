@@ -11,7 +11,6 @@ if (!class_exists('Anuncio')) {
 
 class AnuncioDAO
 {
-
     private PDO $conn;
 
     public function __construct()

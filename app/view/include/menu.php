@@ -25,8 +25,14 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
             <div class="collapse navbar-collapse justify-content-between" id="navbarPrincipal">
                 
                 <!-- Barra de pesquisa -->
-                <form class="d-flex mx-auto" role="search">
-                    <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
+                <form class="d-flex mx-auto" role="search" method="GET" action="<?= BASEURL ?>/controller/BuscaController.php">
+                    <input type="hidden" name="action" value="InputBusca">
+                    <select class="form-select me-2" name="select" style="width: auto;">
+                        <option value="">Todos</option>
+                        <option value="anun">Anúncios</option>
+                        <option value="users">Usuários</option>
+                    </select>
+                    <input class="form-control me-2" type="search" name="busca" placeholder="Pesquisar" aria-label="Pesquisar" required>
                     <button class="btn btn-outline-secondary" type="submit">🔍</button>
                 </form>
 

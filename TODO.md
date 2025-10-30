@@ -1,2 +1,9 @@
-- [x] Correct the SQL query in findTrocasExistByIdAnu method in TrocasDAO.php to check anuncios_id_oferta and anuncios_id_solicitador instead of usuarios_id_oferta and usuarios_id_solicitador.
-- [ ] Test the validation to ensure it properly prevents duplicate trades between the same pair of anuncios and displays the error message.
+# TODO: Implement BuscaDAO Search Mapping
+
+- [x] Update constructor to establish PDO connection using Connection::getConn()
+- [x] Implement buscaOnlyUser method: SELECT from usuarios where nome LIKE %busca%, map to Usuario objects
+- [x] Implement buscaOnlyAnuncio method: SELECT from anuncios where nome_livro LIKE %busca% and status='ativo', map to Anuncio objects
+- [x] Implement busca method: Combine results from buscaOnlyUser and buscaOnlyAnuncio, return merged array
+- [x] Implement mapBuscaUser: Map query results to Usuario objects
+- [x] Implement mapBuscaAnuncio: Map query results to Anuncio objects
+- [x] Ensure all queries use prepared statements with bindValue for security

@@ -60,7 +60,7 @@ require_once(__DIR__ . "/../include/menu.php");
                                     </span>
                                 </div>
                                 <div>
-                                    <?php foreach ($dados['livros'] as $ls) {
+                                    <?php foreach ($dados['livros']as $ls) {
                                      ?>  <?= print_r($ls)?>
                                     <?php }?>
                                 </div>
