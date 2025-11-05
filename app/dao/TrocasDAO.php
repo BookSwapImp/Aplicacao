@@ -1,6 +1,6 @@
 <?php
 require_once(__DIR__ . "/../model/Trocas.php");
-require_once(__DIR__ . "/../model/Anuncios.php");
+require_once(__DIR__ . "/../model/Anuncio.php");
 require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../connection/Connection.php");
 
@@ -10,6 +10,7 @@ class TrocasDAO{
     private $anunciosSolicitadorIdObj;
     private $usuariosOfertaIdObj;
     private $usuariosSolicitadorIdObj;
+    
 
     public function __construct() {
         $this->conexao = Connection::getConn();
@@ -21,6 +22,17 @@ class TrocasDAO{
         $stm->execute();
         $result = $stm->fetchAll();
        return $this->mapTrocas($result);
+    }
+    public function findTrocasExistByIdAnu(Int $idOferta ,Int $idSolict){
+        $sql = 'SELECT * FROM troca WHERE anuncios_id_oferta = :idOferta AND anuncios_id_solicitador = :idSolict OR anuncios_id_oferta = :idSolict AND anuncios_id_solicitador = :idOferta ';
+        $stm = $this->conexao->prepare($sql);
+        $stm->bindValue(':idOferta', $idOferta);
+        $stm->bindValue(':idSolict', $idSolict);
+        $stm->execute();
+        $result = $stm->fetchAll();
+        if($result)
+            return true;
+        return false;
     }
     public function listByIdUsuario($idUser){
         $sql = 'SELECT * FROM troca WHERE  usuarios_id_oferta = :idUser || usuarios_id_solicitador =:idUser';
@@ -116,20 +128,27 @@ class TrocasDAO{
         $stm->bindValue('status',$trocas->getStatus(), PDO::PARAM_STR);
         $stm->execute();    
     }
-    public function deleteTrocas(int $id){
+        public function deleteTroca(int $id){
         $sql = 'DELETE FROM troca WHERE id = :id';
         $stm = $this->conexao->prepare($sql);
         $stm->bindValue('id',$id);
         $stm->execute();
     }
+    public function deleteTrocaByIdAn(int $id){
+          $sql = 'DELETE FROM troca WHERE anuncios_id_solicitador = :id || anuncios_id_oferta = :id' ;
+          $stm = $this->conexao->prepare($sql);
+          $stm->bindValue('id', $id);
+          $stm->execute();
+    }
+  
     private function mapTrocas($result): array {
         $trocas = array();
         foreach($result as $row){
             $troca = new Trocas();
             $usuariosdOferta = new Usuario();
             $usuariosdSolicitador = new Usuario();
-            $anunciosOferta = new Anuncios();
-            $anunciosSolicitador = new Anuncios();
+            $anunciosOferta = new Anuncio();
+            $anunciosSolicitador = new Anuncio();
             $date = new DateTime($row['data_troca']);
             $anunciosOferta->setId($row['anuncios_id_oferta']);
             $anunciosSolicitador->setId($row['anuncios_id_solicitador']);

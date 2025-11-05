@@ -2,7 +2,9 @@
 
  include_once(__DIR__ . "/../include/header.php");
 
- include_once(__DIR__."/../include/menu.php")  
+ include_once(__DIR__."/../include/menu.php");
+
+ include_once(__DIR__."/../include/msg.php");
 ?>
 <script>
 function showSecCode(cod) {
@@ -16,7 +18,7 @@ function showSecCode(cod) {
         <div class="book-card">
             <h6>Solicitadas</h6>
             <div class="">
-                <img src="<?=BASEURL_ARQUIVOS.DIRECTORY_SEPARATOR.$sol['anuncio']->getImagemLivro();?>" alt="<?=$sol['anuncio']->getNomeLivro();?>"><br>
+                <img src="<?=BASEURL_ARQUIVOS.DIRECTORY_SEPARATOR.$sol['anuncio']->getImagemLivro()?>" alt="<?=$sol['anuncio']->getNomeLivro()?>"><br>
             </div>
             <h3><?=$sol['anuncio']->getNomeLivro()?></h3><br>
             <p>user name</p><br>
@@ -25,6 +27,10 @@ function showSecCode(cod) {
         <?php else: ?>
             <strong><p>Não ativa, aguarde o outro usuário</p></strong>
             <?php endif; ?>
+            <form method="POST" action="?action=buttonDeleteTrade">
+                <input type="hidden" name="idTroca" value="<?=$sol['trocaId']?>">
+                <button class="btn btn-danger" type="submit" onclick="return confirm('Tem certeza que deseja cancelar esta troca?')">Cancelar Troca</button>
+            </form>
          </div>
          <?php endforeach;
             foreach ($dados['ofertas'] as $of):?>
@@ -42,10 +48,14 @@ function showSecCode(cod) {
                  </form>
                 <?php else:?>
                     <form method="POST" action="?action=trocasActive">
-                        <input type="hidden" name="idTroca" value="<?=$of['trocaId']?>">
+                        <input type="hidden" name="idTroca" value="<?=$of['trocaId']?>"><p><?=$of['trocaId']?></p>
                         <button class="btn btn-primary" type="submit">ativar Troca</button>
                     </form>
                 <?php endif;?>
+                <form method="POST" action="?action=buttonDeleteTrade">
+                    <input type="hidden" name="idTroca" value="<?=$of['trocaId']?>">
+                    <button class="btn btn-danger" type="submit" onclick="return confirm('Tem certeza que deseja cancelar esta troca?')">Cancelar Troca</button>
+                </form>
             </div>
             <?php endforeach;?>
         <?php endif;?>  

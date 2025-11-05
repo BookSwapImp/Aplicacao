@@ -121,13 +121,16 @@ DROP TABLE IF EXISTS `denuncia`;
 CREATE TABLE `denuncia` (
   `id` int NOT NULL AUTO_INCREMENT,
   `descricao` varchar(255) NOT NULL,
-  `anuncios_id` int NOT NULL,
-  `usuarios_id` int NOT NULL,
+  `anuncios_id` int NULL,
+  `usuarios_reu_id` int NOT NULL,
+  `usuario_acusador_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `denuncia_ibfk_1` (`anuncios_id`),
-  KEY `denuncia_ibfk_2` (`usuarios_id`),
+  KEY `denuncia_ibfk_2` (`usuarios_reu_id`),
+   KEY `denuncia_ibfk_3` (`usuario_acusador_id`),
   CONSTRAINT `denuncia_ibfk_1` FOREIGN KEY (`anuncios_id`) REFERENCES `anuncios` (`id`),
-  CONSTRAINT `denuncia_ibfk_2` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`)
+  CONSTRAINT `denuncia_ibfk_2` FOREIGN KEY (`usuarios_reu_id`) REFERENCES `usuarios` (`id`),
+  CONSTRAINT `denuncia_ibfk_3` FOREIGN KEY (`usuario_acusador_id`) REFERENCES `usuarios` (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 

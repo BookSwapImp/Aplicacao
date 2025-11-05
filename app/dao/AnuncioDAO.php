@@ -1,8 +1,8 @@
 <?php
 
-include_once(__DIR__ . "/../connection/Connection.php");
-include_once(__DIR__ . "/../model/Anuncio.php");
-include_once(__DIR__ . "/../model/Usuario.php");
+require_once(__DIR__ . "/../connection/Connection.php");
+require_once(__DIR__ . "/../model/Anuncio.php");
+require_once(__DIR__ . "/../model/Usuario.php");
 
 // Verificar se a classe Anuncios foi carregada
 if (!class_exists('Anuncio')) {
@@ -11,7 +11,6 @@ if (!class_exists('Anuncio')) {
 
 class AnuncioDAO
 {
-
     private PDO $conn;
 
     public function __construct()

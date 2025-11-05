@@ -6,9 +6,11 @@ require_once(__DIR__ . "/../service/UsuarioService.php");
 require_once(__DIR__ . "/../service/ArquivoService.php");
 require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../service/EditarService.php");
+require_once(__DIR__ . "/../dao/AnuncioDAO.php");
 class PerfilController extends Controller {
 
     private UsuarioDAO $usuarioDao;
+    private AnuncioDAO $anuncioDAO;
     private UsuarioService $usuarioService;
     private ArquivoService $arquivoService;
     private EditarService $editarService;
@@ -34,6 +36,16 @@ class PerfilController extends Controller {
     protected function perfilPage() {
        $dados['usuario'] = $this->procurarUsuarioId();
         $this->loadView("perfil/perfil.php", $dados);
+    }
+    protected function otherUserPerfilPage(){
+        $idProfile = isset($_GET['idProfile']) ? (int)trim($_GET['idProfile']): null;
+        if($idProfile === $this->getIdUsuarioLogado() || $idProfile === null) return $this->perfilPage();
+        $this->anuncioDAO = new AnuncioDAO();
+        $dados['usuario'] = $this->usuarioDao->findById($idProfile);
+        if (empty($dados['usuario'])) return header('location: '.BASEURL.'/controller/HomeController.php?action=Home'); 
+        $dados['livros'] = $this->anuncioDAO->findAnuncioByAnuncioId($idProfile);
+        
+        $this->loadView("perfil/otherUserPerfil.php", $dados);
     }
 
     protected function editarPerfilPage(){

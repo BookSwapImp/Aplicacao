@@ -1,5 +1,10 @@
 <?php 
-require_once(__DIR__ . "/../include/header.php");
+
+ include_once(__DIR__ . "/../include/header.php");
+
+ include_once(__DIR__."/../include/menu.php");
+
+ include_once(__DIR__."/../include/msg.php");
 ?>
 <div class="container">
     <div class="anuncio-oferta">
