@@ -31,6 +31,13 @@ class DenunciaDAO {
         $denuncias = $this->mapDenuncias($result);
         return $denuncias;
     }
+    public function deleteDenuncia(int $id): bool
+    {
+        $sql = "DELETE FROM denuncia WHERE id = :id";
+        $stm = $this->conn->prepare($sql);
+        $stm->bindValue(":id", $id, PDO::PARAM_INT);
+        return $stm->execute();
+    }
     public function mapDenuncias(array $result): array
     {
         $denuncias = array();
@@ -49,23 +56,4 @@ class DenunciaDAO {
         }
         return $denuncias;
     }
-}
-$denuncia = new Denuncia();
-$denuncia->setDescricao("Descrição da denúncia");
-$anuncio = new Anuncio();
-$denuncia->setAnuncio($anuncio->setId(18));
-$usuarioReu = new Usuario();
-$denuncia->setUsuarioReu($usuarioReu->setId(1));
-$usuarioAcusador = new Usuario();
-$denuncia->setUsuarioAcusador($usuarioAcusador->setId(2));
-$denunciaDAO = new DenunciaDAO();
-$denunciaDAO->createDenuncia($denuncia);
-$allDenuncias = $denunciaDAO->getAllDenuncias();
-foreach ($allDenuncias as $denuncia) {
-    echo "Denúncia ID: " . $denuncia->getId() . "\n";
-    echo "Descrição: " . $denuncia->getDescricao() . "\n";
-    echo "Anúncio ID: " . ($denuncia->getAnuncio() ? $denuncia->getAnuncio()->getId() : 'N/A') . "\n";
-    echo "Usuário Réu ID: " . ($denuncia->getUsuarioReu() ? $denuncia->getUsuarioReu()->getId() : 'N/A') . "\n";
-    echo "Usuário Acusador ID: " . ($denuncia->getUsuarioAcusador() ? $denuncia->getUsuarioAcusador()->getId() : 'N/A') . "\n";
-    echo "-------------------------\n";
 }
