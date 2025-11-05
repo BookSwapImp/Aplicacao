@@ -23,6 +23,7 @@ require_once(__DIR__ . "/../include/menu.php");
                         <input type="hidden" name="anuncio_id" value="<?= htmlspecialchars($dados['anuncio']->getId()) ?>">
                         <button type="submit" class="btn btn-primary">Trocar</button>
                     </form>
+                    <a href="<?= BASEURL ?>/controller/DenunciaController.php?action=loadDenunciaForm&anuncio_id=<?= htmlspecialchars($dados['anuncio']->getId()) ?>&usuario_reu_id=<?= htmlspecialchars($dados['anuncio']->getUsuarioIdInt()) ?>&usuario_acusador_id=<?= htmlspecialchars($dados['usuario_logado_id']) ?>" class="btn btn-danger">Denunciar</a>
                 </div>
             </div>
         </div>

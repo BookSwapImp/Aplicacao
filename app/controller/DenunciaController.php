@@ -14,6 +14,17 @@ class DenunciaController extends Controller{
             return;
         $this->denunciaDAO = new DenunciaDAO();
     }
+    protected function loadDenunciaForm()
+    {   
+        $dados = [];
+        if(isset($_GET['anuncio_id']) && isset($_GET['usuario_reu_id']) && isset($_GET['usuario_acusador_id'])){
+            $dados['anuncio_id'] = (int)trim($_GET['anuncio_id']);
+            $dados['usuario_reu_id'] = (int)trim($_GET['usuario_reu_id']);
+            $dados['usuario_acusador_id'] = (int)trim($_GET['usuario_acusador_id']);
+            return $this->loadView('denuncia/formDenuncia', $dados);
+        }
+        return header('location: '.BASEURL.'/controller/HomeController.php?action=Home');
+    }
 
     protected function createDenuncia(Denuncia $denuncia)
     {

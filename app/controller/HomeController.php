@@ -35,7 +35,7 @@ class HomeController extends Controller
     protected function anuncio(string $msgErro = "", string $msgSucesso = "")
     {
         $anuncio = $this->anuncioDAO->findAnuncioByAnuncioId($_GET['id']);
-        $dados = ['anuncio' => $anuncio];
+        $dados = ['anuncio' => $anuncio, 'usuario_logado_id' => $this->getIdUsuarioLogado()];
         $this->loadView("home/anuncio.php", $dados,  $msgErro, $msgSucesso);
     }
 }
