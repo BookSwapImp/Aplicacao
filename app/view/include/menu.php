@@ -23,7 +23,7 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
 
             <!-- Conteúdo do menu -->
             <div class="collapse navbar-collapse justify-content-between" id="navbarPrincipal">
-                
+
                 <!-- Barra de pesquisa -->
                 <form class="d-flex mx-auto" role="search">
                     <input class="form-control me-2" type="search" placeholder="Pesquisar" aria-label="Pesquisar">
@@ -33,32 +33,45 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
                 <!-- Menu do usuário -->
                 <ul class="navbar-nav">
                     <?php if (!isset($_SESSION[SESSAO_USUARIO_ID])): ?>
-                          <li class="nav-item">
-                                <a class="nav-link fw-semibold" href="<?= BASEURL . '/controller/LoginController.php?action=Login'?>">Iniciar Sessão</a>
-                            </li>
-                        <?php else: ?>
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle fw-semibold" href="#" id="navbarUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                            <?= $nome ?>
-                        </a>
-                        <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUsuario">
-                            <li>
-                                 <a class="dropdown-item" href="<?= BASEURL . '/controller/PerfilController.php?action=perfilPage' ?>">Perfil</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item" href="<?= BASEURL . '/controller/MeusLivrosController.php?action=meusLivrosPage' ?>">Meus Livros</a>
-                            </li>
+                        <li class="nav-item">
+                            <a class="nav-link fw-semibold" href="<?= BASEURL . '/controller/LoginController.php?action=Login' ?>">Iniciar Sessão</a>
+                        </li>
+                    <?php else: ?>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle fw-semibold" href="#" id="navbarUsuario" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                <?= $nome ?>
+                            </a>
+                            <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUsuario">
+
+                                 <?php
+                                        if (isset($_SESSION['SESSAO_USUARIO_ID']) && $_SESSION['SESSAO_USUARIO_ID'] === 'ADMINISTRADOR') {
+
+                                           echo '<a href="<?= BASEURL ?>/controller/MantenedorController.php?action=usuarios" class="btn btn-primary mt-3">Dashboard</a>';
+                                        }
+                                        ?>
+
+
                                <li>
-                                <a class="dropdown-item" href="<?= BASEURL . '/controller/TrocasController.php?action=trocasPages' ?>">Trocas</a>
-                            </li>
-                             <li>
-                                <a class="dropdown-item" href="<?= BASEURL . '/controller/EnderecosController.php?action=enderecoPage' ?>">Endereços</a>
-                            </li>
-                            <li>
-                                <a class="dropdown-item text-danger" href="<?= LOGOUT_PAGE ?>">Sair da conta</a>
-                            </li>
-                        </ul>
-                    </li>
+                                    <a class="dropdown-item" href="<?= BASEURL . '/controller/MantenedorController.php?action=home' ?>">Dashbord</a>
+                               </li>
+
+                                <li>
+                                    <a class="dropdown-item" href="<?= BASEURL . '/controller/PerfilController.php?action=perfilPage' ?>">Perfil</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="<?= BASEURL . '/controller/MeusLivrosController.php?action=meusLivrosPage' ?>">Meus Livros</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="<?= BASEURL . '/controller/TrocasController.php?action=trocasPages' ?>">Trocas</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item" href="<?= BASEURL . '/controller/EnderecosController.php?action=enderecoPage' ?>">Endereços</a>
+                                </li>
+                                <li>
+                                    <a class="dropdown-item text-danger" href="<?= LOGOUT_PAGE ?>">Sair da conta</a>
+                                </li>
+                            </ul>
+                        </li>
                     <?php endif; ?>
                 </ul>
             </div>
