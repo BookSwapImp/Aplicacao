@@ -50,3 +50,4 @@ class BuscaController extends Controller{
     $this->loadView("busca/busca.php", $dados, $msgErro ?? '');
 }
 }
+print('ola mundo');
