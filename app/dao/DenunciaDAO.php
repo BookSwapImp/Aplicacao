@@ -4,15 +4,21 @@ require_once(__DIR__ . "/../model/Denuncia.php");
 require_once(__DIR__ . "/../model/Anuncio.php");
 require_once(__DIR__ . "/../model/Usuario.php");
 require_once(__DIR__ . "/../connection/Connection.php");
+require_once(__DIR__ . "/../dao/AnuncioDAO.php");
+require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 
-class DenunciaDAO {
+
+
+class DenunciaDAO
+{
     private PDO $conn;
 
     public function __construct()
     {
         $this->conn = Connection::getConn();
     }
-    Public function createDenuncia(Denuncia $denuncia): bool {
+    public function createDenuncia(Denuncia $denuncia): bool
+    {
         $sql = "INSERT INTO denuncia (descricao, anuncios_id, usuarios_reu_id, usuario_acusador_id) 
                 VALUES (:descricao, :anuncios_id, :usuarios_reu_id, :usuario_acusador_id)";
         $stm = $this->conn->prepare($sql);
@@ -23,13 +29,21 @@ class DenunciaDAO {
 
         return $stm->execute();
     }
-    public function getAllDenuncias(): array {
-        $sql = "SELECT * FROM denuncia";
-        $stm = $this->conn->prepare($sql);
-        $stm->execute();
-        $result = $stm->fetchAll();
-        $denuncias = $this->mapDenuncias($result);
-        return $denuncias;
+    public function getAllDenuncias(): array
+    {
+        try {
+            $sql = "SELECT * FROM denuncia";
+
+            $stm = $this->conn->prepare($sql);
+            $stm->execute();
+            $result = $stm->fetchAll(PDO::FETCH_ASSOC);
+            $denuncias = $this->mapDenuncias($result);
+
+            return $denuncias;
+
+        } catch (Exception $e) {
+            throw new Exception("Erro ao buscar denúncias: " . $e->getMessage());
+        }
     }
     public function deleteDenuncia(int $id): bool
     {
@@ -40,16 +54,21 @@ class DenunciaDAO {
     }
     public function mapDenuncias(array $result): array
     {
+        $anuncioDAO = new AnuncioDAO();
+        $usuarioDAO = new UsuarioDAO();
+
         $denuncias = array();
         foreach ($result as $reg) {
             $denuncia = new Denuncia();
-            $anuncio = new Anuncio();
-            $usuarioReu = new Usuario();
-            $usuarioAcusador = new Usuario();
+            $anuncio = $anuncioDAO->findAnuncioByAnuncioId($reg['anuncios_id']);
+            $usuarioReu = $usuarioDAO->findById($reg['usuarios_id']);
+
             $denuncia->setId($reg['id']);
-            $denuncia->setAnuncio($anuncio->setId($reg['anuncios_id']));
-            $denuncia->setUsuarioReu($usuarioReu->setId($reg['usuarios_reu_id']));
-            $denuncia->setUsuarioAcusador($usuarioAcusador->setId($reg['usuario_acusador_id']));
+
+            $denuncia->setAnuncio($anuncio);
+            
+            $denuncia->setUsuarioReu( $usuarioReu);
+            //$denuncia->setUsuarioAcusador($usuarioAcusador->setId($reg['usuario_acusador_id']));
             $denuncia->setDescricao($reg['descricao']);
             // Map Anuncio and Usuario objects if necessary
             array_push($denuncias, $denuncia);

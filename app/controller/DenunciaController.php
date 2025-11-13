@@ -13,6 +13,9 @@ class DenunciaController extends Controller{
         if(! $this->usuarioEstaLogado())
             return;
         $this->denunciaDAO = new DenunciaDAO();
+
+        $this->handleAction(); 
+
     }
     protected function loadDenunciaForm()
     {   
@@ -45,13 +48,18 @@ class DenunciaController extends Controller{
         return header('location: '.BASEURL.'/controller/HomeController.php?action=Home');
     }
 
-    protected function getAllDenuncias()
+    public function denuncias()
     {
+
         $mgsErro = '';
-        $dados = $this->denunciaDAO->getAllDenuncias();
+        $dados['denuncias'] = $this->denunciaDAO->getAllDenuncias();
+
         if(empty($dados)) 
             $mgsErro = 'Nenhuma denúncia encontrada.';
-        //return $this->loadView('denuncia/listarDenuncias', $dados);
+        
+        return $this->loadView('denuncia/listarDenuncias.php', $dados);
     }
   
 }
+
+new DenunciaController();

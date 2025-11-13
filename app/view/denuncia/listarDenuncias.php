@@ -19,6 +19,10 @@
       background-color: #0a4b7dff;
       color: white;
       padding: 20px;
+
+      
+          height: 100vh;
+
     }
     .sidebar a {
       display: block;
@@ -54,7 +58,7 @@
 <body>
   <div class="d-flex">
     <!-- Sidebar -->
-    <?php include_once(__DIR__ . "/sidebar.php"); ?>
+    <?php include_once(__DIR__ . "/../mantenedor/sidebar.php"); ?>
  
     <div class="content col-10">
       <!-- Barra superior -->
@@ -69,23 +73,25 @@
     <br>
       <div class="row mb-4">
           <div class="card p-3">
-            <h5>Gerenciamento de aaaa</h5>
+            <h5>Gerenciamento de Denuncias</h5>
             <table class="table table-striped">
               <thead>
                 <tr>
-                  <th>Nome</th>
-                  <th>Email</th>
-                  <th>Status</th>
+                  <th>Solicitante</th>
+                  <th>Denuncia</th>
+                  <th>Anuncio</th>
+                  <th>#</th>
+
                 </tr>
               </thead>
               <tbody>
-                <?php foreach ($dados['usuarios'] as $usuario) : ?>
+                <?php foreach ($dados['denuncias'] as $denuncia) : ?>
                 
                 <tr>
-                  <td><?= $usuario->getNome()  ?></td>
-                  <td><?= $usuario->getEmail() ?></td>
-                  <td><?= $usuario->getStatus() ?></td>
-                  <td><button class="btn btn-sm btn-secondary">View</button></td>
+                  <td><a href="#"><?= $denuncia->getUsuarioReu()->getNome()  ?></a></td>
+                  <td><?= $denuncia->getDescricao() ?></td>
+                  <td> <a href="#">  <?= $denuncia->getAnuncio()->getNomeLivro() ?></a></td>
+                  <td><button class="btn btn-sm btn-success">aceitar</button> <button class="btn btn-sm btn-danger">recusar</button></td>
                 </tr>
 
                 <?php endforeach; ?>

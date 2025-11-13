@@ -1,3 +1,5 @@
-- [x] Modificar app/controller/HomeController.php: adicionar 'usuario_logado_id' => $this->getIdUsuarioLogado() no método anuncio
-- [x] Modificar app/view/home/anuncio.php: adicionar botão "Denunciar" ao lado do botão "Trocar"
-- [x] Modificar app/view/denuncia/FormDenuncia.php: implementar o formulário com textarea para descrição e campos hidden
+# TODO for Updating Relatorios.php
+
+- [x] Add private properties: id, denuncia_id, descrição, tipo_de_denuncia, status_denunciado, relatorio_status, data
+- [x] Add getters and setters for each new property
+- [x] Implement jsonSerialize method
