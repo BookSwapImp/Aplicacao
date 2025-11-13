@@ -5,37 +5,42 @@ require_once(__DIR__ . "/../model/Usuario.php");
 
 class BuscaDAO{
     private PDO $conn;
+    private Usuario $usuario;
+    private Anuncio $anuncio;
 
     public function __construct()
     {
         $this->conn = Connection::getConn();
     }
 
-    public function buscaOnlyUser(string $busca): array
+    public function buscaOnlyUser(string $busca, Usuario $an): array
     {
-        $sql = "SELECT * FROM usuarios WHERE nome LIKE :busca";
+        $sql = "SELECT * FROM usuarios WHERE nome LIKE :busca AND BINARY id != :id";
         $stm = $this->conn->prepare($sql);
         $stm->bindValue("busca", "%" . $busca . "%");
+        $stm->bindValue("id", $an->getId());
         $stm->execute();
         $result = $stm->fetchAll();
         return $this->mapBuscaUser($result);
     }
 
-    public function buscaOnlyAnuncio(string $busca): array
+    public function buscaOnlyAnuncio(string $busca,usuario $an ): array
     {
-        $sql = "SELECT * FROM anuncios WHERE nome_livro LIKE :busca AND status = 'ativo'";
+        $sql = "SELECT * FROM anuncios WHERE nome_livro LIKE :busca AND status = 'ativo' AND BINARY anuncios.usuarios_id != :id";
         $stm = $this->conn->prepare($sql);
         $stm->bindValue("busca", "%" . $busca . "%");
+        
+        $stm->bindValue("id", $an->getId());
         $stm->execute();
         $result = $stm->fetchAll();
         return $this->mapBuscaAnuncio($result);
     }
 
-    public function busca(string $busca): array
+    public function busca(string $busca, Usuario $usuario): array
     {
         $dados = array();
-        $dados = array_merge($dados, $this->buscaOnlyAnuncio($busca));
-        $dados = array_merge($dados, $this->buscaOnlyUser($busca));
+        $dados = array_merge($dados, $this->buscaOnlyAnuncio($busca,$usuario));
+        $dados = array_merge($dados, $this->buscaOnlyUser($busca,$usuario));
         return $dados;
     }
 
@@ -78,6 +83,3 @@ class BuscaDAO{
     }
 
 }
-$DAoCu = new BuscaDAO();
- $cuu = $DAoCu->busca('pequeno');
- print_r($cuu);

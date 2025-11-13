@@ -59,10 +59,33 @@ require_once(__DIR__ . "/../include/menu.php");
                                         <?= ucfirst($dados['usuario']->getStatus()) ?>
                                     </span>
                                 </div>
-                                <div>
-                                    <?php foreach ($dados['livros']as $ls) {
-                                     ?>  <?= print_r($ls)?>
-                                    <?php }?>
+                                <div class="col-12 mb-3">
+                                    <h5 class="text-primary">Livros Anunciados</h5>
+                                    <hr>
+                                    <?php if (!empty($dados['livros'])): ?>
+                                        <div class="row">
+                                            <?php foreach ($dados['livros'] as $livro): ?>
+                                                <div class="col-md-6 mb-3">
+                                                    <div class="card">
+                                                        <form action="HomeController.php?" method="GET">
+                                                            <input type="hidden" name="action" value="anuncio">
+                                                            <input type="hidden" name="id" value="<?= htmlspecialchars($livro->getId()) ?>">
+                                                        <button  class="anuncioButton" type="submit">
+                                                            <img src="<?= BASEURL_ARQUIVOS . DIRECTORY_SEPARATOR . $livro->getImagemLivro() ?>" class="card-img-top" alt="<?= htmlspecialchars($livro->getNomeLivro()) ?>" style="height: 200px; object-fit: cover;">
+                                                        </button>
+                                                        <div class="card-body">
+                                                            <h6 class="card-title"><?= htmlspecialchars($livro->getNomeLivro()) ?></h6>
+                                                            <p class="card-text"><?= htmlspecialchars(substr($livro->getDescricao(), 0, 100)) ?>...</p>
+                                                            <span class="badge bg-secondary"><?= htmlspecialchars($livro->getEstadoCon()) ?></span>
+                                                        </div>
+                                                        </form>
+                                                    </div>
+                                                </div>
+                                            <?php endforeach; ?>
+                                        </div>
+                                    <?php else: ?>
+                                        <p class="text-muted">Nenhum livro anunciado.</p>
+                                    <?php endif; ?>
                                 </div>
                             </div>
                         </div>

@@ -38,8 +38,8 @@ require_once(__DIR__ . "/../include/menu.php");
                                 <img src="<?= !empty($item->getFotoDePerfil()) ? BASEURL_ARQUIVOS . '/' . htmlspecialchars($item->getFotoDePerfil()) : BASEURL_ARQUIVOS . '/basePfp.jpeg' ?>" alt="Foto de Perfil" class="rounded-circle mx-auto mb-3" style="width: 80px; height: 80px; object-fit: cover;">
                                 <h5 class="card-title"><?= htmlspecialchars($item->getNome()) ?></h5>
                                 <p class="card-text text-muted"><?= htmlspecialchars($item->getEmail()) ?></p>
-                                <form method="GET" action="<?= BASEURL ?>/controller/PerfilController.php" class="mt-auto">
-                                    <input type="hidden" name="action" value="otherUserPerfil">
+                                <form method="GET" action="<?= BASEURL ?>/controller/PerfilController.php?action=otherUserPerfilPage" class="mt-auto">
+                                    <input type="hidden" name="action" value="otherUserPerfilPage">
                                     <input type="hidden" name="id" value="<?= htmlspecialchars($item->getId()) ?>">
                                     <button type="submit" class="btn btn-outline-primary w-100">Ver Perfil</button>
                                 </form>

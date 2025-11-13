@@ -21,7 +21,7 @@ function showSecCode(cod) {
                 <img src="<?=BASEURL_ARQUIVOS.DIRECTORY_SEPARATOR.$sol['anuncio']->getImagemLivro()?>" alt="<?=$sol['anuncio']->getNomeLivro()?>"><br>
             </div>
             <h3><?=$sol['anuncio']->getNomeLivro()?></h3><br>
-            <p>user name</p><br>
+            <p><a href="http://localhost/Aplicacao/app/controller/PerfilController.php?action=otherUserPerfilPage&id=<?=$sol['anuncio']->getUsuarioIdInt()?>">Ver Perfil do Dono</a></p><br>
             <?php if($sol['anuncio']->getStatusTroca() === true): ?>
                <strong><p>Codigo segurança: <?=$sol['secCode']?></p></strong>
         <?php else: ?>
@@ -38,7 +38,7 @@ function showSecCode(cod) {
                 <h6>ofertas</h6>
                 <img src="<?=BASEURL_ARQUIVOS.DIRECTORY_SEPARATOR.$of['anuncio']->getImagemLivro()?>"alt="<?=$of['anuncio']->getNomeLivro()?>">
                 <h3><?=$of['anuncio']->getNomeLivro()?></h3>
-                <p>user name</p>
+                <p><a href="http://localhost/Aplicacao/app/controller/PerfilController.php?action=otherUserPerfilPage&id=<?=$of['anuncio']->getUsuarioIdInt()?>"><?=$of['anuncio']->getUsuarioIdInt()?></a></p>
                 <p>Troca Iniciada: </p>
                 <?php if($of['anuncio']->getStatusTroca() === true):?>
                  <form method="POST" action="?action=inputCodeSec">

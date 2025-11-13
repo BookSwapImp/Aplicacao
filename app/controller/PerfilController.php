@@ -38,12 +38,16 @@ class PerfilController extends Controller {
         $this->loadView("perfil/perfil.php", $dados);
     }
     protected function otherUserPerfilPage(){
-        $idProfile = isset($_GET['idProfile']) ? (int)trim($_GET['idProfile']): null;
-        if($idProfile === $this->getIdUsuarioLogado() || $idProfile === null) return $this->perfilPage();
+        $idProfile = isset($_GET['id']) ? (int)trim($_GET['id']): null;
+        if($idProfile === $this->getIdUsuarioLogado() || $idProfile === null) 
+           return header('location: '.BASEURL.'/controller/HomeController.php?action=Home');
         $this->anuncioDAO = new AnuncioDAO();
         $dados['usuario'] = $this->usuarioDao->findById($idProfile);
-        if (empty($dados['usuario'])) return header('location: '.BASEURL.'/controller/HomeController.php?action=Home'); 
-        $dados['livros'] = $this->anuncioDAO->findAnuncioByAnuncioId($idProfile);
+
+        if (empty($dados['usuario'])) 
+            return header('location: '.BASEURL.'/controller/HomeController.php?action=Home');
+
+        $dados['livros'] = $this->anuncioDAO->findAnunciosByUsuariosId($idProfile);
         
         $this->loadView("perfil/otherUserPerfil.php", $dados);
     }
