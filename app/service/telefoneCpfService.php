@@ -19,50 +19,56 @@ class TelefoneCpfService {
      */
     public function validarCPF(string $cpf, ?int $idUsuario = null): array {
         $erros = [];
-        
+
         if (!$cpf) {
             $erros[] = "O campo [CPF] é obrigatório.";
             return $erros;
         }
-        
-        // Remove caracteres não numéricos
-        $cpf = preg_replace('/[^0-9]/', '', $cpf);
-        
+
+        // Verifica formato sem pontos e traço
+        if (!preg_match('/^\d{11}$/', $cpf)) {
+            $erros[] = "O CPF deve conter apenas 11 dígitos numéricos.";
+            return $erros;
+        }
+
+        // Remove caracteres não numéricos para validação
+        $cpfLimpo = preg_replace('/[^0-9]/', '', $cpf);
+
         // Validações básicas
-        if (strlen($cpf) != 11) {
+        if (strlen($cpfLimpo) != 11) {
             $erros[] = "O CPF deve ter 11 dígitos.";
             return $erros;
         }
-        
-        if (preg_match('/(\d)\1{10}/', $cpf)) {
+
+        if (preg_match('/(\d)\1{10}/', $cpfLimpo)) {
             $erros[] = "O CPF é inválido.";
             return $erros;
         }
-        
+
         // Validação dos dígitos verificadores
         for ($t = 9; $t < 11; $t++) {
             $d = 0;
             for ($c = 0; $c < $t; $c++) {
-                $d += $cpf[$c] * (($t + 1) - $c);
+                $d += $cpfLimpo[$c] * (($t + 1) - $c);
             }
             $d = ((10 * $d) % 11) % 10;
-            if ($cpf[$c] != $d) {
+            if ($cpfLimpo[$c] != $d) {
                 $erros[] = "O CPF é inválido.";
                 break;
             }
         }
-        
+
         // Verifica duplicidade no banco
         if (empty($erros)) {
-            $cpfInt = (int)$cpf;
+            $cpfInt = (int)$cpfLimpo;
             $usuarioExistente = $this->usuarioDAO->findByCpf($cpfInt);
-            
+
             // Se encontrou um usuário e não é o mesmo que está sendo editado
             if ($usuarioExistente === false && ($idUsuario === null || $this->usuarioDAO->findById($idUsuario)->getCpf() != $cpfInt)) {
                 $erros[] = "Este CPF já está cadastrado no sistema.";
             }
         }
-        
+
         return $erros;
     }
     
@@ -74,9 +80,10 @@ class TelefoneCpfService {
      */
     public function validarTelefone(string $telefone, ?int $idUsuario = null): array {
         $erros = [];
-        
+
         if (!$telefone) {
-            return $erros; // Telefone é opcional
+            $erros[] = "O campo [Telefone] é obrigatório.";
+            return $erros;
         }
         
         // Remove todos os caracteres não numéricos

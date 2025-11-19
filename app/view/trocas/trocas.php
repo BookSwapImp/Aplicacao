@@ -38,7 +38,7 @@ function showSecCode(cod) {
                 <h6>ofertas</h6>
                 <img src="<?=BASEURL_ARQUIVOS.DIRECTORY_SEPARATOR.$of['anuncio']->getImagemLivro()?>"alt="<?=$of['anuncio']->getNomeLivro()?>">
                 <h3><?=$of['anuncio']->getNomeLivro()?></h3>
-                <p><a href="http://localhost/Aplicacao/app/controller/PerfilController.php?action=otherUserPerfilPage&id=<?=$of['anuncio']->getUsuarioIdInt()?>"><?=$of['anuncio']->getUsuarioIdInt()?></a></p>
+                <p><a href="http://localhost/Aplicacao/app/controller/PerfilController.php?action=otherUserPerfilPage&id=<?=$of['anuncio']->getUsuarioIdInt()?>"><?=$of['OtherUserData']->getNome()?></a></p>
                 <p>Troca Iniciada: </p>
                 <?php if($of['anuncio']->getStatusTroca() === true):?>
                  <form method="POST" action="?action=inputCodeSec">

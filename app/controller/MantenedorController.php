@@ -1,10 +1,11 @@
 <?php
 require_once(__DIR__ . "/Controller.php");
-
 require_once(__DIR__ . '/../model/enum/UsuarioPapel.php');
 
 require_once(__DIR__ . '/../dao/UsuarioDAO.php');
 require_once(__DIR__ . '/../dao/AnuncioDAO.php');
+require_once(__DIR__ . '/../dao/TrocasDAO.php');
+
 
 
 class MantenedorController extends Controller
@@ -12,15 +13,17 @@ class MantenedorController extends Controller
     private Usuario $usuario;
     private UsuarioDAO $usuarioDAO;
     private AnuncioDAO $anuncioDAO;
+    private TrocasDAO $TrocasDAO;
 
     
     public function __construct()
     {
         if (!$this->usuarioEstaLogado())
             return;
-
+        
         $this->usuarioDAO = new UsuarioDAO();
         $this->anuncioDAO = new AnuncioDAO();
+        $this->TrocasDAO = new TrocasDAO();
         
         $userType = $this->usuarioDAO->findById($this->getIdUsuarioLogado());
 
@@ -77,7 +80,7 @@ class MantenedorController extends Controller
     {
         $dados = array();
 
-        $dados['trocas'] = $this->TrocasDAO->listTrocas();
+        $dados['trocas'] = $this->TrocasDAO->list();
         // $dados['denuncias'] = $this->denunciasDAO->listAllDenuncias(); ;;
 
         $dados['numeroAnuncios'] = $this->anuncioDAO->quantidadeAnuncios();
@@ -90,7 +93,7 @@ class MantenedorController extends Controller
         $dados = array();
 
         $dados['anuncios'] = $this->anuncioDAO->listAnuncio();
-        // $dados['denuncias'] = $this->denunciasDAO->listAllDenuncias(); ;;
+        //$dados['denuncias'] = $this->denunciasDAO->listAllDenuncias(); ;;
 
         $dados['numeroAnuncios'] = $this->anuncioDAO->quantidadeAnuncios();
         

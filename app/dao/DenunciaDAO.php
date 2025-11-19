@@ -61,14 +61,15 @@ class DenunciaDAO
         foreach ($result as $reg) {
             $denuncia = new Denuncia();
             $anuncio = $anuncioDAO->findAnuncioByAnuncioId($reg['anuncios_id']);
-            $usuarioReu = $usuarioDAO->findById($reg['usuarios_id']);
+            $usuarioReu = $usuarioDAO->findById($reg['usuarios_reu_id']);
+            $usuarioAcusador = $usuarioDAO->findById($reg['usuario_acusador_id']);
 
             $denuncia->setId($reg['id']);
 
             $denuncia->setAnuncio($anuncio);
             
             $denuncia->setUsuarioReu( $usuarioReu);
-            //$denuncia->setUsuarioAcusador($usuarioAcusador->setId($reg['usuario_acusador_id']));
+            $denuncia->setUsuarioAcusador($usuarioAcusador);
             $denuncia->setDescricao($reg['descricao']);
             // Map Anuncio and Usuario objects if necessary
             array_push($denuncias, $denuncia);

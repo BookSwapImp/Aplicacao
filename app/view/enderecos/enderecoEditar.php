@@ -60,7 +60,7 @@ include_once(__DIR__.'/../include/menu.php');
                                 <input type="text" id="cidade" name="cidade" required value="<?php echo isset($dados['endereco']) ? htmlspecialchars($dados['endereco']->getCidade()) : ''; ?>">
 
                                 <label for="cep">CEP:</label>
-                                <input type="text" id="cep" name="cep" required pattern="\d{5}-?\d{3}" placeholder="Ex: 12345-678" value="<?php echo isset($dados['endereco']) ? htmlspecialchars($dados['endereco']->getCep()) : ''; ?>">
+                                <input type="text" id="cep" name="cep" required maxlength="8" onkeypress="return onlyNumbers(event)" placeholder="Ex: 12345678" value="<?php echo isset($dados['endereco']) ? htmlspecialchars($dados['endereco']->getCep()) : ''; ?>">
 
                                 <label for="rua">Rua:</label>
                                 <input type="text" id="rua" name="rua" required value="<?php echo isset($dados['endereco']) ? htmlspecialchars($dados['endereco']->getRua()) : ''; ?>">

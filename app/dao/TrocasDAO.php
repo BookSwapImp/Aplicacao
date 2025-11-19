@@ -51,6 +51,13 @@ class TrocasDAO{
         $result = $stm->fetchAll();
         return $this->mapTrocas($result);
     }
+      public function list(){
+        $sql = 'SELECT * FROM troca';
+        $stm = $this->conexao->prepare($sql);
+        $stm->execute();
+        $result = $stm->fetchAll();
+        return $this->mapTrocas($result);
+    }
     public function insertTroca(Trocas $trocas){
         
     $sql ='INSERT INTO `troca` 

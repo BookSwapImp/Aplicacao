@@ -19,6 +19,7 @@ class TrocasController extends Controller{
         $this->Trocas = new Trocas();
         $this->TrocasDAO = new TrocasDAO();
         $this->anuncioDAO= new AnuncioDAO();
+        $this->usuarioDAO = new UsuarioDAO();
         $this->handleAction(); 
     }
   
@@ -37,21 +38,23 @@ class TrocasController extends Controller{
             //$ trocas esta enviando do anuncio solicitador pis e a oferta do anuncioado
             if($usuarioOfertaId == $this->getIdUsuarioLogado()) {
                 $anuncio = $this->anuncioDAO->findAnuncioByAnuncioId($tr->getAnunciosIdSolicitador()->getId());
+                $usuarioData = $this->usuarioDAO->findById($usuarioSolicitador);
                 if($atividade == Status::ATIVO)
                     $anuncio->setStatusTroca(true);
                 else
                     $anuncio->setStatusTroca(false);
-                $oferta = array('anuncio' => $anuncio, 'trocaId' => $tr->getId());
+                $oferta = array('anuncio' => $anuncio, 'trocaId' => $tr->getId() , 'OtherUserData' => $usuarioData);
                 array_push($ofertas, $oferta);
             }
             if($usuarioSolicitador ==$this->getIdUsuarioLogado()){
                 $anuncio = $this->anuncioDAO->findAnuncioByAnuncioId($tr->getAnunciosIdOferta()->getId());
+                $usuarioOtherData = $this->usuarioDAO->findById($usuarioOfertaId);
                 if($atividade == Status::ATIVO){
                     $anuncio->setStatusTroca(true);
-                    $solicit = array('anuncio' => $anuncio, 'trocaId' => $tr->getId(), 'secCode' => $tr->getSecCode());
+                    $solicit = array('anuncio' => $anuncio, 'trocaId' => $tr->getId(), 'secCode' => $tr->getSecCode(),'OtherUserData' => $usuarioOtherData);
                 }else{
                     $anuncio->setStatusTroca(false);
-                    $solicit = array('anuncio' => $anuncio, 'trocaId' => $tr->getId());
+                    $solicit = array('anuncio' => $anuncio, 'trocaId' => $tr->getId(),'OtherUserData' => $usuarioOtherData);
                 }
                 array_push($solicitacao, $solicit);
             }
@@ -115,6 +118,12 @@ class TrocasController extends Controller{
                 if ($trocaObj->getUsuariosIdOferta()->getId() == $this->getIdUsuarioLogado()) {
                     $trocaObj->setStatus(Status::ATIVO);
                     $this->TrocasDAO->updateTroca($trocaObj);
+
+                    // Enviar WhatsApp para o outro usuário
+                    $usuarioSolicitador = $trocaObj->getUsuariosIdSolicitador();
+                    $telefone = $usuarioSolicitador->getNumb();
+                    $mensagem = "Olá! Sua troca foi ativada. Acesse o sistema para mais detalhes.";
+                    $this->enviarWhatsApp($telefone, $mensagem);
                 }
             }
         }
@@ -193,6 +202,26 @@ class TrocasController extends Controller{
     private function verificaIdUser(Anuncio $ans){
         if($ans->getUsuarioIdInt() === $this->getIdUsuarioLogado())
             header("location:" . HOME_PAGE);
+    }
+
+    private function enviarWhatsApp($telefone, $mensagem) {
+        // Formatar telefone para WhatsApp (remover formatação)
+        $telefoneLimpo = preg_replace('/[^0-9]/', '', $telefone);
+
+        // URL do WhatsApp API (usando wa.me para link direto)
+        $url = "https://wa.me/" . $telefoneLimpo . "?text=" . urlencode($mensagem);
+
+        // Usar curl para abrir o link (simula clique no link WhatsApp)
+        $ch = curl_init();
+        curl_setopt($ch, CURLOPT_URL, $url);
+        curl_setopt($ch, CURLOPT_RETURNTRANSFER, true);
+        curl_setopt($ch, CURLOPT_FOLLOWLOCATION, true);
+        curl_setopt($ch, CURLOPT_TIMEOUT, 10);
+        $response = curl_exec($ch);
+        curl_close($ch);
+
+        // Nota: Isso abre o link, mas o envio real depende do usuário clicar em "Enviar" no WhatsApp Web ou app.
+        // Para envio automático, seria necessário uma API como Twilio ou similar, mas aqui usamos o link direto.
     }
 }
 $new = new TrocasController();

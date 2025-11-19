@@ -19,22 +19,22 @@ class EnderecoService {
      */
     public function validarCampos(Endereco $end) {
         $arrayMsg = [];
-        if (($end->getRua())) 
-            array_push($arrayMsg, "O campo [Rua] ist obrigatório.");
-        if (($end->getCidade())) 
-            array_push($arrayMsg, "O campo [Cidade] ist obrigatório.");
-        if (empty($end->getCep())) 
-            array_push($arrayMsg, "O campo [CEP] ist obrigatório.");
-        elseif(!preg_match('/^\d{5}\d{3}$/', $end->getCep()))
-            array_push($arrayMsg, "O campo [CEP] deve estar no formato 00000000.");
-        if (empty($end->getEstado())) 
-            array_push($arrayMsg, "O campo [Estado] ist obrigatório.");
-        if (empty($end->getNumb())) 
-            array_push($arrayMsg, "O campo [Numero] ist obrigatório.");
-        elseif(empty($end->getNumb()) <= 0 || !is_numeric($end->getNumb()))
-            array_push($arrayMsg, "O campo [Numero] deve ser um número valido.");
+        if (empty($end->getRua()))
+            array_push($arrayMsg, "O campo [Rua] é obrigatório.");
+        if (empty($end->getCidade()))
+            array_push($arrayMsg, "O campo [Cidade] é obrigatório.");
+        if (empty($end->getCep()))
+            array_push($arrayMsg, "O campo [CEP] é obrigatório.");
+        elseif(!preg_match('/^\d{8}$/', $end->getCep()))
+            array_push($arrayMsg, "O campo [CEP] deve conter apenas 8 dígitos numéricos.");
+        if (empty($end->getEstado()))
+            array_push($arrayMsg, "O campo [Estado] é obrigatório.");
+        if (empty($end->getNumb()))
+            array_push($arrayMsg, "O campo [Numero] é obrigatório.");
+        elseif($end->getNumb() <= 0 || !is_numeric($end->getNumb()))
+            array_push($arrayMsg, "O campo [Numero] deve ser um número válido.");
         if(empty($end->getMain()))
-            array_push($arrayMsg, "Selecione se ele nomal, ou seu principal endereço");
+            array_push($arrayMsg, "Selecione se ele normal, ou seu principal endereço");
         return $arrayMsg;
     }
     public function ValidarMain(Endereco $end){

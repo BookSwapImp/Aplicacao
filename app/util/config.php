@@ -10,7 +10,9 @@ error_reporting(E_ALL);
 define('DB_HOST', 'localhost');
 define('DB_NAME', 'bookswap');
 define('DB_USER', 'root');
-define('DB_PASSWORD', '');
+define('DB_PASSWORD', 'adrloclvl2007');
+define('MAIL_HOST','BookSwap.br@proton.me') ;
+define('MAIL_PASSWORD','bookSwap2022.6,02x10^23') ;
 
 //Caminho para adionar imagens, scripts e chamar páginas no sistema
 //Deve ter o nome da pasta do projeto no servidor APACHE
