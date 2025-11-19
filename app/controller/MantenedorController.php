@@ -77,7 +77,7 @@ class MantenedorController extends Controller
     {
         $dados = array();
 
-        $dados['anuncios'] = $this->anuncioDAO->listAnuncio();
+        $dados['trocas'] = $this->TrocasDAO->listTrocas();
         // $dados['denuncias'] = $this->denunciasDAO->listAllDenuncias(); ;;
 
         $dados['numeroAnuncios'] = $this->anuncioDAO->quantidadeAnuncios();
@@ -85,7 +85,7 @@ class MantenedorController extends Controller
         $this->loadView("mantenedor/anunciosMantenedor.php", $dados);
     }
 
-     protected function denuncias()
+    protected function denuncias()
     {
         $dados = array();
 
