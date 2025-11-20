@@ -1,6 +1,5 @@
 <?php
 #Classe controller padrão
-
 require_once(__DIR__ . "/../util/config.php");
 
 class Controller {
@@ -65,6 +64,24 @@ class Controller {
             return $_SESSION[SESSAO_USUARIO_ID];
 
         return 0;
+    }
+    protected function getTipoUsuarioLogado(){
+        if(session_status() != PHP_SESSION_ACTIVE)
+            session_start();
+        
+        if(isset($_SESSION[SESSAO_USUARIO_TIPO]))
+            return $_SESSION[SESSAO_USUARIO_TIPO];
+
+        return null;
+    }
+    protected function getStatusUsuarioLogado() {
+        if(session_status() != PHP_SESSION_ACTIVE)
+            session_start();
+        
+        if(isset($_SESSION[SESSAO_USUARIO_STATUS]))
+            return $_SESSION[SESSAO_USUARIO_STATUS];
+
+        return false;
     }
     protected function gerarSecCode():string{
         $caracteres = 'ABCDEFGHIJKlMNOPQRSTUWXYZabcdefghijkmopqrstuwxyz1234567890';

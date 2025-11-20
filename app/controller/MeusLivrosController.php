@@ -3,6 +3,7 @@
 require_once(__DIR__ . "/Controller.php");
 require_once(__DIR__ . "/../dao/UsuarioDAO.php");
 require_once(__DIR__ . "/../model/Usuario.php");
+require_once(__DIR__ . "/../model/enum/Status.php");
 require_once(__DIR__ . "/../model/Anuncio.php");
 require_once(__DIR__ . "/../dao/AnuncioDAO.php");
 require_once(__DIR__ . "/../service/CadastroLivroService.php");
@@ -19,6 +20,8 @@ class MeusLivrosController extends Controller {
 
     public function __construct() {
         if(! $this->usuarioEstaLogado())
+            return;
+         if ($this->getStatusUsuarioLogado() === Status::INATIVO || $this->getStatusUsuarioLogado() === null)
             return;
         $this->usuario = new Usuario();
         $this->usuarioDao = new UsuarioDAO();

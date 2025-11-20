@@ -36,17 +36,11 @@ class LoginController extends Controller {
             
             if($usuario !== null) {
                 //  Usuário encontrado e senha correta
-                if($usuario->getTipo() == UsuarioPapel::ADMINISTRADOR) {
-                    //Se encontrou o usuário, salva a sessão e redireciona para a HOME do sistema
-                    $this->loginService->salvarUsuarioSessao($usuario);
-                    header("location: " . HOME_ADMIN);
-                    exit;
-                } else {
                     //  Usuário comum
                     $this->loginService->salvarUsuarioSessao($usuario);
                     header("location: " . HOME_PAGE);
                     exit; //  EXIT ADICIONADO
-                }
+                
             } else {
                 //  Usuário não encontrado ou senha incorreta
                 $erros = ["Login ou senha informados são inválidos!"];

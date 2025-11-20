@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . '/../controller/Controller.php');
 require_once(__DIR__ . '/../model/Endereco.php');
+require_once(__DIR__ . '/../model/enum/Status.php');
 require_once(__DIR__ . '/../dao/EnderecoDAO.php');
 require_once(__DIR__ . '/../dao/UsuarioDAO.php');
 require_once(__DIR__ . '/../service/EnderecoService.php');
@@ -14,6 +15,8 @@ class EnderecosController extends Controller {
     public function __construct() {
         if(! $this->usuarioEstaLogado())
             return;
+         if ($this->getStatusUsuarioLogado() === Status::INATIVO || $this->getStatusUsuarioLogado() === null)
+        return;
         $this->endereco = new Endereco();
         $this->enderecoDAO = new EnderecoDAO();
         $this->enderecoService = new EnderecoService();

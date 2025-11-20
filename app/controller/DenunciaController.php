@@ -3,6 +3,7 @@ require_once(__DIR__."/Controller.php");
 require_once(__DIR__ . "/../model/Denuncia.php");
 require_once(__DIR__ . "/../model/Anuncio.php");
 require_once(__DIR__ . "/../model/Usuario.php");
+require_once(__DIR__ . "/../model/enum/Status.php");
 require_once(__DIR__ . "/../dao/DenunciaDAO.php");
 require_once(__DIR__ . "/../dao/AnuncioDAO.php");
 
@@ -15,6 +16,8 @@ class DenunciaController extends Controller{
     public function __construct()
     {
         if(! $this->usuarioEstaLogado())
+            return;
+         if ($this->getStatusUsuarioLogado() === Status::INATIVO || $this->getStatusUsuarioLogado() === null)
             return;
         $this->denunciaDAO = new DenunciaDAO();
         $this->anuncioDAO = new AnuncioDAO();

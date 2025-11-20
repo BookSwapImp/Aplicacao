@@ -22,7 +22,7 @@ class AnuncioDAO
     public function listAnuncio()
     {
         $conn = Connection::getConn();
-        $sql = "SELECT * FROM anuncios a WHERE status = 'ativo' ORDER BY a.id";
+        $sql = "SELECT a.*, u.nome as usuario_nome FROM anuncios a JOIN usuarios u ON a.usuarios_id = u.id WHERE a.status = 'ativo' ORDER BY a.id";
         $stm = $conn->prepare($sql);
         $stm->execute();
         $result = $stm->fetchAll();

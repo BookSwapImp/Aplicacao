@@ -32,6 +32,7 @@ class LoginService {
         $_SESSION[SESSAO_USUARIO_ID]   = $usuario->getId();
         $_SESSION[SESSAO_USUARIO_NOME] = $usuario->getNome();
         $_SESSION[SESSAO_USUARIO_TIPO] = $usuario->getTipo();
+        $_SESSION[SESSAO_USUARIO_STATUS] = $usuario->getStatus();
     }
 
     public function removerUsuarioSessao() {

@@ -18,15 +18,7 @@
         $this->usuarioService = new UsuarioService(); 
         $this->handleAction();    
     }
-        protected function home() {               
-        $tipo = 'ADMINISTRADOR';//$this->usuario->getTipo(); 
-        if($tipo == UsuarioPapel::ADMINISTRADOR) {;
-           Echo'usuario é'; 
-           $this->loadView("relatorios/Relatorios.php", []); ;
-        }
-        else {
-            header("location: " . LOGIN_PAGE);      }
-        } 
+        
     }
     #Criar objeto da classe para assim executar o construtor
     new RelatoriosController();

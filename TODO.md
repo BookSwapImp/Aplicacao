@@ -1,3 +1,4 @@
-ok- [ ] Update CPF validation in telefoneCpfService.php to accept only 11 digits without punctuation
-- [ ] Update CEP validation in EnderecoService.php to accept only 8 digits without punctuation
-- [ ] Test the changes by running the application
+- [ ] Modificar AnuncioDAO para carregar nome do usuário nos anúncios via JOIN
+- [ ] Editar usuariosMantenedor.php para tornar nome do usuário um link para perfil
+- [ ] Editar anunciosMantenedor.php para tornar título do anúncio um link para detalhes e adicionar coluna Usuário com link para perfil
+- [ ] Testar os links nas páginas do mantenedor

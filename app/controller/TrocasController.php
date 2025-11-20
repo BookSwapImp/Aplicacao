@@ -16,6 +16,9 @@ class TrocasController extends Controller{
     public function __construct(){
         if(! $this->usuarioEstaLogado())
         return;
+        if ($this->getStatusUsuarioLogado() === Status::INATIVO || $this->getStatusUsuarioLogado() === null)
+        return;
+    
         $this->Trocas = new Trocas();
         $this->TrocasDAO = new TrocasDAO();
         $this->anuncioDAO= new AnuncioDAO();
