@@ -59,6 +59,13 @@ class DenunciaDAO
         $stm->bindValue(":usuarioId", $usuarioId, PDO::PARAM_INT);
         return $stm->execute();
     }
+    public function deleteDenunciasByAnuncioId(int $anuncioId): bool
+    {
+        $sql = "DELETE FROM denuncia WHERE anuncios_id = :anuncioId";
+        $stm = $this->conn->prepare($sql);
+        $stm->bindValue(":anuncioId", $anuncioId, PDO::PARAM_INT);
+        return $stm->execute();
+    }
     public function mapDenuncias(array $result): array
     {
         $anuncioDAO = new AnuncioDAO();

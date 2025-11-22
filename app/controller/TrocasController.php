@@ -124,7 +124,7 @@ class TrocasController extends Controller{
 
                     // Enviar WhatsApp para o outro usuário
                     $usuarioSolicitador = $trocaObj->getUsuariosIdSolicitador();
-                    $telefone = $usuarioSolicitador->getNumb();
+                    $telefone = $usuarioSolicitador->getTelefone();
                     $mensagem = "Olá! Sua troca foi ativada. Acesse o sistema para mais detalhes.";
                     $this->enviarWhatsApp($telefone, $mensagem);
                 }
@@ -177,13 +177,13 @@ class TrocasController extends Controller{
     
     private function exgangeAnuncios(Int $idTroca){
      $troca= $this->TrocasDAO->findByIdTroca($idTroca);$trocaObj = $troca[0];
-     $idAuxUserSolicitador = $trocaObj->getUsuarioIdSolicitador()->getId();
-     $idAuxUserOferta = $trocaObj->getUsuarioIdSolicitador()->getId();
-     $idAuxAnSolicitador = $trocaObj->getUsuarioIdSolicitador()->getId();
-     $idAuxAnOferta = $trocaObj->getUsuariosIdOferta()->getId();
-     $auxAnOferta = $this->anuncioDAO->findAnuncioByAnuncioId($idAuxAnOferta);
+     $idAuxUserSolicitador = $trocaObj->getUsuariosIdSolicitador()->getId();
+     $idAuxUserOferta = $trocaObj->getUsuariosIdOferta()->getId();
+     $idAuxAnSolicitador = $trocaObj->getAnunciosIdSolicitador()->getId();
+     $idAuxAnOferta = $trocaObj->getAnunciosIdOferta()->getId();
+     $auxAnOferta = $this->anuncioDAO->findAnuncioByAnuncioId( $idAuxAnOferta );
      $auxAnSolicitador = $this->anuncioDAO->findAnuncioByAnuncioId($idAuxAnSolicitador);
-     if (!empty($auxAnSolicitador())&&!empty($auxAnOferta())) {
+     if (!empty($auxAnSolicitador) && !empty($auxAnOferta)) {
         $newIdUserSolicit = new Usuario(); 
         $newIdUserOfert = new Usuario();
         $newIdUserSolicit->setId($idAuxUserOferta);
@@ -192,9 +192,9 @@ class TrocasController extends Controller{
         $newAnOferta = $auxAnOferta;
         $newAnSolicitador->setUsuarioId($newIdUserSolicit);
         $newAnOferta->setUsuarioId($newIdUserOfert);
-        $anArray =[$newAnSolicitador,$newAnOferta];
+        $anArray = [$newAnSolicitador, $newAnOferta];
         for ($i=0; $i < 2; $i++) { 
-            $this->TrocasDAO->updateTroca($anArray[$i]);
+            $this->anuncioDAO->updateAnuncios($anArray[$i]);
         }
         return true;
      }

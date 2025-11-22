@@ -168,7 +168,7 @@ class MeusLivrosController extends Controller {
         // Validar campos (implementar validação adequada)
         $erros = [];
   
-        $this->anuncio->setId(null);
+       // $this->anuncio->setId(null);
         $this->anuncio->setUsuarioId($this->usuario->setId($idUsuario));
         $this->anuncio->setNomeLivro($nomeLivro);
         $this->anuncio->setDescricao($descricao);

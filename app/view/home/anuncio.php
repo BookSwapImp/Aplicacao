@@ -19,14 +19,22 @@ require_once(__DIR__ . "/../include/menu.php");
                     <h3><?= htmlspecialchars($dados['anuncio']->getNomeLivro()) ?></h3>
                     <p><strong>Descrição:</strong> <?= htmlspecialchars($dados['anuncio']->getDescricao()) ?></p>
                     <p><strong>Publicado em:</strong> <?= htmlspecialchars($dados['anuncio']->getDataPublicacao()->format('d/m/Y')) ?></p>
-                    <form method="POST" action="<?= BASEURL ?>/controller/HomeController.php?action=trade">
-                        <input type="hidden" name="anuncio_id" value="<?= htmlspecialchars($dados['anuncio']->getId()) ?>">
-                        <button type="submit" class="btn btn-primary">Trocar</button>
+                    <form method="GET" action="TrocasController.php">
+                        <input type="hidden" name="action" value="trocasIntoPage">
+                        <input type="hidden" name="idAnuncio" value="<?= $dados['anuncio']->getId() ?>"> 
+                       <button type="submit" class="btn btn-primary">Trocar</button>
                     </form>
                     <a href="<?= BASEURL ?>/controller/DenunciaController.php?action=loadDenunciaForm&anuncio_id=<?= htmlspecialchars($dados['anuncio']->getId()) ?>&usuario_reu_id=<?= htmlspecialchars($dados['anuncio']->getUsuarioIdInt()) ?>&usuario_acusador_id=<?= htmlspecialchars($dados['usuario_logado_id']) ?>" class="btn btn-danger">Denunciar</a>
                 </div>
             </div>
         </div>
+               <form method="GET" action="TrocasController.php">
+                        <input type="hidden" name="action" value="trocasIntoPage">
+                        <input type="hidden" name="idAnuncio" value="<?= $dados['anuncio']->getId() ?>">
+                        <p><?= htmlspecialchars($dados['anuncio']->getDescricao()) ?></p><!--descricao-->
+                        <p>Anuncio Publicado: <?= $dados['anuncio']->getDataPublicacao()->format('d/m/Y'); ?></p>
+                        <button type="submit" class="trade-button" id='<?= $dados['anuncio']->getId() ?>'>Trocar</button>
+                    </form>
     <?php else: ?>
         <p>Anúncio não encontrado.</p>
     <?php endif; ?>

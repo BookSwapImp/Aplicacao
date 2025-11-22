@@ -46,7 +46,13 @@
                                        <form method='POST'action="<?php echo BASEURL; ?>/controller/MantenedorController.php?action=removerDenuncia" style="display:inline;" >
                                             <input type="hidden" name="denuncia_id" value="<?php echo $denuncia->getId(); ?>">
                                             <button type="submit" class="btn btn-warning btn-sm" onclick="return confirm('Tem certeza que deseja remover esta denúncia?')">Remover Denúncia</button>
-                                      </form>   
+                                      </form>
+                                      <?php if ($denuncia->getAnuncio()) : ?>
+                                      <form method='POST' action="<?php echo BASEURL; ?>/controller/MantenedorController.php?action=excluirAnuncio" style="display:inline;" >
+                                            <input type="hidden" name="anuncio_id" value="<?php echo $denuncia->getAnuncio()->getId(); ?>">
+                                            <button type="submit" class="btn btn-dark btn-sm" onclick="return confirm('Tem certeza que deseja excluir este anúncio?')">Excluir Anúncio</button>
+                                      </form>
+                                      <?php endif; ?>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

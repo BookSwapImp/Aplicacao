@@ -135,7 +135,7 @@ class TrocasDAO{
         $stm->bindValue('status',$trocas->getStatus(), PDO::PARAM_STR);
         $stm->execute();    
     }
-        public function deleteTroca(int $id){
+    public function deleteTroca(int $id){
         $sql = 'DELETE FROM troca WHERE id = :id';
         $stm = $this->conexao->prepare($sql);
         $stm->bindValue('id',$id);

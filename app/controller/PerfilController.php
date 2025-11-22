@@ -47,7 +47,7 @@ class PerfilController extends Controller {
         if (empty($dados['usuario'])) 
             return header('location: '.BASEURL.'/controller/HomeController.php?action=Home');
 
-        $dados['livros'] = $this->anuncioDAO->findAnunciosByUsuariosId($idProfile);
+        $dados['livros'] = $this->anuncioDAO->findAnunciosByUsuariosIdAtivos($idProfile);
         
         $this->loadView("perfil/otherUserPerfil.php", $dados);
     }

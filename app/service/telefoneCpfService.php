@@ -152,10 +152,10 @@ class TelefoneCpfService {
         $len = strlen($telefone);
         
         if ($len == 11) {
-            // Celular: (99) 99999-9999
+          
             return '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 5) . '-' . substr($telefone, 7, 4);
         } elseif ($len == 10) {
-            // Fixo: (99) 9999-9999
+           
             return '(' . substr($telefone, 0, 2) . ') ' . substr($telefone, 2, 4) . '-' . substr($telefone, 6, 4);
         }
         

@@ -53,6 +53,19 @@ class AnuncioDAO
 
         return $anuncio;
     }
+    public function findAnunciosByUsuariosIdAtivos($usuariosId)
+    {
+        $conn = Connection::getConn();
+        $sql = "SELECT * FROM anuncios an
+                    WHERE BINARY an.usuarios_id = ? AND an.status = 'ativo'";
+
+        $stm = $conn->prepare($sql);
+        $stm->execute([$usuariosId]);
+        $result = $stm->fetchAll();
+        $anuncio = $this->mapAnuncios($result);
+
+        return $anuncio;
+    }
     public function findAnuncioByAnuncioId(int $anuncioId)
     {
         $conn = Connection::getConn();

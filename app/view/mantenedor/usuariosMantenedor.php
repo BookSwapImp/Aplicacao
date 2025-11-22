@@ -35,6 +35,10 @@
                                     <td>
                                         <a href="<?php echo BASEURL; ?>/controller/PerfilController.php?action=otherUserPerfilPage&id=<?php echo $usuario->getId(); ?>" class="btn btn-primary btn-sm">Ver Perfil</a>
                                         <a href="<?php echo BASEURL; ?>/controller/PerfilController.php?action=otherUserPerfilPage&id=<?php echo $usuario->getId(); ?>" class="btn btn-secondary btn-sm">Ver Anúncios</a>
+                                        <form method="POST" action="<?php echo BASEURL; ?>/controller/MantenedorController.php?action=banirUsuario" style="display:inline;">
+                                            <input type="hidden" name="usuario_id" value="<?php echo $usuario->getId(); ?>">
+                                            <button type="submit" class="btn btn-danger btn-sm" onclick="return confirm('Tem certeza que deseja banir este usuário?')">Banir</button>
+                                        </form>
                                     </td>
                                 </tr>
                             <?php endforeach; ?>

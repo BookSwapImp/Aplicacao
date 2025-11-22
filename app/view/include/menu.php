@@ -48,20 +48,11 @@ if (isset($_SESSION[SESSAO_USUARIO_NOME]))
                                 <?= $nome ?>
                             </a>
                             <ul class="dropdown-menu dropdown-menu-end" aria-labelledby="navbarUsuario">
-
                                  <?php
                                     $tipoUsuario = $this->getTipoUsuarioLogado();
                                         if (isset($tipoUsuario) && $tipoUsuario === UsuarioPapel::ADMINISTRADOR):?>
-
-                                            <a href="<?= BASEURL ?>/controller/MantenedorController.php?action=usuarios" class="btn btn-primary mt-3">Dashboard</a>
-                                        
+                                            <a href="<?= BASEURL ?>/controller/MantenedorController.php?action=usuarios" class="btn btn-primary mt-3">Dashboard</a> 
                                         <?php endif;?>
-
-
-                               <li>
-                                    <a class="dropdown-item" href="<?= BASEURL . '/controller/MantenedorController.php?action=home' ?>">Dashbord</a>
-                               </li>
-
                                 <li>
                                     <a class="dropdown-item" href="<?= BASEURL . '/controller/PerfilController.php?action=perfilPage' ?>">Perfil</a>
                                 </li>

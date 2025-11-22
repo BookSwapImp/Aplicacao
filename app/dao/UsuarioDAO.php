@@ -93,7 +93,7 @@ class UsuarioDAO {
       $sql = "SELECT * FROM usuarios u " .
             "WHERE BINARY u.email = ?";
         $stm = $this->conn->prepare($sql);
-        $stm->execute([$email]);
+        $stm->execute(params: [$email]);
         $result = $stm->fetchAll();
         $usuarios = $this->mapUsuarios($result);
         

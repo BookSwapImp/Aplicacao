@@ -24,7 +24,6 @@
          </select>
             <input type="hidden" name="idAnOferta" id="idAnOferta" value="<?=$dados['AnuncioOferta']->getId();?>">
             <button class="btn btn-primary" type="submit">confirmar</button>
-            <button class="btn btn-danger">cancelar</button>
         </form>
     </div>
 </div><br>

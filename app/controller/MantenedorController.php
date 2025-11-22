@@ -111,34 +111,35 @@ class MantenedorController extends Controller
     {
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['usuario_id'])) {
             $usuarioId = (int) $_POST['usuario_id'];
-            $denunciaId = (int) $_POST['denuncia_id'];
-
-            // Buscar todos os anúncios do usuário
-            $anuncios = $this->anuncioDAO->findAnunciosByUsuariosId($usuarioId);
-
-            // Excluir fotos dos anúncios
-            $arquivoService = new ArquivoService();
-            foreach ($anuncios as $anuncio) {
-                if ($anuncio->getImagemLivro()) {
-                    $arquivoService->excluirArquivo($anuncio->getImagemLivro());
-                }
-            }
-
-            // Excluir todos os anúncios
-            foreach ($anuncios as $anuncio) {
-                $this->anuncioDAO->excluirAnuncios($anuncio->getId());
-            }
-
-            // Deixar a conta inativa
+            $denunciaId = isset($_POST['denuncia_id']) ? (int) $_POST['denuncia_id'] : null;
             $usuario = $this->usuarioDAO->findById($usuarioId);
-            if ($usuario) {
-                $usuario->setStatus('inativo');
-                $this->usuarioDAO->update($usuario);
+
+            if (!$usuario)
+                return header("Location: " . BASEURL . "/controller/MantenedorController.php?action=usuarios&msg=Erro ao banir usuário");
+
+            $usuario->setStatus('inativo');
+            $this->usuarioDAO->update($usuario);
+
+            if ($denunciaId !== null) {
                 $this->denunciaDAO->deleteDenuncia($denunciaId);
             }
 
+            // Buscar todos os anúncios do usuário
+            $anuncios = $this->anuncioDAO->findAnunciosByUsuariosId($usuarioId);
+            // Excluir fotos dos anúncios
+            $arquivoService = new ArquivoService();
+            foreach ($anuncios as $anuncio) {
+                // Delete trocas related to this anuncio before deleting the anuncio
+                $this->TrocasDAO->deleteTrocaByIdAn($anuncio->getId());
+                if ($anuncio->getImagemLivro())
+                    $arquivoService->excluirArquivo($anuncio->getImagemLivro());
+                // Excluir o anúncio
+                $this->anuncioDAO->excluirAnuncios(idLivro: $anuncio->getId());
+            }
+
             // Redirecionar de volta com mensagem
-            header("Location: " . BASEURL . "/controller/MantenedorController.php?action=denuncias&msg=Usuario banido com sucesso");
+            $redirectAction = $denunciaId !== null ? 'denuncias' : 'usuarios';
+            header("Location: " . BASEURL . "/controller/MantenedorController.php?action={$redirectAction}&msg=Usuario banido com sucesso");
             exit;
         }
     }
@@ -154,8 +155,34 @@ class MantenedorController extends Controller
             header("Location: " . BASEURL . "/controller/MantenedorController.php?action=denuncias&msg=Denúncia removida com sucesso");
             exit;
         }
+    
+    protected function excluirAnuncio(){
+        if($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['anuncio_id'])) 
+             $anuncioId = (int) $_POST['anuncio_id'];
+        
+            // Buscar o anúncio para obter a imagem
+            $anuncio = $this->anuncioDAO->findAnuncioByAnuncioId($anuncioId);
+            $arquivoService = new ArquivoService();
+            if ($anuncio && $anuncio->getImagemLivro()) {
+                $arquivoService->excluirArquivo($anuncio->getImagemLivro());
+            }
+
+            // Excluir trocas relacionadas ao anúncio
+            $this->TrocasDAO->deleteTrocaByIdAn($anuncioId);
+
+            // Excluir denúncias relacionadas ao anúncio
+            $this->denunciaDAO->deleteDenunciasByAnuncioId($anuncioId);
+
+            // Excluir o anúncio
+            $this->anuncioDAO->excluirAnuncios(idLivro: $anuncioId);
+
+            // Redirecionar de volta com mensagem
+            header("Location: " . BASEURL . "/controller/MantenedorController.php?action=denuncias&msg=Anúncio excluído com sucesso");
+            exit;
+        }
+        
     }
 
-    
 
 new MantenedorController();
+
