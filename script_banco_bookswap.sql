@@ -34,7 +34,6 @@ CREATE TABLE `anuncios` (
   PRIMARY KEY (`id`),
   KEY `anuncios_ibfk_1` (`usuarios_id`),
   CONSTRAINT `anuncios_ibfk_1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=19 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -43,7 +42,7 @@ CREATE TABLE `anuncios` (
 
 LOCK TABLES `anuncios` WRITE;
 /*!40000 ALTER TABLE `anuncios` DISABLE KEYS */;
-INSERT INTO `anuncios` VALUES (2,2,'Ilíada','Livro novo','2025-07-05 14:41:29','ativo','bom','iliada.png'),(12,1,'O Pequeno Livro','O pequeno livro, Marcelo Cipis','2025-08-18 01:04:45','ativo','bom','arquivo_68a5cce03b241_1755696352.jpeg'),(18,1,'the making of prince of persia','Relato da criação de prince of persia','2025-09-10 15:54:40','ativo','bom','arquivo_68c183207a565_1757512480.png');
+INSERT INTO `anuncios` VALUES (18,1,'the making of prince of persia','Relato da criação de prince of persia','2025-09-10 15:54:40','ativo','bom','arquivo_68c183207a565_1757512480.png');
 /*!40000 ALTER TABLE `anuncios` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -68,7 +67,6 @@ CREATE TABLE `avaliacao` (
   CONSTRAINT `enderecos_ibfk_10` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `fk_avaliacao_anuncios1` FOREIGN KEY (`anuncios_id`) REFERENCES `anuncios` (`id`),
   CONSTRAINT `fk_avaliacao_usuarios1` FOREIGN KEY (`usuarios_id_denunciado`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +97,6 @@ CREATE TABLE `compra` (
   KEY `compra_ibfk_2` (`anuncios_id`),
   CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `compra_ibfk_2` FOREIGN KEY (`anuncios_id`) REFERENCES `anuncios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -121,17 +118,19 @@ DROP TABLE IF EXISTS `denuncia`;
 CREATE TABLE `denuncia` (
   `id` int NOT NULL AUTO_INCREMENT,
   `descricao` varchar(255) NOT NULL,
-  `anuncios_id` int NULL,
+  `anuncios_id` int DEFAULT NULL,
   `usuarios_reu_id` int NOT NULL,
   `usuario_acusador_id` int NOT NULL,
   PRIMARY KEY (`id`),
   KEY `denuncia_ibfk_1` (`anuncios_id`),
-  KEY `denuncia_ibfk_2` (`usuarios_reu_id`),
-   KEY `denuncia_ibfk_3` (`usuario_acusador_id`),
+  KEY `fk_denuncia_usuarios_reu` (`usuarios_reu_id`),
+  KEY `fk_denuncia_usuarios_acusador` (`usuario_acusador_id`),
   CONSTRAINT `denuncia_ibfk_1` FOREIGN KEY (`anuncios_id`) REFERENCES `anuncios` (`id`),
   CONSTRAINT `denuncia_ibfk_2` FOREIGN KEY (`usuarios_reu_id`) REFERENCES `usuarios` (`id`),
-  CONSTRAINT `denuncia_ibfk_3` FOREIGN KEY (`usuario_acusador_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+  CONSTRAINT `fk_denuncia_usuarios_acusador` FOREIGN KEY (`usuario_acusador_id`) REFERENCES `usuarios` (`id`),
+  CONSTRAINT `fk_denuncia_usuarios_reu` FOREIGN KEY (`usuarios_reu_id`) REFERENCES `usuarios` (`id`),
+  CONSTRAINT `fk_usuarios` FOREIGN KEY (`usuario_acusador_id`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=10 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -164,7 +163,7 @@ CREATE TABLE `enderecos` (
   PRIMARY KEY (`id`),
   KEY `enderecos_ibfk_1` (`usuarios_id`),
   CONSTRAINT `enderecos_ibfk_1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=15 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -195,7 +194,6 @@ CREATE TABLE `relatorio` (
   PRIMARY KEY (`id`),
   KEY `fk_Relatorio_denuncia1` (`denuncia_id`),
   CONSTRAINT `fk_Relatorio_denuncia1` FOREIGN KEY (`denuncia_id`) REFERENCES `denuncia` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -221,7 +219,6 @@ CREATE TABLE `troca` (
   `data_troca` datetime NOT NULL,
   `usuarios_id_oferta` int NOT NULL,
   `usuarios_id_solicitador` int NOT NULL,
-  `status` ENUM('ativo','inativo') NOT NULL,
   `sec_code` char(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `troca_ibfk_1` (`anuncios_id_oferta`),
@@ -232,7 +229,6 @@ CREATE TABLE `troca` (
   CONSTRAINT `troca_ibfk_2` FOREIGN KEY (`anuncios_id_solicitador`) REFERENCES `anuncios` (`id`),
   CONSTRAINT `troca_ibfk_3` FOREIGN KEY (`usuarios_id_oferta`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `troca_ibfk_4` FOREIGN KEY (`usuarios_id_solicitador`) REFERENCES `usuarios` (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -262,7 +258,6 @@ CREATE TABLE `usuarios` (
   `status` enum('ativo','inativo') NOT NULL,
   `foto_de_perfil` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -271,7 +266,7 @@ CREATE TABLE `usuarios` (
 
 LOCK TABLES `usuarios` WRITE;
 /*!40000 ALTER TABLE `usuarios` DISABLE KEYS */;
-INSERT INTO `usuarios` VALUES (1,'Lionel','root.silva@email.com','$2y$10$9H8nNzW7tM7cGhy6r59gYuKuflEGKzKGOMPv86yUhJbySUNnnY42y','67981883427','94434593021','USUARIO','ativo','arquivo_68a5cec7e90b9_1755696839.png'),(2,'João Root da Silva','joao.silva@email.com','$2y$10$k5MaEAVH3jchFAjMBLr2qeH4ZPgmN8Ob4uIYbvh5PQY5PuEOnJ3Mq','','15985363031','USUARIO','ativo',NULL),(3,'Vitin','Vitin@email.com','$2y$10$F9f926/f2nN48SjG9TaXseuh3NkFoD0O.5axioMDsRoO0OmmvwrAG','459999999','99949494944','USUARIO','ativo',NULL),(4,'kauana silva dos reis','kauanaareis@hotmail.com','$2y$10$Po7VYc6RmGw4Vggp1qkTSetx5197Dpug16LZ8x4i4xWb0cUiM4COS','4576893369','03647599704','USUARIO','ativo',NULL),(12,'janin','janin@email.com','$2y$10$1da0rSrFoUrXmWvuFl6l9OZ3wQNpXd9V.mvaGmVMYp2BR4Ttu9zdO','4596996999','12345678909','USUARIO','ativo',NULL),(15,'natan','natan@email.com','$2y$10$0eEDWtP5WDKQqXVJ2IKxkOA2M3Wa3Z7pyRSL7MZnt7BqAzBP62KOu','null()','12345678909','USUARIO','ativo',NULL),(17,'json','json.silva@email.com','$2y$10$9H8nNzW7tM7cGhy6r59gYuKuflEGKzKGOMPv86yUhJbySUNnnY42y','12345678901','123456789','ADMINISTRADOR','ativo',NULL),(20,'Lionel','joao@email.com','$2y$10$ciMCgdsgQTUI2TbYOBL1au6tMbfoE1WP7G5kFdUXAeo5Qc8IkbmGW',NULL,'12769996908','USUARIO','ativo',NULL),(21,'Adrian José','adrianJose@gmail.com','$2y$10$kCs5RzdkmdLA4VkjnrOtde1c3YFFTXqRuTmLZ07kE6SOOlD5MgUqy',NULL,'02005955981','USUARIO','ativo','arquivo_689dee52c49a9_1755180626.png'),(22,'Aberto Phonix','alberto@email.com','$2y$10$1c/WbCVZr1G23eep97942u73inS.VIys6BrsACtL33dayt0sH1zei','0','86081641910','USUARIO','ativo','arquivo_68a5d0d09a8f1_1755697360.jpg'),(23,'Isaac Miguel André Bernardes','IsaacEmail.com@gmail.com','$2y$10$rMb7tktNK9pNjeeJoywZPuulFrMs1WNadnAdmkXS0CnqhK54/cRzW','45993526039','21589473060','USUARIO','ativo','arquivo_68c172e04e4d0_1757508320.jpeg');
+INSERT INTO `usuarios` VALUES (1,'Lionel','root.silva@email.com','$2y$10$9H8nNzW7tM7cGhy6r59gYuKuflEGKzKGOMPv86yUhJbySUNnnY42y','67981883427','94434593021','USUARIO','ativo','arquivo_68a5cec7e90b9_1755696839.png'),(2,'João Root','joao.silva@email.com','$2y$10$k5MaEAVH3jchFAjMBLr2qeH4ZPgmN8Ob4uIYbvh5PQY5PuEOnJ3Mq','','15985363031','ADMINISTRADOR','ativo',NULL);
 /*!40000 ALTER TABLE `usuarios` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -284,4 +279,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2025-09-18  9:24:52
+-- Dump completed on 2025-11-24 15:17:16
