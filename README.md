@@ -1,5 +1,7 @@
 BookSwap: Sistema Web Colaborativo para Troca de Livros
 
+Orientadores: ANA CARLA ARRUDA DE HOLANDA
+
 O BookSwap é um sistema web colaborativo desenvolvido com o objetivo de promover a troca de livros usados, incentivando o acesso à leitura de forma sustentável e econômica 1
 . A plataforma atua como um ponto de encontro virtual para usuários que desejam trocar seus livros, consolidando-se como uma solução relevante e tecnicamente consistente 1
 .
