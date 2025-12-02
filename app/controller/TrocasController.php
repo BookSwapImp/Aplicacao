@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . '/../controller/Controller.php');
 require_once(__DIR__.'/../model/Trocas.php'); 
+require_once(__DIR__.'/../model/enum/UsuarioPapel.php'); 
 require_once(__DIR__.'/../model/enum/Status.php'); 
 require_once(__DIR__.'/../dao/AnuncioDAO.php');
 require_once(__DIR__.'/../dao/UsuarioDAO.php');  
@@ -17,6 +18,8 @@ class TrocasController extends Controller{
         if(! $this->usuarioEstaLogado())
         return;
         if ($this->getStatusUsuarioLogado() === Status::INATIVO || $this->getStatusUsuarioLogado() === null)
+        return;
+         if ($this->getTipoUsuarioLogado() ===  UsuarioPapel::ADMINISTRADOR || $this->getTipoUsuarioLogado() === null)
         return;
     
         $this->Trocas = new Trocas();
@@ -124,9 +127,9 @@ class TrocasController extends Controller{
 
                     // Enviar WhatsApp para o outro usuário
                     $usuarioSolicitador = $trocaObj->getUsuariosIdSolicitador();
-                    $telefone = $usuarioSolicitador->getTelefone();
+                    //$telefone = $usuarioSolicitador->getTelefone();
                     $mensagem = "Olá! Sua troca foi ativada. Acesse o sistema para mais detalhes.";
-                    $this->enviarWhatsApp($telefone, $mensagem);
+                   // $this->enviarWhatsApp($telefone, $mensagem);
                 }
             }
         }

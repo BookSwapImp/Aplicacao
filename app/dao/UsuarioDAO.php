@@ -158,15 +158,15 @@ class UsuarioDAO {
     //Método para atualizar um Usuario
     public function update(Usuario $usuario) {
 
-        $sql = "UPDATE usuarios SET nome = :nome, email = :email, cpf = :cpf, telefone = :telefone, foto_de_perfil = :foto_de_perfil" .
+        $sql = "UPDATE usuarios SET nome = :nome, email = :email, cpf = :cpf, telefone = :telefone, foto_de_perfil = :foto_de_perfil, status=:status" .
                " WHERE id = :id";
-    
         $stm = $this->conn->prepare($sql);
         $stm->bindValue("nome", $usuario->getNome());
         $stm->bindValue("email", $usuario->getEmail());
         $stm->bindValue("cpf", $usuario->getCpf());
         $stm->bindValue("telefone", $usuario->getTelefone());
         $stm->bindValue("id", $usuario->getId());
+        $stm->bindValue('status',$usuario->getStatus());
         $stm->bindValue("foto_de_perfil", $usuario->getFotoDePerfil());
         return $stm->execute();
     }

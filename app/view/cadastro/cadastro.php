@@ -28,7 +28,7 @@ require_once(__DIR__ . "/../include/headerMenuLoginCasdatro.php");
                             <input type="password" name="confSenha" id="txtConfSenha" class="form-control" placeholder="Confirme sua senha" value="<?= $dados['confSenha'] ?? '' ?>">
                         </div>
                         <div class="mb-3">
-                            <label for="intTelefone" class="form-label">Telefone: </label><p class="text-muted">sem pontos e sem caracteres especiais</p>
+                            <label for="intTelefone" class="form-label">*Telefone: </label><p class="text-muted">sem pontos e sem caracteres especiais</p>
                             <input type="tel" name="telefone" id="intTelefone" class="form-control" placeholder="Informe o telefone" value="<?= $dados['telefone'] ?? '' ?>">
                         </div>
                         <div class="mb-3">

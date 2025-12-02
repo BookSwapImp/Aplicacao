@@ -15,11 +15,19 @@
             <div class="row mt-3">
                 <div class="col-md-12">
                     <table class="table table-striped table-hover">
+                        <?php if(empty($dados['anuncios'])):?>
+                        <div class="data-message">
+                            <h4 class="text-muted mb-3">Aviso</h4>
+                            <p class="lead text-secondary">
+                                <strong>Não há dados</strong>
+                            </p>
+                            <small class="text-muted">Nenhum registro foi encontrado para os critérios de busca.</small>
+                        </div>
+                        <?php else: ?>
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">ID</th>
                                 <th scope="col">Título</th>
-                                <th scope="col">Usuário</th>
                                 <th scope="col">Descrição</th>
                                 <th scope="col">Status</th>
                                 <th scope="col">Ações</th>
@@ -39,6 +47,7 @@
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
+                        <?php endif; ?>
                     </table>
                 </div>
             </div>

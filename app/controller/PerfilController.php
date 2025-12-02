@@ -88,6 +88,7 @@ class PerfilController extends Controller {
             $usuario->setNome($nome);
             $usuario->setEmail($email);
             $usuario->setCpf($cpf);
+            $usuario->setStatus('ativo');
             $usuario->setTelefone($telefone);
 
             // Se foi enviada nova foto, salva e apaga a anterior

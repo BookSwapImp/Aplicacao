@@ -1,12 +1,10 @@
-<?php require_once(__DIR__ . "/../include/header.php"); ?>
 
 <?php require_once(__DIR__ . "/headerMantenedor.php"); ?>
-<div class="d-flex">
+<body>
  <!-- Sidebar -->
+    <div class="d-flex">
     <?php include_once(__DIR__ . "/sidebar.php"); ?>
-<div class="container-fluid mt-3">
-    <div class="">
-            <?php include_once(__DIR__ . "/sidebar.php"); ?>
+ <div class="container-fluid mt-3">
         <div class="col-md-10">
             <div class="row">
                 <div class="col-md-12">
@@ -16,6 +14,15 @@
             <div class="row mt-3">
                 <div class="col-md-12">
                     <table class="table table-striped table-hover table-responsive">
+                        <?php if(empty($dados['denuncias'])):?>
+                        <div class="data-message">
+                            <h4 class="text-muted mb-3">Aviso</h4>
+                            <p class="lead text-secondary">
+                                <strong>Não há dados</strong>
+                            </p>
+                            <small class="text-muted">Nenhum registro foi encontrado para os critérios de busca.</small>
+                        </div>
+                        <?php else: ?>
                         <thead class="table-dark">
                             <tr>
                                 <th scope="col">ID</th>
@@ -27,6 +34,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                            
                             <?php foreach ($dados['denuncias'] as $denuncia) : ?>
                                 <tr>
                                     <td><?php echo $denuncia->getId(); ?></td>
@@ -49,7 +57,7 @@
                                       </form>
                                       <?php if ($denuncia->getAnuncio()) : ?>
                                       <form method='POST' action="<?php echo BASEURL; ?>/controller/MantenedorController.php?action=excluirAnuncio" style="display:inline;" >
-                                            <input type="hidden" name="anuncio_id" value="<?php echo $denuncia->getAnuncio()->getId(); ?>">
+                                            <input type="hidden" name="anuncio_id" id='usuario_id'value="<?php echo $denuncia->getAnuncio()->getId(); ?>">
                                             <button type="submit" class="btn btn-dark btn-sm" onclick="return confirm('Tem certeza que deseja excluir este anúncio?')">Excluir Anúncio</button>
                                       </form>
                                       <?php endif; ?>
@@ -57,10 +65,12 @@
                                 </tr>
                             <?php endforeach; ?>
                         </tbody>
+                        <?php endif; ?>
                     </table>
                 </div>
             </div>
         </div>
     </div>
 </div>
+
 </div>

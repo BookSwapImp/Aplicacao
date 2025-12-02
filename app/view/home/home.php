@@ -11,9 +11,16 @@ require_once(__DIR__ . "/../include/menu.php");
             <div class="book-grid">
                 <!-- Livro 1 -->
             <?php 
-                if(empty($dados)):
-                    echo'não á livros';
-                    endif;
+                if(empty($dados)):?> 
+                    <div class="data-message">
+                        <h4 class="text-muted mb-3">Aviso</h4>
+                        
+                        <!-- O texto principal, com ênfase e cor de texto sutil -->
+                        <p class="lead text-secondary">
+                            <strong>Não há Livros</strong>
+                        </p>
+                    </div>
+                    <?php endif;
                      foreach ($dados as $a ):
                          // Home acessível para todos os usuários
                          ?>            

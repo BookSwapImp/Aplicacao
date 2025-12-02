@@ -34,6 +34,7 @@ CREATE TABLE `anuncios` (
   PRIMARY KEY (`id`),
   KEY `anuncios_ibfk_1` (`usuarios_id`),
   CONSTRAINT `anuncios_ibfk_1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=23 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -67,6 +68,7 @@ CREATE TABLE `avaliacao` (
   CONSTRAINT `enderecos_ibfk_10` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `fk_avaliacao_anuncios1` FOREIGN KEY (`anuncios_id`) REFERENCES `anuncios` (`id`),
   CONSTRAINT `fk_avaliacao_usuarios1` FOREIGN KEY (`usuarios_id_denunciado`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -97,6 +99,7 @@ CREATE TABLE `compra` (
   KEY `compra_ibfk_2` (`anuncios_id`),
   CONSTRAINT `compra_ibfk_1` FOREIGN KEY (`usuarios_id`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `compra_ibfk_2` FOREIGN KEY (`anuncios_id`) REFERENCES `anuncios` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -194,6 +197,7 @@ CREATE TABLE `relatorio` (
   PRIMARY KEY (`id`),
   KEY `fk_Relatorio_denuncia1` (`denuncia_id`),
   CONSTRAINT `fk_Relatorio_denuncia1` FOREIGN KEY (`denuncia_id`) REFERENCES `denuncia` (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -219,6 +223,7 @@ CREATE TABLE `troca` (
   `data_troca` datetime NOT NULL,
   `usuarios_id_oferta` int NOT NULL,
   `usuarios_id_solicitador` int NOT NULL,
+  `status` enum('ativo','inativo') NOT NULL,
   `sec_code` char(6) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `troca_ibfk_1` (`anuncios_id_oferta`),
@@ -229,6 +234,7 @@ CREATE TABLE `troca` (
   CONSTRAINT `troca_ibfk_2` FOREIGN KEY (`anuncios_id_solicitador`) REFERENCES `anuncios` (`id`),
   CONSTRAINT `troca_ibfk_3` FOREIGN KEY (`usuarios_id_oferta`) REFERENCES `usuarios` (`id`),
   CONSTRAINT `troca_ibfk_4` FOREIGN KEY (`usuarios_id_solicitador`) REFERENCES `usuarios` (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=37 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -258,6 +264,7 @@ CREATE TABLE `usuarios` (
   `status` enum('ativo','inativo') NOT NULL,
   `foto_de_perfil` varchar(255) DEFAULT NULL,
   PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=24 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --

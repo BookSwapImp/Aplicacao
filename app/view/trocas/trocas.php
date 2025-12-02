@@ -13,7 +13,19 @@ function showSecCode(cod) {
 </script>
 <div class="countainer">
     <div class="book-grid">
-     <?php if(empty($dados)): echo'<h2 style="text-aling: center;">Não a trocas</h2>';
+     <?php if(empty($dados)): echo'
+<div class="data-message">
+    <!-- Título ou cabeçalho para a mensagem -->
+    <h4 class="text-muted mb-3">Aviso</h4>
+    
+    <!-- O texto principal, com ênfase e cor de texto sutil -->
+    <p class="lead text-secondary">
+        <strong>Não há dados</strong>
+    </p>
+    
+    <!-- Texto de apoio opcional -->
+    <small class="text-muted">Nenhum registro foi encontrado para os critérios de busca.</small>
+</div>';
       else: foreach($dados['solicitacao'] as $sol):?>
         <div class="book-card">
             <h6>Solicitadas</h6>
@@ -21,12 +33,13 @@ function showSecCode(cod) {
                 <img src="<?=BASEURL_ARQUIVOS.DIRECTORY_SEPARATOR.$sol['anuncio']->getImagemLivro()?>" alt="<?=$sol['anuncio']->getNomeLivro()?>"><br>
             </div>
             <h3><?=$sol['anuncio']->getNomeLivro()?></h3><br>
-            <p><a href="http://localhost/Aplicacao/app/controller/PerfilController.php?action=otherUserPerfilPage&id=<?=$sol['anuncio']->getUsuarioIdInt()?>">Ver Perfil do Dono</a></p><br>
-            <?php if($sol['anuncio']->getStatusTroca() === true): ?>
+<p><a href="http://localhost/Aplicacao/app/controller/PerfilController.php?action=otherUserPerfilPage&id=<?=$sol['anuncio']->getUsuarioIdInt()?>">Ver Perfil do Dono</a></p><br>
+          <?php if($sol['anuncio']->getStatusTroca() === true): ?>
                <strong><p>Codigo segurança: <?=$sol['secCode']?></p></strong>
         <?php else: ?>
             <strong><p>Não ativa, aguarde o outro usuário</p></strong>
             <?php endif; ?>
+            <p>Telefone: <?=$sol['OtherUserData']->getTelefone()?></p><br>
             <form method="POST" action="?action=buttonDeleteTrade">
                 <input type="hidden" name="idTroca" value="<?=$sol['trocaId']?>">
                 <button class="btn btn-danger" type="submit" onclick="return confirm('Tem certeza que deseja cancelar esta troca?')">Cancelar Troca</button>
@@ -38,9 +51,10 @@ function showSecCode(cod) {
                 <h6>ofertas</h6>
                 <img src="<?=BASEURL_ARQUIVOS.DIRECTORY_SEPARATOR.$of['anuncio']->getImagemLivro()?>"alt="<?=$of['anuncio']->getNomeLivro()?>">
                 <h3><?=$of['anuncio']->getNomeLivro()?></h3>
-                <p><a href="http://localhost/Aplicacao/app/controller/PerfilController.php?action=otherUserPerfilPage&id=<?=$of['anuncio']->getUsuarioIdInt()?>"><?=$of['OtherUserData']->getNome()?></a></p>
-                <p>Troca Iniciada: </p>
+<p><a href="http://localhost/Aplicacao/app/controller/PerfilController.php?action=otherUserPerfilPage&id=<?=$of['anuncio']->getUsuarioIdInt()?>"><?=$of['OtherUserData']->getNome()?></a></p>
+              <p>Troca Iniciada: </p>
                 <?php if($of['anuncio']->getStatusTroca() === true):?>
+                    <p>Telefone: <?=$of['OtherUserData']->getTelefone()?></p>
                  <form method="POST" action="?action=inputCodeSec">
                    <input type="hidden" name="idTroca" value="<?=$of['trocaId']?>">
                    <input name="codeSec"id="codeSec">

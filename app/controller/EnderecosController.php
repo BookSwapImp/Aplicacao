@@ -17,6 +17,8 @@ class EnderecosController extends Controller {
             return;
          if ($this->getStatusUsuarioLogado() === Status::INATIVO || $this->getStatusUsuarioLogado() === null)
         return;
+         if ($this->getTipoUsuarioLogado() ===  UsuarioPapel::ADMINISTRADOR || $this->getTipoUsuarioLogado() === null)
+        return;
         $this->endereco = new Endereco();
         $this->enderecoDAO = new EnderecoDAO();
         $this->enderecoService = new EnderecoService();

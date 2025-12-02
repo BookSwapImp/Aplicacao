@@ -28,7 +28,15 @@ require_once(__DIR__ . "/../include/menu.php");
   <h1><!--<?=$dados['usuario']->getNome()?>--></h1>
 <div class="container mt-4">
     <?php if (empty($dados['anuncio'])): ?>
-        <p>Não há livros cadastrados.</p>
+
+<div class="data-message">
+  <h4 class="text-muted mb-3">Aviso</h4>
+    
+    <p class="lead text-secondary">
+        <strong>Não há livros cadastrados</strong>
+    </p>
+     <small class="text-muted">Crie novos acima.</small>
+</div>
     <?php else: ?>
         <div class="d-flex flex-wrap gap-3">
             <?php foreach ($dados['anuncio'] as $a): ?>

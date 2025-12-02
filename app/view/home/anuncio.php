@@ -28,15 +28,14 @@ require_once(__DIR__ . "/../include/menu.php");
                 </div>
             </div>
         </div>
-               <form method="GET" action="TrocasController.php">
-                        <input type="hidden" name="action" value="trocasIntoPage">
-                        <input type="hidden" name="idAnuncio" value="<?= $dados['anuncio']->getId() ?>">
-                        <p><?= htmlspecialchars($dados['anuncio']->getDescricao()) ?></p><!--descricao-->
-                        <p>Anuncio Publicado: <?= $dados['anuncio']->getDataPublicacao()->format('d/m/Y'); ?></p>
-                        <button type="submit" class="trade-button" id='<?= $dados['anuncio']->getId() ?>'>Trocar</button>
-                    </form>
+    </form>
     <?php else: ?>
-        <p>Anúncio não encontrado.</p>
+            <div class="data-message">
+                        <h4 class="text-muted mb-3">Aviso</h4>
+                      <p class="lead text-secondary">
+                            <strong>Anúncio não encontrado</strong>
+                        </p>
+                    </div>
     <?php endif; ?>
 </div>
 

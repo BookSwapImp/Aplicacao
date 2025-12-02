@@ -25,6 +25,8 @@ class MantenedorController extends Controller
             return;
         if ($this->getStatusUsuarioLogado() === Status::INATIVO || $this->getStatusUsuarioLogado() === null)
             return;
+         if ($this->getTipoUsuarioLogado() ===  UsuarioPapel::USUARIO || $this->getTipoUsuarioLogado() === null)
+        return;
         
         $this->usuarioDAO = new UsuarioDAO();
         $this->anuncioDAO = new AnuncioDAO();
@@ -116,10 +118,10 @@ class MantenedorController extends Controller
 
             if (!$usuario)
                 return header("Location: " . BASEURL . "/controller/MantenedorController.php?action=usuarios&msg=Erro ao banir usuário");
-
-            $usuario->setStatus('inativo');
+            
+            $usuario->setStatus('inativo'); 
             $this->usuarioDAO->update($usuario);
-
+            
             if ($denunciaId !== null) {
                 $this->denunciaDAO->deleteDenuncia($denunciaId);
             }

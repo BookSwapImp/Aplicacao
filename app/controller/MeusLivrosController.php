@@ -23,6 +23,7 @@ class MeusLivrosController extends Controller {
             return;
          if ($this->getStatusUsuarioLogado() === Status::INATIVO || $this->getStatusUsuarioLogado() === null)
             return;
+        
         $this->usuario = new Usuario();
         $this->usuarioDao = new UsuarioDAO();
         $this->anuncio = new Anuncio();
